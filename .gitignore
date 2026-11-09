@@ -1,0 +1,6 @@
+.superpowers/
+node_modules/
+.cache/
+/build/
+/dist/
+*.log
