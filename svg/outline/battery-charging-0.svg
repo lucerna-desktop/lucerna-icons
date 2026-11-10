@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="3.625" y="8" width="15.5" height="8" rx="2" />
+  <defs>
+    <mask id="corte" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="white" stroke="none" />
+      <path d="M15.2 5.5 9.6 12.6 12.6 12.6 10.6 18.5 16.2 11.4 13.2 11.4z" fill="black" stroke="black" stroke-width="3.25" />
+    </mask>
+  </defs>
+  <rect x="3.625" y="8" width="15.5" height="8" rx="2" mask="url(#corte)" />
   <path d="M19.125 10.75h1.25v2.5h-1.25z" fill="currentColor" />
-  <path d="M12.425 9.6 9.075 12.55 10.975 12.55 10.325 14.4 13.675 11.45 11.775 11.45z" fill="currentColor" stroke-width="0.75" />
+  <path d="M15.2 5.5 9.6 12.6 12.6 12.6 10.6 18.5 16.2 11.4 13.2 11.4z" stroke-width="1.25" />
 </svg>
