@@ -358,3 +358,23 @@ def test_resposta_cortada_nao_derruba_a_galeria(repo_galeria, tmp_path, fontes, 
 
     monkeypatch.setattr(fetch, "_baixar", baixar)
     assert fetch.original(repo_galeria.raiz, "0.460.0", "arrow-right") is None
+
+
+def test_preencher_todos_tem_botao_e_ganchos(repo_galeria, tmp_path, fontes):
+    texto, saida = gerar(repo_galeria, ["bateria", "caixa"], tmp_path, fontes)
+    assert 'id="alternar-todos"' in texto
+    # O botão liga a classe do corpo, que o CSS propaga para a tabela, os blocos e o Material.
+    js = (PASTA_GALERIA / "gallery.js").read_text(encoding="utf-8")
+    css = (PASTA_GALERIA / "gallery.css").read_text(encoding="utf-8")
+    assert 'toggle("todos-cheios"' in js
+    for alvo in (".todos-cheios .tamanhos .par", ".todos-cheios .blocos .bloco", ".todos-cheios .blocos .m"):
+        assert alvo in css
+    # A linha "Contorno" da tabela é um par (contorno + preenchido sobrepostos), com o id no contorno.
+    m = re.search(r'<tr id="ic-bateria-escuro-contorno">.*?</tr>', texto, re.S)
+    assert m and m.group(0).count('class="par"') == len(TAMANHOS)
+    assert "cont" in classes_de(texto, "ic-bateria-escuro-contorno-24")
+    # Sem o preenchido desenhado, não há par na linha (nada para trocar).
+    m = re.search(r'<tr id="ic-caixa-escuro-contorno">.*?</tr>', texto, re.S)
+    assert m and 'class="par"' not in m.group(0)
+    # A seção de animação segue com o próprio botão.
+    assert "data-alternar" in texto

@@ -42,7 +42,7 @@
     const encher = todos.dataset.cheio !== "1";
     todos.dataset.cheio = encher ? "1" : "0";
     todos.textContent = encher ? "Esvaziar todos" : "Preencher todos";
-    document.querySelectorAll("[data-alterna]").forEach((a) => alternar(a, encher));
+    corpo.classList.toggle("todos-cheios", encher);
   });
 
   // O Material: o do sistema ("Material local") ou o do Google Fonts. Sem

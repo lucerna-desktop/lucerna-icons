@@ -142,12 +142,12 @@ def _vazio(ident: str, texto: str = "a desenhar", classe: str = "") -> str:
     return f'<span id="{ident}" class="vazio a-desenhar {classe}">{_e(texto)}</span>'
 
 
-def _par(item: Item, px: int) -> str:
-    """O contorno e o preenchido sobrepostos, para a animação."""
+def _par(item: Item, px: int, ident: str = "") -> str:
+    """O contorno e o preenchido sobrepostos, para a animação (o id fica no contorno)."""
     peso = peso_do_tamanho(px)
     return (
         f'<span class="par" style="font-size:{px}px">'
-        f'{_glifo(item.nome, px, peso, classe="cont")}'
+        f'{_glifo(item.nome, px, peso, ident, classe="cont")}'
         f'{_glifo(item.nome + "-fill", px, peso, classe="fill")}'
         "</span>"
     )
@@ -248,7 +248,11 @@ def _tabela(item: Item, tema: str) -> str:
         linhas.append(f'<tr id="{ident}"><th scope="row">{rotulo}</th>{corpo}</tr>')
 
     if item.contorno is not None:
-        linha("contorno", "Contorno", lambda t, i: _glifo(n, t, peso_do_tamanho(t), i))
+        # O contorno é um par, para o "Preencher todos" trocá-lo pelo preenchido com a animação.
+        if item.preenchido_a_desenhar:
+            linha("contorno", "Contorno", lambda t, i: _glifo(n, t, peso_do_tamanho(t), i))
+        else:
+            linha("contorno", "Contorno", lambda t, i: _par(item, t, i))
         if item.preenchido_a_desenhar:
             linha("preenchido", "Preenchido", None, vazio="preenchido a desenhar")
         else:
