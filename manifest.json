@@ -125,16 +125,7 @@
       "name": "wifi-2",
       "origin": "lucide:wifi-high",
       "material": [
-        "network_wifi_2_bar"
-      ],
-      "filled": "outline",
-      "family": "wifi",
-      "status": "pendente"
-    },
-    {
-      "name": "wifi-3",
-      "origin": "lucerna",
-      "material": [
+        "network_wifi_2_bar",
         "network_wifi_3_bar"
       ],
       "filled": "outline",
@@ -142,7 +133,7 @@
       "status": "pendente"
     },
     {
-      "name": "wifi-4",
+      "name": "wifi-3",
       "origin": "lucide:wifi",
       "material": [
         "signal_wifi_4_bar",
@@ -276,7 +267,6 @@
       "name": "brush-cleaning",
       "origin": "lucide:brush-cleaning",
       "material": [
-        "clear_all",
         "delete_sweep"
       ],
       "filled": "own",
@@ -917,16 +907,6 @@
       "status": "pendente"
     },
     {
-      "name": "droplet",
-      "origin": "lucide:droplet",
-      "material": [
-        "water_drop"
-      ],
-      "filled": "own",
-      "family": null,
-      "status": "pendente"
-    },
-    {
       "name": "wind",
       "origin": "lucide:wind",
       "material": [
@@ -992,16 +972,6 @@
       "origin": "lucide:lock",
       "material": [
         "lock"
-      ],
-      "filled": "own",
-      "family": null,
-      "status": "pendente"
-    },
-    {
-      "name": "lock-open",
-      "origin": "lucide:lock-open",
-      "material": [
-        "lock_open"
       ],
       "filled": "own",
       "family": null,
@@ -1872,32 +1842,12 @@
       "status": "pendente"
     },
     {
-      "name": "unlink",
-      "origin": "lucide:unlink",
-      "material": [
-        "link_off"
-      ],
-      "filled": "outline",
-      "family": null,
-      "status": "pendente"
-    },
-    {
       "name": "refresh-ccw-dot",
       "origin": "lucide:refresh-ccw-dot",
       "material": [
         "settings_backup_restore"
       ],
       "filled": "outline",
-      "family": null,
-      "status": "pendente"
-    },
-    {
-      "name": "sparkles",
-      "origin": "lucide:sparkles",
-      "material": [
-        "auto_awesome"
-      ],
-      "filled": "own",
       "family": null,
       "status": "pendente"
     },

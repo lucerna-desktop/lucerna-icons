@@ -7,7 +7,7 @@ Os derivados vêm do **Lucide 1.70.0** (o `lucideVersion` do `manifest.json`). T
 Como ler:
 
 - **Material**: as ligaduras do Material Symbols que o ícone substitui (às vezes mais de uma, quando o shell usa duas para o mesmo desenho).
-- **Lucerna**: o nome no pacote (a ligadura nova). Igual ao do Lucide quando derivado; os estados têm sufixo numérico (`battery-0`…`battery-7`, `wifi-0`…`wifi-4`, `volume-0`…`volume-2`).
+- **Lucerna**: o nome no pacote (a ligadura nova). Igual ao do Lucide quando derivado; os estados têm sufixo numérico (`battery-0`…`battery-7`, `wifi-0`…`wifi-3`, `volume-0`…`volume-2`).
 - **Lucide**: o ícone de origem, ou **desenhar** quando o Lucide não tem. ≈ marca um equivalente aproximado, a conferir na galeria.
 - **filled**: `own` tem área para preencher (o preenchido é desenhado aqui, porque o Lucide só tem contorno); `outline` não tem, e o `-fill` mostra o próprio contorno.
 - **Família**: os estados aprovados juntos.
@@ -30,9 +30,8 @@ Os indicadores da barra (rede, volume, bateria) e as ações dela.
 | `battery_alert` | `battery-exclamation-point` | `battery-exclamation-point` | own | battery | bateria baixa |
 | `signal_wifi_0_bar` | `wifi-0` | `wifi-zero` | outline | wifi | só o ponto |
 | `network_wifi_1_bar` | `wifi-1` | `wifi-low` | outline | wifi | 1 arco |
-| `network_wifi_2_bar` | `wifi-2` | `wifi-high` | outline | wifi | 2 arcos |
-| `network_wifi_3_bar` | `wifi-3` | **desenhar** | outline | wifi | o Lucide tem 4 níveis (0–3 arcos) e o Material 5 |
-| `signal_wifi_4_bar`, `wifi` | `wifi-4` | `wifi` | outline | wifi | cheio; também o bloco do Wi-Fi ligado (wifiOn) |
+| `network_wifi_2_bar`, `network_wifi_3_bar` | `wifi-2` | `wifi-high` | outline | wifi | 2 arcos; o Material tem 5 níveis e o Lucide 4, então o shell passa a dividir o sinal em 4 faixas na migração |
+| `signal_wifi_4_bar`, `wifi` | `wifi-3` | `wifi` | outline | wifi | cheio (3 arcos); também o bloco do Wi-Fi ligado (wifiOn) |
 | `wifi_off` | `wifi-off` | `wifi-off` | outline | wifi |  |
 | `signal_wifi_bad` | `wifi-alert` | **desenhar** | outline | wifi | sem internet (offline): Wi-Fi com “!” |
 | `lan` | `network` | `network` ≈ | own | — | cabo (ethernet) |
@@ -52,7 +51,7 @@ O sino da barra e da central, e limpar tudo.
 | `notifications` | `bell` | `bell` | own | bell |  |
 | `notifications_active` | `bell-ring` | `bell-ring` | own | bell | há notificações |
 | `notifications_paused` | `bell-snooze` | **desenhar** | own | bell | não perturbe: sino com “z”; o Lucide só tem o bell-off |
-| `clear_all`, `delete_sweep` | `brush-cleaning` | `brush-cleaning` ≈ | own | — | limpar tudo / o histórico |
+| `delete_sweep` | `brush-cleaning` | `brush-cleaning` ≈ | own | — | limpar o histórico (o `clear_all` do `Icons.clearAll` não tem uso) |
 
 ## Central (Ações)
 
@@ -137,7 +136,6 @@ O painel, a mídia, o desempenho e o clima.
 | `weather_snowy` | `cloud-snow` | `cloud-snow` | own | — |  |
 | `thunderstorm` | `cloud-lightning` | `cloud-lightning` | own | — |  |
 | `humidity_percentage` | `droplets` | `droplets` | own | — | umidade |
-| `water_drop` | `droplet` | `droplet` | own | — | chuva (Icons.rain, sem uso hoje) |
 | `air` | `wind` | `wind` | outline | — | vento |
 | `wb_twilight` | `sunrise` | `sunrise` | own | — | nascer do sol |
 
@@ -152,7 +150,6 @@ O menu de energia, a tela de bloqueio e o modo de segurança.
 | `restart_alt` | `rotate-ccw` | `rotate-ccw` | outline | — | reiniciar |
 | `bedtime`, `clear_night` | `moon` | `moon` | own | — | suspender; também a noite limpa e o pôr do sol |
 | `lock` | `lock` | `lock` | own | — |  |
-| `lock_open` | `lock-open` | `lock-open` | own | — | sem uso hoje |
 | `warning` | `triangle-exclamation-point` | `triangle-exclamation-point` | own | — | modo de segurança |
 | `terminal` | `square-terminal` | `square-terminal` ≈ | own | — | o terminal do Lucide é só “>_”; este tem a moldura, como o Material |
 
@@ -274,9 +271,7 @@ As páginas das configurações.
 | `back_hand` | `hand` | `hand` | own | — | canhoto |
 | `ads_click` | `mouse-pointer-click` | `mouse-pointer-click` | own | — | foco segue o mouse |
 | `dialpad` | `grip` | `grip` | outline | — | Num Lock |
-| `link_off` | `unlink` | `unlink` | outline | — | sem uso hoje |
 | `settings_backup_restore` | `refresh-ccw-dot` | `refresh-ccw-dot` | outline | — | restaurar o padrão |
-| `auto_awesome` | `sparkles` | `sparkles` | own | — | em breve (sem uso hoje) |
 | `volunteer_activism` | `hand-heart` | `hand-heart` | own | — | créditos |
 | `playlist_add_check` | `list-check` | `list-check` | outline | — | lista de jogos |
 | `playlist_remove` | `list-x` | `list-x` | outline | — | lista de exceções |
@@ -304,15 +299,19 @@ Os controles usados em várias telas (fechar, confirmar, expandir…).
 
 | | Ícones |
 |---|---|
-| Total de ícones (glifos de contorno) | 204 |
-| Ligaduras do Material substituídas | 215 |
-| Vindos do Lucide | 180 |
+| Total de ícones (glifos de contorno) | 199 |
+| Ligaduras do Material substituídas | 210 |
+| Vindos do Lucide | 176 |
 | Aproximados (≈), a conferir | 20 |
-| Para desenhar (contorno novo) | 24 |
-| Com preenchido (`own`) | 137 |
+| Para desenhar (contorno novo) | 23 |
+| Com preenchido (`own`) | 134 |
 | … dos quais o contorno também é para desenhar | 19 |
-| Sem área (`outline`, o `-fill` usa o contorno) | 67 |
+| Sem área (`outline`, o `-fill` usa o contorno) | 65 |
 
-Todo preenchido é desenhado aqui, porque o Lucide só tem contorno: são **137 preenchidos para desenhar** (118 sobre um contorno do Lucide e 19 sobre um contorno novo). Somando os 24 contornos novos, são **161 desenhos** ao todo, além dos ajustes que a galeria pedir.
+Todo preenchido é desenhado aqui, porque o Lucide só tem contorno: são **134 preenchidos para desenhar** (115 sobre um contorno do Lucide e 19 sobre um contorno novo). Somando os 23 contornos novos, são **157 desenhos** ao todo, além dos ajustes que a galeria pedir.
 
 Nomes do Lucide terminados em dígito que não são estados: `gamepad-2` e `picture-in-picture-2` (variantes do Lucide, sem relação com uma família `gamepad` ou `picture-in-picture`). `volume-1` e `volume-2` são do Lucide e também são estados da família `volume`.
+
+**Fora do pacote.** Cinco propriedades do `Icons.qml` não têm uso no shell e saíram do inventário: `soon`/`auto_awesome` (`sparkles`), `unlink`/`link_off` (`unlink`), `lockOpen`/`lock_open` (`lock-open`), `rain`/`water_drop` (`droplet`) e `clearAll`/`clear_all` (só a ligadura; o `brush-cleaning` fica por causa do `delete_sweep`). Elas saem do `Icons.qml` na migração do shell.
+
+**Wi-Fi com 4 níveis.** O Lucide tem 4 níveis (`wifi-0` a `wifi-3`, de 0 a 3 arcos), então o shell passa a dividir o sinal em 4 faixas na migração. O `wifi-alert` continua a desenhar.
