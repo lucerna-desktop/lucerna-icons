@@ -33,12 +33,12 @@ Marcado com `[x]` o que já existe.
   "lucideVersion": "1.70.0",
   "icons": [
     {
-      "name": "wifi-2",
-      "origin": "lucide:wifi",
-      "material": ["network_wifi_2_bar"],
+      "name": "battery-2",
+      "origin": "lucide:battery-low",
+      "material": ["battery_2_bar"],
       "filled": "own",
-      "family": "wifi",
-      "status": "aprovado"
+      "family": "battery",
+      "status": "pendente"
     }
   ]
 }
@@ -49,7 +49,7 @@ Marcado com `[x]` o que já existe.
 - `origin`: `"lucide:<nome>"` ou `"lucerna"`, para os originais.
 - `material`: as ligaduras do Material Symbols que ele substitui (cada uma em um só ícone).
 - `filled`: `"own"` quando tem `svg/filled/<nome>.svg`; `"outline"` para os sem área a preencher (fechar, setas), em que o `<nome>-fill` mostra o próprio contorno.
-- `family`: os estados de uma família (`battery-1`…`battery-8`) levam o mesmo nome aqui, e a família é aprovada junta; `null` quando não tem.
+- `family`: os estados de uma família (`battery-0`…`battery-7`) levam o mesmo nome aqui, e a família é aprovada junta; `null` quando não tem.
 - `status`: `"pendente"` ou `"aprovado"`. Só os aprovados entram na fonte instalada; um pendente pode não ter SVG ainda.
 
 ## Os SVGs
@@ -79,6 +79,7 @@ Para instalar, primeiro o build como usuário e depois a cópia como root (o `in
 make build
 sudo make install PREFIX=/usr   # TTFs em $(PREFIX)/share/fonts/lucerna-icons/,
                                 # SVGs e manifesto em $(PREFIX)/share/lucerna-icons/
+                                # LICENSE e LICENSE-LUCIDE em $(PREFIX)/share/licenses/lucerna-icons/
 ```
 
 Direto pela ferramenta: `PYTHONPATH=tools .venv/bin/python -m lucerna_icons check` e `... build [--all] --out dist/`.
