@@ -245,3 +245,16 @@ def test_recorte_da_mascara_cresce_com_o_traco(tmp_path):
     assert area(1.0) == pytest.approx(16 * 14, rel=1e-3)
     assert area(2.0) == pytest.approx(16 * 12, rel=1e-3)
     assert area(2.5) == pytest.approx(16 * 11, rel=1e-3)
+
+
+@pytest.mark.parametrize("traco", [1.0, 1.5, 2.0, 2.5])
+def test_battery_fill_1_sobre_o_battery_0_da_o_battery_1(traco):
+    # A bateria baixa: o corpo vazio mais a camada do preenchimento é o nível 1, em todos os pesos.
+    import pathops
+
+    svg = Path(__file__).parent.parent / "svg" / "outline"
+    corpo, camada, nivel = (build.contorno_svg(svg / f"{n}.svg", traco) for n in ("battery-0", "battery-fill-1", "battery-1"))
+    sobra = pathops.op(pathops.op(corpo, camada, pathops.PathOp.UNION), nivel, pathops.PathOp.XOR)
+    pen = AreaPen()
+    sobra.draw(pen)
+    assert abs(pen.value) < 1e-3

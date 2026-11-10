@@ -13,14 +13,14 @@ Esquema:
                                          # "outline": o -fill usa o contorno
           "family": "wifi",              # os estados de uma família, ou null
           "status": "aprovado",          # ou "pendente"
-          "layer": "battery-bolt"        # opcional: o glifo da camada de cima,
-                                         # da mesma família (as cargas da bateria)
+          "layer": "battery-fill-1"      # opcional: o glifo da camada de cima,
+                                         # da mesma família (a bateria baixa)
         }
       ]
     }
 
 `layer` diz que o ícone é a camada de baixo de um ícone em duas camadas: o
-shell sobrepõe o glifo `layer` (outra cor) a ele. A camada precisa existir no
+shell sobrepõe o glifo `layer`, em outra cor, a ele. A camada precisa existir no
 manifesto, ser da mesma família e não ser o próprio ícone.
 
 `lucideVersion` pode ficar como um texto qualquer (ex.: "pendente") enquanto

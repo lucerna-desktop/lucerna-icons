@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <mask id="interior" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="white" stroke="none" />
+      <rect x="3.625" y="8" width="15.5" height="8" rx="2" stroke="black" />
+    </mask>
+  </defs>
+  <path d="M7.5 8v8H5.625a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2z" fill="currentColor" stroke="none" mask="url(#interior)" />
+  <path d="M7.5 8v8" stroke-width="1" mask="url(#interior)" />
+</svg>

@@ -383,30 +383,26 @@ def test_preencher_todos_tem_botao_e_ganchos(repo_galeria, tmp_path, fontes):
 def test_camadas_mostram_a_composicao_na_cor_do_estado(repo_galeria, tmp_path, fontes):
     dados = json.loads((repo_galeria.raiz / "manifest.json").read_text())
     dados["icons"] += [
-        icone("battery-1", family="battery", status="pendente"),
-        icone("battery-charging-1", family="battery", status="pendente", layer="battery-bolt"),
-        icone("battery-bolt", family="battery", status="pendente"),
-        icone("battery-exclamation-point", family="battery", status="pendente"),
+        icone("battery-0", family="battery", status="pendente", layer="battery-fill-1"),
+        icone("battery-fill-1", family="battery", status="pendente"),
     ]
     (repo_galeria.raiz / "manifest.json").write_text(json.dumps(dados))
-    for n in ("battery-1", "battery-charging-1", "battery-bolt", "battery-exclamation-point"):
+    for n in ("battery-0", "battery-fill-1"):
         repo_galeria.svg("outline", n)
-    texto, _ = gerar(repo_galeria, ["battery-1"], tmp_path, fontes)
+    texto, _ = gerar(repo_galeria, ["battery-0"], tmp_path, fontes)
     achados = ids(texto)
     for tema in TEMAS:
         assert f"familia-battery-{tema}-cor" in achados
         for px in gallery.CAMADAS_PX:
-            ident = f"ic-battery-charging-1-{tema}-camadas-{px}"
+            ident = f"ic-battery-0-{tema}-camadas-{px}"
             assert ident in achados
-            assert {"camadas", "estado-success"} <= classes_de(texto, ident)
-    # A camada de cima vai sobre a de baixo; a bateria baixa e o alerta, na cor deles.
-    assert re.search(r'class="g baixo"[^>]*>battery-charging-1<.*?class="g cima"[^>]*>battery-bolt<', texto)
-    assert 'class="camadas estado-warning"' in texto and 'class="camadas estado-danger"' in texto
-    # As cores de estado e o onContainer delas vêm do temas.json.
+            assert {"camadas", "estado-danger"} <= classes_de(texto, ident)
+    # A camada de cima vai sobre a de baixo.
+    assert re.search(r'class="g baixo"[^>]*>battery-0<.*?class="g cima"[^>]*>battery-fill-1<', texto)
+    # A cor de estado vem do temas.json.
     temas = json.loads((PASTA_GALERIA / "temas.json").read_text())
     for papel in TEMAS:
-        cores = temas["temas"][papel]["cores"]
-        assert f"--success: {cores['success']}" in texto and f"--on-success: {cores['onSuccess']}" in texto
+        assert f"--danger: {temas['temas'][papel]['cores']['danger']}" in texto
 
 
 def test_sem_camada_nao_tem_composicao(repo_galeria, tmp_path, fontes):

@@ -9,7 +9,8 @@
       ],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente"
+      "status": "pendente",
+      "layer": "battery-fill-1"
     },
     {
       "name": "battery-1",
@@ -60,8 +61,7 @@
       "material": [],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
-      "layer": "battery-bolt"
+      "status": "pendente"
     },
     {
       "name": "battery-charging-1",
@@ -69,8 +69,7 @@
       "material": [],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
-      "layer": "battery-bolt"
+      "status": "pendente"
     },
     {
       "name": "battery-charging-2",
@@ -78,8 +77,7 @@
       "material": [],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
-      "layer": "battery-bolt"
+      "status": "pendente"
     },
     {
       "name": "battery-charging-3",
@@ -87,8 +85,7 @@
       "material": [],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
-      "layer": "battery-bolt"
+      "status": "pendente"
     },
     {
       "name": "battery-charging-4",
@@ -96,15 +93,6 @@
       "material": [
         "battery_charging_full"
       ],
-      "filled": "outline",
-      "family": "battery",
-      "status": "pendente",
-      "layer": "battery-bolt"
-    },
-    {
-      "name": "battery-bolt",
-      "origin": "lucerna",
-      "material": [],
       "filled": "outline",
       "family": "battery",
       "status": "pendente"
@@ -115,6 +103,14 @@
       "material": [
         "battery_alert"
       ],
+      "filled": "outline",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-fill-1",
+      "origin": "lucerna",
+      "material": [],
       "filled": "outline",
       "family": "battery",
       "status": "pendente"

@@ -1,12 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <defs>
-    <mask id="nivel" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+    <mask id="corte" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
       <rect width="24" height="24" fill="white" stroke="none" />
-      <path d="M12.775 9.95 8.875 12.45 11.025 12.45 9.975 14.05 13.875 11.55 11.725 11.55z" fill="black" stroke="black" stroke-width="0.5" />
+      <path d="M16.8 2.7 12.4 8.2 14.3 8.2 13.6 12.5 18 7 16.1 7z" fill="black" stroke="black" stroke-width="4" />
     </mask>
   </defs>
-  <rect x="3.625" y="8" width="15.5" height="8" rx="2" />
+  <rect x="3.625" y="8" width="15.5" height="8" rx="2" mask="url(#corte)" />
   <path d="M19.125 10.75h1.25v2.5h-1.25z" fill="currentColor" />
-  <path d="M7.5 8v8H5.625a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2z" fill="currentColor" stroke="none" mask="url(#nivel)" />
-  <path d="M7.5 8v8" stroke-width="1" mask="url(#nivel)" />
+  <path d="M6.7903 8L5.4879 16H5.625a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2z" fill="currentColor" stroke="none" mask="url(#corte)" />
+  <path d="M6.7903 8L5.4879 16" stroke-width="0.4805" mask="url(#corte)" />
+  <path d="M16.8 2.7 12.4 8.2 14.3 8.2 13.6 12.5 18 7 16.1 7z" fill="currentColor" stroke-width="1.5" />
 </svg>

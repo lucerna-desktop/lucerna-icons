@@ -23,8 +23,8 @@ Ids previsíveis (os testes e o controlador contam com eles):
     ic-<nome>-<tema>-anima                 a animação do preenchimento
     ic-<nome>-a-desenhar                   o aviso de um ícone ainda sem SVG
     familia-<família>                      a seção de uma família
-    familia-<família>-<tema>-cor           a composição colorida (com `layer`)
-    ic-<nome>-<tema>-camadas-<tamanho>     um ícone em duas camadas, na cor do estado
+    familia-<família>-<tema>-cor           a composição dos ícones com `layer`
+    ic-<nome>-<tema>-camadas-<tamanho>     o ícone e a camada de cima, na cor do estado
 
 `<tema>` é `escuro` ou `claro`; `<tipo>` é `contorno`, `preenchido`,
 `material` ou `material-fill`. O que ainda não foi desenhado leva a classe
@@ -49,13 +49,9 @@ BLOCO_PX = 20  # o ícone do Tile da central
 ANIMA_PX = 40
 CAMADAS_PX = (16, 20, 64)
 
-# A regra de cor por estado do shell, para a composição colorida: o ícone (a
-# camada de baixo) vai na cor do estado, e a camada de cima (`layer`) no
-# onContainer dela. Os ícones com `layer` estão "carregando" (success); os
-# estados abaixo mostram a mesma regra sem camada.
-ESTADOS_SEM_CAMADA = {
-    "battery": [("bateria baixa", [("battery-1", "warning"), ("battery-exclamation-point", "danger")])],
-}
+# A cor da camada de cima (`layer`) na composição: o ícone de baixo fica na cor
+# normal (`text`) e a camada de cima vai na cor do estado em que o shell a usa.
+COR_DA_CAMADA = {"battery-fill-1": ("bateria baixa", "danger")}
 
 
 class ErroDeGaleria(Exception):
@@ -371,47 +367,39 @@ def _faixa(itens: list[Item], temas: dict) -> str:
     return f'<div class="faixas">{"".join(paineis)}</div>'
 
 
-def _camadas(nome: str, cima: str | None, estado: str, px: int, ident: str = "") -> str:
-    """O ícone na cor do estado e, por cima, a camada `cima` no onContainer dela."""
+def _camadas(nome: str, cima: str, estado: str, px: int, ident: str = "") -> str:
+    """O ícone na cor normal e, por cima, a camada `cima` na cor do estado."""
     peso = peso_do_tamanho(px)
-    topo = _glifo(cima, px, peso, classe="cima") if cima else ""
     ida = f' id="{ident}"' if ident else ""
     return (
         f'<span{ida} class="camadas estado-{estado}" style="font-size:{px}px">'
-        f'{_glifo(nome, px, peso, classe="baixo")}{topo}</span>'
+        f'{_glifo(nome, px, peso, classe="baixo")}{_glifo(cima, px, peso, classe="cima")}</span>'
     )
 
 
 def _cor_por_estado(itens: list[Item], temas: dict) -> str:
-    """A composição colorida da família: as cargas em duas camadas e os outros estados de cor."""
-    com_camada = [it for it in itens if it.icone.layer and it.contorno is not None]
+    """A composição dos ícones com `layer`: o de baixo em `text` e a camada de cima na cor do estado."""
+    nomes = {it.nome for it in itens if it.contorno is not None}
+    com_camada = [it for it in itens if it.icone.layer and it.contorno is not None and it.icone.layer in nomes]
     if not com_camada:
         return ""
     fam = itens[0].icone.family
-    nomes = {it.nome for it in itens if it.contorno is not None}
-    grupos = [("carregando", [(it.nome, it.icone.layer, "success") for it in com_camada])]
-    for rotulo, membros in ESTADOS_SEM_CAMADA.get(fam, []):
-        grupos.append((rotulo, [(n, None, e) for n, e in membros if n in nomes]))
     paineis = []
     for papel, tema in temas.items():
         linhas = []
-        for rotulo, membros in grupos:
-            if not membros:
-                continue
-            cels = []
-            for px in CAMADAS_PX:
-                glifos = "".join(
-                    _camadas(n, cima, e, px, f"ic-{n}-{papel}-camadas-{px}" if cima else "") for n, cima, e in membros
-                )
-                cels.append(f'<div class="cor-tam"><div class="pilha">{glifos}</div><small>{px} px</small></div>')
-            legenda = " · ".join(
-                f"<code>{_e(n)}</code>" + (f" + <code>{_e(c)}</code>" if c else "") + f" em <b>{e}</b>"
-                for n, c, e in membros
+        for it in com_camada:
+            rotulo, estado = COR_DA_CAMADA.get(it.icone.layer, ("camada", "accent"))
+            cels = "".join(
+                f'<div class="cor-tam"><div class="pilha">'
+                f'{_camadas(it.nome, it.icone.layer, estado, px, f"ic-{it.nome}-{papel}-camadas-{px}")}'
+                f"</div><small>{px} px</small></div>"
+                for px in CAMADAS_PX
             )
-            linhas.append(f'<div class="cor-linha"><h5>{_e(rotulo)}</h5>{"".join(cels)}<p>{legenda}</p></div>')
+            legenda = f"<code>{_e(it.nome)}</code> em <b>text</b> + <code>{_e(it.icone.layer)}</code> em <b>{estado}</b>"
+            linhas.append(f'<div class="cor-linha"><h5>{_e(rotulo)}</h5>{cels}<p>{legenda}</p></div>')
         paineis.append(
             f'<div id="familia-{_e(fam)}-{papel}-cor" class="tema tema-{papel} faixa cor">'
-            f'<h4>{_e(tema["nome"])}: cor por estado (a camada de cima no onContainer do estado)</h4>'
+            f'<h4>{_e(tema["nome"])}: camadas (o ícone na cor normal, a camada de cima na cor do estado)</h4>'
             f'{"".join(linhas)}</div>'
         )
     return f'<div class="faixas">{"".join(paineis)}</div>'

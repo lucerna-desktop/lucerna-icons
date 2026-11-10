@@ -399,7 +399,7 @@ main { padding: 24px clamp(16px, 4vw, 48px) 8px; display: grid; gap: 28px; }
   html { scroll-behavior: auto; }
 }
 
-/* A composição colorida: o ícone na cor do estado e a camada de cima no onContainer dela. */
+/* As camadas: o ícone na cor normal e a camada de cima (layer) na cor do estado. */
 .faixas + .faixas { margin-top: 12px; }
 .cor .cor-linha { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 24px; margin-bottom: 12px; }
 .cor .cor-linha:last-child { margin-bottom: 0; }
@@ -409,9 +409,8 @@ main { padding: 24px clamp(16px, 4vw, 48px) 8px; display: grid; gap: 28px; }
 .cor-tam small { font-size: 10px; color: var(--text-faint); }
 .camadas { position: relative; display: inline-block; width: 1em; height: 1em; vertical-align: middle; }
 .camadas > .g { position: absolute; inset: 0; }
-.estado-success > .baixo { color: var(--success); }
-.estado-success > .cima { color: var(--on-success); }
-.estado-warning > .baixo { color: var(--warning); }
-.estado-warning > .cima { color: var(--on-warning); }
-.estado-danger > .baixo { color: var(--danger); }
-.estado-danger > .cima { color: var(--on-danger); }
+.camadas > .baixo { color: var(--text); }
+.estado-accent > .cima { color: var(--accent); }
+.estado-success > .cima { color: var(--success); }
+.estado-warning > .cima { color: var(--warning); }
+.estado-danger > .cima { color: var(--danger); }
