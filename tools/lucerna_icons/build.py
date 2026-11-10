@@ -30,6 +30,8 @@ from fontTools.pens.ttGlyphPen import TTGlyphPen
 from lxml import etree
 from picosvg.svg import SVG
 from picosvg.svg_pathops import skia_path
+from picosvg.svg_transform import Affine2D
+from picosvg.svg_types import SVGPath
 
 from . import manifest
 
@@ -108,13 +110,43 @@ def _reescrever_traco(raiz: etree._Element, traco: float) -> None:
             )
 
 
+# O skia converte o traço em contorno com a precisão de 1/4 de unidade, pensada
+# para pixels; na grade de 24 isso deforma as curvas pequenas (o lado de dentro
+# do anel do `sun`, de raio 3, virava um quadrado arredondado). Por isso o
+# desenho é ampliado antes da conversão e reduzido de volta depois.
+AMPLIACAO = 100
+
+
+def _ampliado(texto: str) -> str:
+    """O SVG com as formas em caminhos e tudo (coordenadas e traços) ampliado AMPLIACAO vezes."""
+    svg = SVG.fromstring(texto)
+    svg.apply_style_attributes(inplace=True)
+    svg.shapes_to_paths(inplace=True)
+    svg._update_etree()
+    raiz = svg.svg_root
+    escala = Affine2D.identity().scale(AMPLIACAO)
+    for el in raiz.iter():
+        if not isinstance(el.tag, str):
+            continue
+        if el.get("d") is not None:
+            el.set("d", SVGPath(d=el.get("d")).apply_transform(escala).d)
+        if el.get("stroke-width") is not None:
+            el.set("stroke-width", _numero(float(el.get("stroke-width")) * AMPLIACAO))
+        if el.get("transform") is not None:
+            raise ErroDeBuild("transform não é suportado nos SVGs")
+    if raiz.get("viewBox") is not None:
+        raiz.set("viewBox", " ".join(_numero(float(v) * AMPLIACAO) for v in raiz.get("viewBox").replace(",", " ").split()))
+    return etree.tostring(raiz, encoding="unicode")
+
+
 def _formas(raiz: etree._Element) -> list[tuple[str, pathops.Path]]:
     """As formas pintadas do SVG, já como contornos: pares (cor, caminho)."""
-    texto = etree.tostring(raiz, encoding="unicode")
-    pico = SVG.fromstring(texto).topicosvg()
+    texto = _ampliado(etree.tostring(raiz, encoding="unicode"))
+    pico = SVG.fromstring(texto).topicosvg(ndigits=6)
     formas = []
     for forma in pico.shapes():
         caminho = skia_path(forma.as_cmd_seq(), forma.fill_rule)
+        caminho = caminho.transform(1 / AMPLIACAO, 0, 0, 1 / AMPLIACAO, 0, 0)
         formas.append((forma.fill.strip().lower(), caminho))
     return formas
 

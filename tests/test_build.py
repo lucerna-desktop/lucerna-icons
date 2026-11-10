@@ -247,6 +247,31 @@ def test_recorte_da_mascara_cresce_com_o_traco(tmp_path):
     assert area(2.5) == pytest.approx(16 * 11, rel=1e-3)
 
 
+@pytest.mark.parametrize("traco", [1.0, 2.0, 2.5])
+def test_anel_pequeno_sai_redondo(tmp_path, traco):
+    # O lado de dentro do anel de raio 4 (o disco do `sun`) é um círculo, e
+    # não o quadrado arredondado que o skia dava convertendo o traço na grade de 24.
+    import math
+
+    svg = tmp_path / "anel.svg"
+    svg.write_text(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+        ' stroke-width="2"><circle cx="12" cy="12" r="4"/></svg>'
+    )
+    caminho = build.contorno_svg(svg, traco)
+    dentro = 4 - traco / 2
+    for contorno in caminho.contours:
+        pontos = [p for _, ps in contorno.segments for p in ps if p]
+        raios = [math.hypot(x - 12, y - 12) for x, y in pontos]
+        if max(raios) < 4:
+            # Os pontos de controle das quadráticas ficam a no máximo 3 % fora do
+            # círculo (antes, 41 %: os 4 cantos de um quadrado).
+            assert dentro * 0.999 <= min(raios) and max(raios) <= dentro * 1.03
+            break
+    else:
+        pytest.fail("sem o contorno de dentro do anel")
+
+
 @pytest.mark.parametrize("traco", [1.0, 1.5, 2.0, 2.5])
 def test_battery_fill_1_sobre_o_battery_0_da_o_battery_1(traco):
     # A bateria baixa: o corpo vazio mais a camada do preenchimento é o nível 1, em todos os pesos.

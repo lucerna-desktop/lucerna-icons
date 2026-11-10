@@ -52,7 +52,7 @@ Marcado com `[x]` o que já existe.
 - `family`: os estados de uma família (`battery-0`…`battery-4`) levam o mesmo nome aqui, e a família é aprovada junta; `null` quando não tem.
 - `status`: `"pendente"` ou `"aprovado"`. Só os aprovados entram na fonte instalada; um pendente pode não ter SVG ainda.
 - `layer` (opcional): o glifo da camada de cima de um ícone em duas camadas, que o shell sobrepõe em outra cor. A galeria mostra a composição, com o ícone em `text` e a camada na cor do estado. Hoje só o `battery-0` (o corpo vazio) usa, com `"layer": "battery-fill-1"` (só o preenchimento de 25 %, na posição exata do `battery-1`). Na migração, quando a bateria está baixa, o shell desenha o corpo na cor normal e o preenchimento em `danger`. A camada precisa existir no manifesto e ser da mesma família.
-- `minSize` (opcional): o menor tamanho, em px, em que o ícone precisa funcionar no shell. Sem o campo, vale 14, o menor token. Os estados de uma família declaram o mesmo valor, e o `check` confere isso. A galeria esmaece os tamanhos abaixo dele, com o rótulo "fora do uso". A família `battery` tem `minSize: 18`, porque aparece em 18 px na barra e em 20 px ou mais no resto.
+- `minSize` (opcional): o menor tamanho, em px, em que o ícone precisa funcionar no shell. Sem o campo, vale 14, o menor token. Os estados de uma família declaram o mesmo valor, e o `check` confere isso. A galeria esmaece os tamanhos abaixo dele, com o rótulo "fora do uso". A família `battery` tem `minSize: 18`, porque aparece em 18 px na barra e em 20 px ou mais no resto; a `wifi` e a `bluetooth` também têm 18, e a `brightness`, 14 (o controle de brilho da central).
 
 ## Os SVGs
 

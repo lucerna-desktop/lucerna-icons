@@ -99,7 +99,8 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "wifi-1",
@@ -109,7 +110,8 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "wifi-2",
@@ -120,7 +122,8 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "wifi-3",
@@ -131,7 +134,8 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "wifi-off",
@@ -141,7 +145,8 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "wifi-alert",
@@ -151,7 +156,8 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "network",
@@ -271,7 +277,8 @@
       ],
       "filled": "outline",
       "family": "bluetooth",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "bluetooth-connected",
@@ -281,7 +288,8 @@
       ],
       "filled": "outline",
       "family": "bluetooth",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "bluetooth-off",
@@ -291,7 +299,8 @@
       ],
       "filled": "outline",
       "family": "bluetooth",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "bluetooth-searching",
@@ -301,7 +310,8 @@
       ],
       "filled": "outline",
       "family": "bluetooth",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "headphones",
@@ -541,7 +551,8 @@
       ],
       "filled": "own",
       "family": "brightness",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 14
     },
     {
       "name": "sun-medium",
@@ -551,7 +562,8 @@
       ],
       "filled": "own",
       "family": "brightness",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 14
     },
     {
       "name": "sun",
@@ -563,7 +575,8 @@
       ],
       "filled": "own",
       "family": "brightness",
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 14
     },
     {
       "name": "layout-dashboard",
