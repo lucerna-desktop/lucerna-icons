@@ -1,11 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <defs>
-    <mask id="folha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+    <mask id="dias" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
       <rect width="24" height="24" fill="white" stroke="none" />
       <g stroke="black">
-        <path d="M8 2v3" stroke-width="4" />
-        <path d="M16 2v3" stroke-width="4" />
-        <path d="M5 9h14" />
         <path d="M8 13h.01" />
         <path d="M12 13h.01" />
         <path d="M16 13h.01" />
@@ -15,7 +12,7 @@
       </g>
     </mask>
   </defs>
-  <path d="M8 2v3" />
-  <path d="M16 2v3" />
-  <rect x="3" y="3" width="18" height="18" rx="2" fill="currentColor" mask="url(#folha)" />
+  <path d="M8 1.5v3" />
+  <path d="M16 1.5v3" />
+  <rect x="3" y="3" width="18" height="18" rx="2" fill="currentColor" mask="url(#dias)" />
 </svg>
