@@ -4,7 +4,7 @@
 
 Baseado no [Lucide](https://lucide.dev).
 
-**Situação:** o build da fonte e a validação já existem; ainda não há nenhum ícone. O desenho está no [spec](https://github.com/lucerna-desktop/lucerna-shell/blob/main/docs/superpowers/specs/2026-11-09-lucerna-icons-design.md) do `lucerna-shell`.
+**Situação:** o build da fonte e a validação já existem, e o [inventário](inventario.md) dos ícones do shell está no `manifest.json`, todos `pendente` (os do Lucide 1.70.0 já com o contorno baixado; os outros, para desenhar). Nenhum foi aprovado ainda. O desenho está no [spec](https://github.com/lucerna-desktop/lucerna-shell/blob/main/docs/superpowers/specs/2026-11-09-lucerna-icons-design.md) do `lucerna-shell`.
 
 ## O que é
 
@@ -18,10 +18,11 @@ Baseado no [Lucide](https://lucide.dev).
 
 Marcado com `[x]` o que já existe.
 
-- [x] `manifest.json`: a versão do Lucide de onde vêm os derivados e uma entrada por ícone (veja "O manifesto"). Hoje está vazio.
-- [ ] `svg/outline/<nome>.svg` e `svg/filled/<nome>.svg`: a fonte da verdade, na grade de 24. Hoje só as pastas existem.
+- [x] `manifest.json`: a versão do Lucide de onde vêm os derivados e uma entrada por ícone (veja "O manifesto").
+- [x] `inventario.md`: a tabela legível do inventário, por área do shell: a ligadura do Material, o nome Lucerna, o ícone do Lucide (ou "desenhar"), o `filled` e a família.
+- [ ] `svg/outline/<nome>.svg` e `svg/filled/<nome>.svg`: a fonte da verdade, na grade de 24. Hoje só os contornos vindos do Lucide; os preenchidos e os ícones novos ainda serão desenhados.
 - [ ] `tools/gallery`: a página estática de galeria usada na revisão.
-- [x] `tools/lucerna_icons`: o `check` (manifesto e SVGs) e o `build` da fonte **"Lucerna Icons"**, com uma ligadura por ícone: `<nome>` para o contorno e `<nome>-fill` para o preenchido.
+- [x] `tools/lucerna_icons`: o `check` (manifesto e SVGs), o `fetch` (traz um ícone do Lucide) e o `build` da fonte **"Lucerna Icons"**, com uma ligadura por ícone: `<nome>` para o contorno e `<nome>-fill` para o preenchido.
 - [x] Alvo de instalação (`make install`) para `share/fonts/lucerna-icons` e `share/lucerna-icons/svg`.
 - [x] O CI (`.github/workflows/ci.yml`): `check` e `build` em PR e no `main`; a release nas tags `v*`.
 
@@ -29,7 +30,7 @@ Marcado com `[x]` o que já existe.
 
 ```json
 {
-  "lucideVersion": "0.460.0",
+  "lucideVersion": "1.70.0",
   "icons": [
     {
       "name": "wifi-2",
@@ -43,7 +44,7 @@ Marcado com `[x]` o que já existe.
 }
 ```
 
-- `lucideVersion`: a tag do Lucide de onde vêm os derivados. Enquanto nenhum ícone vier do Lucide, pode ficar como `"pendente"`.
+- `lucideVersion`: a tag do Lucide de onde vêm os derivados (hoje `1.70.0`; as tags do Lucide 1.x não têm o `v`). Enquanto nenhum ícone vier do Lucide, pode ficar como `"pendente"`.
 - `name`: o nome do Lucerna, em kebab-case (igual ao do Lucide quando derivado); não termina em `-fill`.
 - `origin`: `"lucide:<nome>"` ou `"lucerna"`, para os originais.
 - `material`: as ligaduras do Material Symbols que ele substitui (cada uma em um só ícone).
@@ -77,6 +78,15 @@ sudo make install PREFIX=/usr   # TTFs em $(PREFIX)/share/fonts/lucerna-icons/,
 ```
 
 Direto pela ferramenta: `PYTHONPATH=tools .venv/bin/python -m lucerna_icons check` e `... build [--all] --out dist/`.
+
+Para trazer um ícone do Lucide (da tag `lucideVersion`, pelo raw.githubusercontent.com):
+
+```sh
+PYTHONPATH=tools .venv/bin/python -m lucerna_icons fetch battery-full --as battery-7 \
+    --material battery_full --filled own --family battery
+```
+
+O `fetch` grava `svg/outline/<nome>.svg` com os atributos normalizados (grade de 24, `currentColor`, traço 2, pontas e junções redondas) e cria a entrada `pendente` com `origin: "lucide:<nome>"`. Um ícone aprovado nunca é sobrescrito; num pendente, o SVG e a origem são refeitos, e `material`, `filled` e `family` só mudam se vierem na chamada. A variável `LUCERNA_LUCIDE_URL` (ou `--url`) troca a URL, com `{tag}` e `{nome}`.
 
 A fonte tem 4 pesos, gerados dos mesmos SVGs com o traço reescrito: traço 1 → `LucernaIcons-ExtraLight.ttf` (200), 1,5 → `Light` (300), 2 → `Regular` (400) e 2,5 → `SemiBold` (600). Os traços viram contornos com o [picosvg](https://github.com/googlefonts/picosvg) e o skia-pathops, e a fonte é montada com o fontTools.
 

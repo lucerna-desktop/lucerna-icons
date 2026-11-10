@@ -1,4 +1,2056 @@
 {
-  "lucideVersion": "pendente",
-  "icons": []
+  "lucideVersion": "1.70.0",
+  "icons": [
+    {
+      "name": "battery-0",
+      "origin": "lucide:battery",
+      "material": [
+        "battery_0_bar"
+      ],
+      "filled": "own",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-1",
+      "origin": "lucerna",
+      "material": [
+        "battery_1_bar"
+      ],
+      "filled": "own",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-2",
+      "origin": "lucide:battery-low",
+      "material": [
+        "battery_2_bar"
+      ],
+      "filled": "own",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-3",
+      "origin": "lucerna",
+      "material": [
+        "battery_3_bar"
+      ],
+      "filled": "own",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-4",
+      "origin": "lucerna",
+      "material": [
+        "battery_4_bar"
+      ],
+      "filled": "own",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-5",
+      "origin": "lucide:battery-medium",
+      "material": [
+        "battery_5_bar"
+      ],
+      "filled": "own",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-6",
+      "origin": "lucerna",
+      "material": [
+        "battery_6_bar"
+      ],
+      "filled": "own",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-7",
+      "origin": "lucide:battery-full",
+      "material": [
+        "battery_full"
+      ],
+      "filled": "own",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-charging",
+      "origin": "lucide:battery-charging",
+      "material": [
+        "battery_charging_full"
+      ],
+      "filled": "own",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-exclamation-point",
+      "origin": "lucide:battery-exclamation-point",
+      "material": [
+        "battery_alert"
+      ],
+      "filled": "own",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "wifi-0",
+      "origin": "lucide:wifi-zero",
+      "material": [
+        "signal_wifi_0_bar"
+      ],
+      "filled": "outline",
+      "family": "wifi",
+      "status": "pendente"
+    },
+    {
+      "name": "wifi-1",
+      "origin": "lucide:wifi-low",
+      "material": [
+        "network_wifi_1_bar"
+      ],
+      "filled": "outline",
+      "family": "wifi",
+      "status": "pendente"
+    },
+    {
+      "name": "wifi-2",
+      "origin": "lucide:wifi-high",
+      "material": [
+        "network_wifi_2_bar"
+      ],
+      "filled": "outline",
+      "family": "wifi",
+      "status": "pendente"
+    },
+    {
+      "name": "wifi-3",
+      "origin": "lucerna",
+      "material": [
+        "network_wifi_3_bar"
+      ],
+      "filled": "outline",
+      "family": "wifi",
+      "status": "pendente"
+    },
+    {
+      "name": "wifi-4",
+      "origin": "lucide:wifi",
+      "material": [
+        "signal_wifi_4_bar",
+        "wifi"
+      ],
+      "filled": "outline",
+      "family": "wifi",
+      "status": "pendente"
+    },
+    {
+      "name": "wifi-off",
+      "origin": "lucide:wifi-off",
+      "material": [
+        "wifi_off"
+      ],
+      "filled": "outline",
+      "family": "wifi",
+      "status": "pendente"
+    },
+    {
+      "name": "wifi-alert",
+      "origin": "lucerna",
+      "material": [
+        "signal_wifi_bad"
+      ],
+      "filled": "outline",
+      "family": "wifi",
+      "status": "pendente"
+    },
+    {
+      "name": "network",
+      "origin": "lucide:network",
+      "material": [
+        "lan"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "volume-0",
+      "origin": "lucide:volume",
+      "material": [
+        "volume_mute"
+      ],
+      "filled": "own",
+      "family": "volume",
+      "status": "pendente"
+    },
+    {
+      "name": "volume-1",
+      "origin": "lucide:volume-1",
+      "material": [
+        "volume_down"
+      ],
+      "filled": "own",
+      "family": "volume",
+      "status": "pendente"
+    },
+    {
+      "name": "volume-2",
+      "origin": "lucide:volume-2",
+      "material": [
+        "volume_up"
+      ],
+      "filled": "own",
+      "family": "volume",
+      "status": "pendente"
+    },
+    {
+      "name": "volume-off",
+      "origin": "lucide:volume-off",
+      "material": [
+        "volume_off"
+      ],
+      "filled": "own",
+      "family": "volume",
+      "status": "pendente"
+    },
+    {
+      "name": "gamepad-2",
+      "origin": "lucide:gamepad-2",
+      "material": [
+        "sports_esports"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "square",
+      "origin": "lucide:square",
+      "material": [
+        "stop"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "bell",
+      "origin": "lucide:bell",
+      "material": [
+        "notifications"
+      ],
+      "filled": "own",
+      "family": "bell",
+      "status": "pendente"
+    },
+    {
+      "name": "bell-ring",
+      "origin": "lucide:bell-ring",
+      "material": [
+        "notifications_active"
+      ],
+      "filled": "own",
+      "family": "bell",
+      "status": "pendente"
+    },
+    {
+      "name": "bell-snooze",
+      "origin": "lucerna",
+      "material": [
+        "notifications_paused"
+      ],
+      "filled": "own",
+      "family": "bell",
+      "status": "pendente"
+    },
+    {
+      "name": "brush-cleaning",
+      "origin": "lucide:brush-cleaning",
+      "material": [
+        "clear_all",
+        "delete_sweep"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "bluetooth",
+      "origin": "lucide:bluetooth",
+      "material": [
+        "bluetooth"
+      ],
+      "filled": "outline",
+      "family": "bluetooth",
+      "status": "pendente"
+    },
+    {
+      "name": "bluetooth-connected",
+      "origin": "lucide:bluetooth-connected",
+      "material": [
+        "bluetooth_connected"
+      ],
+      "filled": "outline",
+      "family": "bluetooth",
+      "status": "pendente"
+    },
+    {
+      "name": "bluetooth-off",
+      "origin": "lucide:bluetooth-off",
+      "material": [
+        "bluetooth_disabled"
+      ],
+      "filled": "outline",
+      "family": "bluetooth",
+      "status": "pendente"
+    },
+    {
+      "name": "bluetooth-searching",
+      "origin": "lucide:bluetooth-searching",
+      "material": [
+        "bluetooth_searching"
+      ],
+      "filled": "outline",
+      "family": "bluetooth",
+      "status": "pendente"
+    },
+    {
+      "name": "headphones",
+      "origin": "lucide:headphones",
+      "material": [
+        "headphones"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "headset",
+      "origin": "lucide:headset",
+      "material": [
+        "headset_mic"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "keyboard",
+      "origin": "lucide:keyboard",
+      "material": [
+        "keyboard"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "gamepad-directional",
+      "origin": "lucide:gamepad-directional",
+      "material": [
+        "gamepad"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "smartphone",
+      "origin": "lucide:smartphone",
+      "material": [
+        "smartphone"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "watch",
+      "origin": "lucide:watch",
+      "material": [
+        "watch"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "laptop",
+      "origin": "lucide:laptop",
+      "material": [
+        "computer"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "tv",
+      "origin": "lucide:tv",
+      "material": [
+        "tv"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "speaker",
+      "origin": "lucide:speaker",
+      "material": [
+        "speaker"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "mic",
+      "origin": "lucide:mic",
+      "material": [
+        "mic"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "mic-off",
+      "origin": "lucide:mic-off",
+      "material": [
+        "mic_off"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "audio-lines",
+      "origin": "lucide:audio-lines",
+      "material": [
+        "graphic_eq"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "sliders-horizontal",
+      "origin": "lucide:sliders-horizontal",
+      "material": [
+        "tune"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "panel-right",
+      "origin": "lucide:panel-right",
+      "material": [
+        "view_sidebar"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "leaf",
+      "origin": "lucide:leaf",
+      "material": [
+        "eco"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "scale",
+      "origin": "lucide:scale",
+      "material": [
+        "balance"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "rocket",
+      "origin": "lucide:rocket",
+      "material": [
+        "rocket_launch"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "zap",
+      "origin": "lucide:zap",
+      "material": [
+        "electric_bolt"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "refresh-ccw",
+      "origin": "lucide:refresh-ccw",
+      "material": [
+        "sync"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "coffee",
+      "origin": "lucide:coffee",
+      "material": [
+        "coffee"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "moon-star",
+      "origin": "lucide:moon-star",
+      "material": [
+        "nightlight"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "trash",
+      "origin": "lucide:trash",
+      "material": [
+        "delete"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cloud-off",
+      "origin": "lucide:cloud-off",
+      "material": [
+        "cloud_off"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "sun-dim",
+      "origin": "lucide:sun-dim",
+      "material": [
+        "brightness_low"
+      ],
+      "filled": "own",
+      "family": "brightness",
+      "status": "pendente"
+    },
+    {
+      "name": "sun-medium",
+      "origin": "lucide:sun-medium",
+      "material": [
+        "brightness_medium"
+      ],
+      "filled": "own",
+      "family": "brightness",
+      "status": "pendente"
+    },
+    {
+      "name": "sun",
+      "origin": "lucide:sun",
+      "material": [
+        "brightness_high",
+        "sunny",
+        "wb_sunny"
+      ],
+      "filled": "own",
+      "family": "brightness",
+      "status": "pendente"
+    },
+    {
+      "name": "layout-dashboard",
+      "origin": "lucide:layout-dashboard",
+      "material": [
+        "dashboard"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "eighth-note",
+      "origin": "lucide:eighth-note",
+      "material": [
+        "music_note"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "eighth-note-off",
+      "origin": "lucerna",
+      "material": [
+        "music_off"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "play",
+      "origin": "lucide:play",
+      "material": [
+        "play_arrow"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "pause",
+      "origin": "lucide:pause",
+      "material": [
+        "pause"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "skip-forward",
+      "origin": "lucide:skip-forward",
+      "material": [
+        "skip_next"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "skip-back",
+      "origin": "lucide:skip-back",
+      "material": [
+        "skip_previous"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "mic-vocal",
+      "origin": "lucide:mic-vocal",
+      "material": [
+        "lyrics"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "disc",
+      "origin": "lucide:disc",
+      "material": [
+        "album"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "gauge",
+      "origin": "lucide:gauge",
+      "material": [
+        "speed"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cpu",
+      "origin": "lucide:cpu",
+      "material": [
+        "developer_board"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "memory-stick",
+      "origin": "lucide:memory-stick",
+      "material": [
+        "memory_alt"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "hard-drive",
+      "origin": "lucide:hard-drive",
+      "material": [
+        "hard_drive"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "gamepad",
+      "origin": "lucide:gamepad",
+      "material": [
+        "videogame_asset"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "arrow-down-up",
+      "origin": "lucide:arrow-down-up",
+      "material": [
+        "swap_vert"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "download",
+      "origin": "lucide:download",
+      "material": [
+        "download"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "upload",
+      "origin": "lucide:upload",
+      "material": [
+        "upload"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "thermometer",
+      "origin": "lucide:thermometer",
+      "material": [
+        "device_thermostat",
+        "thermostat"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "clock",
+      "origin": "lucide:clock",
+      "material": [
+        "schedule"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "calendar-days",
+      "origin": "lucide:calendar-days",
+      "material": [
+        "calendar_month"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "user",
+      "origin": "lucide:user",
+      "material": [
+        "person"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "map-pin",
+      "origin": "lucide:map-pin",
+      "material": [
+        "location_on"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cloud",
+      "origin": "lucide:cloud",
+      "material": [
+        "cloud"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cloud-sun",
+      "origin": "lucide:cloud-sun",
+      "material": [
+        "partly_cloudy_day"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cloud-moon",
+      "origin": "lucide:cloud-moon",
+      "material": [
+        "partly_cloudy_night"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cloud-fog",
+      "origin": "lucide:cloud-fog",
+      "material": [
+        "foggy"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cloud-drizzle",
+      "origin": "lucide:cloud-drizzle",
+      "material": [
+        "rainy_light"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cloud-rain",
+      "origin": "lucide:cloud-rain",
+      "material": [
+        "rainy"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cloud-rain-wind",
+      "origin": "lucide:cloud-rain-wind",
+      "material": [
+        "rainy_heavy"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cloud-hail",
+      "origin": "lucide:cloud-hail",
+      "material": [
+        "weather_hail"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cloud-snow",
+      "origin": "lucide:cloud-snow",
+      "material": [
+        "weather_snowy"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "cloud-lightning",
+      "origin": "lucide:cloud-lightning",
+      "material": [
+        "thunderstorm"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "droplets",
+      "origin": "lucide:droplets",
+      "material": [
+        "humidity_percentage"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "droplet",
+      "origin": "lucide:droplet",
+      "material": [
+        "water_drop"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "wind",
+      "origin": "lucide:wind",
+      "material": [
+        "air"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "sunrise",
+      "origin": "lucide:sunrise",
+      "material": [
+        "wb_twilight"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "power",
+      "origin": "lucide:power",
+      "material": [
+        "power_settings_new"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "log-out",
+      "origin": "lucide:log-out",
+      "material": [
+        "logout"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "rotate-ccw",
+      "origin": "lucide:rotate-ccw",
+      "material": [
+        "restart_alt"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "moon",
+      "origin": "lucide:moon",
+      "material": [
+        "bedtime",
+        "clear_night"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "lock",
+      "origin": "lucide:lock",
+      "material": [
+        "lock"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "lock-open",
+      "origin": "lucide:lock-open",
+      "material": [
+        "lock_open"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "triangle-exclamation-point",
+      "origin": "lucide:triangle-exclamation-point",
+      "material": [
+        "warning"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "square-terminal",
+      "origin": "lucide:square-terminal",
+      "material": [
+        "terminal"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "layout-grid",
+      "origin": "lucide:layout-grid",
+      "material": [
+        "apps"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "blocks",
+      "origin": "lucide:blocks",
+      "material": [
+        "widgets"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "search",
+      "origin": "lucide:search",
+      "material": [
+        "search"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "folder",
+      "origin": "lucide:folder",
+      "material": [
+        "folder"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "folder-open",
+      "origin": "lucide:folder-open",
+      "material": [
+        "folder_open"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "file-text",
+      "origin": "lucide:file-text",
+      "material": [
+        "description"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "file-pdf",
+      "origin": "lucerna",
+      "material": [
+        "picture_as_pdf"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "folder-archive",
+      "origin": "lucide:folder-archive",
+      "material": [
+        "folder_zip"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "image",
+      "origin": "lucide:image",
+      "material": [
+        "image"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "clapperboard",
+      "origin": "lucide:clapperboard",
+      "material": [
+        "movie"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "globe",
+      "origin": "lucide:globe",
+      "material": [
+        "language"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "earth",
+      "origin": "lucide:earth",
+      "material": [
+        "travel_explore"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "rotate-ccw-clock",
+      "origin": "lucide:rotate-ccw-clock",
+      "material": [
+        "history"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "hourglass",
+      "origin": "lucide:hourglass",
+      "material": [
+        "hourglass_top"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "star",
+      "origin": "lucide:star",
+      "material": [
+        "star",
+        "star_outline"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "eye-off",
+      "origin": "lucide:eye-off",
+      "material": [
+        "visibility_off"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "copy",
+      "origin": "lucide:copy",
+      "material": [
+        "content_copy"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "corner-down-left",
+      "origin": "lucide:corner-down-left",
+      "material": [
+        "keyboard_return"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "arrow-right",
+      "origin": "lucide:arrow-right",
+      "material": [
+        "arrow_forward",
+        "east"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "camera",
+      "origin": "lucide:camera",
+      "material": [
+        "photo_camera"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "video",
+      "origin": "lucide:video",
+      "material": [
+        "videocam"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "scan",
+      "origin": "lucide:scan",
+      "material": [
+        "crop_free"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "app-window",
+      "origin": "lucide:app-window",
+      "material": [
+        "select_window"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "fullscreen",
+      "origin": "lucide:fullscreen",
+      "material": [
+        "fit_screen"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "square-dashed",
+      "origin": "lucide:square-dashed",
+      "material": [
+        "screenshot_region"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "screen-record",
+      "origin": "lucerna",
+      "material": [
+        "screen_record"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "circle-dot",
+      "origin": "lucide:circle-dot",
+      "material": [
+        "radio_button_checked"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "mouse-pointer",
+      "origin": "lucide:mouse-pointer",
+      "material": [
+        "arrow_selector_tool"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "timer",
+      "origin": "lucide:timer",
+      "material": [
+        "timer"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "clipboard",
+      "origin": "lucide:clipboard",
+      "material": [
+        "content_paste"
+      ],
+      "filled": "own",
+      "family": "clipboard",
+      "status": "pendente"
+    },
+    {
+      "name": "clipboard-paste",
+      "origin": "lucide:clipboard-paste",
+      "material": [
+        "content_paste_go"
+      ],
+      "filled": "own",
+      "family": "clipboard",
+      "status": "pendente"
+    },
+    {
+      "name": "clipboard-off",
+      "origin": "lucerna",
+      "material": [
+        "content_paste_off"
+      ],
+      "filled": "own",
+      "family": "clipboard",
+      "status": "pendente"
+    },
+    {
+      "name": "text-align-start",
+      "origin": "lucide:text-align-start",
+      "material": [
+        "notes"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "list-ordered",
+      "origin": "lucide:list-ordered",
+      "material": [
+        "format_list_numbered"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "counter-1",
+      "origin": "lucerna",
+      "material": [
+        "counter_1",
+        "looks_one"
+      ],
+      "filled": "own",
+      "family": "counter",
+      "status": "pendente"
+    },
+    {
+      "name": "counter-2",
+      "origin": "lucerna",
+      "material": [
+        "counter_2"
+      ],
+      "filled": "own",
+      "family": "counter",
+      "status": "pendente"
+    },
+    {
+      "name": "counter-3",
+      "origin": "lucerna",
+      "material": [
+        "counter_3"
+      ],
+      "filled": "own",
+      "family": "counter",
+      "status": "pendente"
+    },
+    {
+      "name": "counter-4",
+      "origin": "lucerna",
+      "material": [
+        "counter_4"
+      ],
+      "filled": "own",
+      "family": "counter",
+      "status": "pendente"
+    },
+    {
+      "name": "counter-5",
+      "origin": "lucerna",
+      "material": [
+        "counter_5"
+      ],
+      "filled": "own",
+      "family": "counter",
+      "status": "pendente"
+    },
+    {
+      "name": "counter-6",
+      "origin": "lucerna",
+      "material": [
+        "counter_6"
+      ],
+      "filled": "own",
+      "family": "counter",
+      "status": "pendente"
+    },
+    {
+      "name": "counter-7",
+      "origin": "lucerna",
+      "material": [
+        "counter_7"
+      ],
+      "filled": "own",
+      "family": "counter",
+      "status": "pendente"
+    },
+    {
+      "name": "counter-8",
+      "origin": "lucerna",
+      "material": [
+        "counter_8"
+      ],
+      "filled": "own",
+      "family": "counter",
+      "status": "pendente"
+    },
+    {
+      "name": "counter-9",
+      "origin": "lucerna",
+      "material": [
+        "counter_9"
+      ],
+      "filled": "own",
+      "family": "counter",
+      "status": "pendente"
+    },
+    {
+      "name": "arrow-up",
+      "origin": "lucide:arrow-up",
+      "material": [
+        "north",
+        "arrow_upward"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "arrow-down",
+      "origin": "lucide:arrow-down",
+      "material": [
+        "south"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "arrow-left",
+      "origin": "lucide:arrow-left",
+      "material": [
+        "west"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "square-arrow-right-enter",
+      "origin": "lucide:square-arrow-right-enter",
+      "material": [
+        "move_item"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "move",
+      "origin": "lucide:move",
+      "material": [
+        "drag_pan"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "maximize-2",
+      "origin": "lucide:maximize-2",
+      "material": [
+        "open_in_full"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "maximize",
+      "origin": "lucide:maximize",
+      "material": [
+        "fullscreen"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "picture-in-picture-2",
+      "origin": "lucide:picture-in-picture-2",
+      "material": [
+        "picture_in_picture"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "pin",
+      "origin": "lucide:pin",
+      "material": [
+        "keep"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "chevron-first",
+      "origin": "lucide:chevron-first",
+      "material": [
+        "first_page"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "chevron-last",
+      "origin": "lucide:chevron-last",
+      "material": [
+        "last_page"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "ban",
+      "origin": "lucide:ban",
+      "material": [
+        "block"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "gallery-horizontal",
+      "origin": "lucide:gallery-horizontal",
+      "material": [
+        "overview_key"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "command",
+      "origin": "lucide:command",
+      "material": [
+        "keyboard_command_key"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "settings",
+      "origin": "lucide:settings",
+      "material": [
+        "settings"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "palette",
+      "origin": "lucide:palette",
+      "material": [
+        "palette"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "wallpaper",
+      "origin": "lucide:wallpaper",
+      "material": [
+        "wallpaper"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "image-plus",
+      "origin": "lucide:image-plus",
+      "material": [
+        "add_photo_alternate"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "monitor",
+      "origin": "lucide:monitor",
+      "material": [
+        "desktop_windows"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "monitor-off",
+      "origin": "lucide:monitor-off",
+      "material": [
+        "desktop_access_disabled"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "proportions",
+      "origin": "lucide:proportions",
+      "material": [
+        "aspect_ratio"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "zoom-in",
+      "origin": "lucide:zoom-in",
+      "material": [
+        "zoom_in"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "rotate-ccw-square",
+      "origin": "lucide:rotate-ccw-square",
+      "material": [
+        "screen_rotation"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "screen-share",
+      "origin": "lucide:screen-share",
+      "material": [
+        "screen_share"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "motion-blur",
+      "origin": "lucerna",
+      "material": [
+        "motion_blur"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "swatch-book",
+      "origin": "lucide:swatch-book",
+      "material": [
+        "gradient"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "layers",
+      "origin": "lucide:layers",
+      "material": [
+        "stacks"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "panel-top",
+      "origin": "lucide:panel-top",
+      "material": [
+        "toolbar"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "blur",
+      "origin": "lucerna",
+      "material": [
+        "blur_on"
+      ],
+      "filled": "outline",
+      "family": "blur",
+      "status": "pendente"
+    },
+    {
+      "name": "blur-off",
+      "origin": "lucerna",
+      "material": [
+        "blur_off"
+      ],
+      "filled": "outline",
+      "family": "blur",
+      "status": "pendente"
+    },
+    {
+      "name": "blend",
+      "origin": "lucide:blend",
+      "material": [
+        "opacity"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "animation",
+      "origin": "lucerna",
+      "material": [
+        "animation"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "mouse",
+      "origin": "lucide:mouse",
+      "material": [
+        "mouse"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "touchpad",
+      "origin": "lucide:touchpad",
+      "material": [
+        "touchpad_mouse"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "arrow-left-right",
+      "origin": "lucide:arrow-left-right",
+      "material": [
+        "swap_horiz"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "chevrons-right",
+      "origin": "lucide:chevrons-right",
+      "material": [
+        "keyboard_double_arrow_right"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "move-vertical",
+      "origin": "lucide:move-vertical",
+      "material": [
+        "swipe_vertical"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "pointer",
+      "origin": "lucide:pointer",
+      "material": [
+        "touch_app"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "hand",
+      "origin": "lucide:hand",
+      "material": [
+        "back_hand"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "mouse-pointer-click",
+      "origin": "lucide:mouse-pointer-click",
+      "material": [
+        "ads_click"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "grip",
+      "origin": "lucide:grip",
+      "material": [
+        "dialpad"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "unlink",
+      "origin": "lucide:unlink",
+      "material": [
+        "link_off"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "refresh-ccw-dot",
+      "origin": "lucide:refresh-ccw-dot",
+      "material": [
+        "settings_backup_restore"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "sparkles",
+      "origin": "lucide:sparkles",
+      "material": [
+        "auto_awesome"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "hand-heart",
+      "origin": "lucide:hand-heart",
+      "material": [
+        "volunteer_activism"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "list-check",
+      "origin": "lucide:list-check",
+      "material": [
+        "playlist_add_check"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "list-x",
+      "origin": "lucide:list-x",
+      "material": [
+        "playlist_remove"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "info",
+      "origin": "lucide:info",
+      "material": [
+        "info"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "external-link",
+      "origin": "lucide:external-link",
+      "material": [
+        "open_in_new"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "x",
+      "origin": "lucide:x",
+      "material": [
+        "close"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "check",
+      "origin": "lucide:check",
+      "material": [
+        "check"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "circle-x",
+      "origin": "lucide:circle-x",
+      "material": [
+        "cancel"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "plus",
+      "origin": "lucide:plus",
+      "material": [
+        "add"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "pencil",
+      "origin": "lucide:pencil",
+      "material": [
+        "edit"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "refresh-cw",
+      "origin": "lucide:refresh-cw",
+      "material": [
+        "refresh"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "chevron-left",
+      "origin": "lucide:chevron-left",
+      "material": [
+        "chevron_left"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "chevron-right",
+      "origin": "lucide:chevron-right",
+      "material": [
+        "chevron_right"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "chevron-down",
+      "origin": "lucide:chevron-down",
+      "material": [
+        "expand_more",
+        "keyboard_arrow_down"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    },
+    {
+      "name": "chevron-up",
+      "origin": "lucide:chevron-up",
+      "material": [
+        "keyboard_arrow_up"
+      ],
+      "filled": "outline",
+      "family": null,
+      "status": "pendente"
+    }
+  ]
 }

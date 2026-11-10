@@ -8,6 +8,7 @@ O que falta fazer no `lucerna-icons`. Cada item vira um PR; ao terminar, ele é 
 - [x] Um check de CI que valida o manifesto e os SVGs (`make check`, jobs `check` e `build`).
 - [x] Alvo de instalação (`make install PREFIX=/usr`).
 - [ ] Ligar `check` e `build` como status obrigatórios no ruleset do `main`, depois do primeiro CI verde.
-- [ ] Fixar a tag do Lucide no `lucideVersion` do manifesto (hoje `"pendente"`).
+- [x] Fixar a tag do Lucide no `lucideVersion` do manifesto (`1.70.0`).
+- [x] O inventário dos ícones do shell (`inventario.md`) e o `fetch` dos que existem no Lucide.
 - [ ] Desenhar e aprovar os ícones, um por vez, na ordem do spec: bateria, Wi-Fi, volume, Bluetooth, blocos da central, barra e o resto.
 - [ ] Depois de todos aprovados, a migração do `lucerna-shell` (nas Pendências de lá).
