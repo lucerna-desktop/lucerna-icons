@@ -811,15 +811,6 @@
       "minSize": 18
     },
     {
-      "name": "thermometer-b",
-      "origin": "lucerna",
-      "material": [],
-      "filled": "own",
-      "family": null,
-      "status": "pendente",
-      "minSize": 18
-    },
-    {
       "name": "clock",
       "origin": "lucide:clock",
       "material": [
