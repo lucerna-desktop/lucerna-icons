@@ -1,0 +1,19 @@
+# Atualizações das dependências do Python (fixadas no requirements.txt) e das
+# actions do CI (fixadas por SHA no ci.yml), uma vez por semana e num PR por
+# ecossistema. Cada PR passa pelos checks (check, build) como qualquer outro.
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      python:
+        patterns: ["*"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
