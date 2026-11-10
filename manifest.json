@@ -168,9 +168,10 @@
       "material": [
         "lan"
       ],
-      "filled": "own",
+      "filled": "outline",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "volume-0",
@@ -213,14 +214,15 @@
       "status": "aprovado"
     },
     {
-      "name": "gamepad-2",
+      "name": "game-mode",
       "origin": "lucide:gamepad-2",
       "material": [
         "sports_esports"
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "square",
@@ -240,7 +242,8 @@
       ],
       "filled": "own",
       "family": "bell",
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "bell-ring",
@@ -250,7 +253,8 @@
       ],
       "filled": "own",
       "family": "bell",
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "bell-snooze",
@@ -260,7 +264,8 @@
       ],
       "filled": "own",
       "family": "bell",
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "brush-cleaning",
@@ -414,7 +419,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "mic-off",
@@ -424,7 +430,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "audio-lines",
@@ -464,7 +471,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "scale",
@@ -474,7 +482,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "rocket",
@@ -484,17 +493,19 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "zap",
-      "origin": "lucide:zap",
+      "origin": "lucerna",
       "material": [
         "electric_bolt"
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 19
     },
     {
       "name": "refresh-ccw",
@@ -514,7 +525,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "moon-star",
@@ -524,7 +536,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "trash",
@@ -544,7 +557,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "sun-dim",

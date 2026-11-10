@@ -49,7 +49,7 @@
       "n": 3,
       "icones": [
         "network",
-        "gamepad-2",
+        "game-mode",
         "bell",
         "bell-ring",
         "bell-snooze",
@@ -63,8 +63,11 @@
         "rocket",
         "zap"
       ],
-      "data": null,
-      "decisao": null
+      "data": "2026-11-10",
+      "decisao": {
+        "resultado": "aprovado",
+        "data": "2026-11-10"
+      }
     },
     {
       "n": 4,
