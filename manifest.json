@@ -55,7 +55,39 @@
       "status": "pendente"
     },
     {
-      "name": "battery-charging",
+      "name": "battery-charging-0",
+      "origin": "lucerna",
+      "material": [],
+      "filled": "outline",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-charging-1",
+      "origin": "lucerna",
+      "material": [],
+      "filled": "outline",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-charging-2",
+      "origin": "lucerna",
+      "material": [],
+      "filled": "outline",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-charging-3",
+      "origin": "lucerna",
+      "material": [],
+      "filled": "outline",
+      "family": "battery",
+      "status": "pendente"
+    },
+    {
+      "name": "battery-charging-4",
       "origin": "lucerna",
       "material": [
         "battery_charging_full"
@@ -70,7 +102,7 @@
       "material": [
         "battery_alert"
       ],
-      "filled": "outline",
+      "filled": "own",
       "family": "battery",
       "status": "pendente"
     },

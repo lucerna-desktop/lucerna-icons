@@ -23,8 +23,12 @@ Os indicadores da barra (rede, volume, bateria) e as ações dela.
 | `battery_3_bar`, `battery_4_bar` | `battery-2` | **desenhar** (do `battery`) | outline | battery | 2 de 4 células |
 | `battery_5_bar`, `battery_6_bar` | `battery-3` | **desenhar** (do `battery`) | outline | battery | 3 de 4 células |
 | `battery_full` | `battery-4` | **desenhar** (do `battery`) | outline | battery | cheia (4 células) |
-| `battery_charging_full` | `battery-charging` | **desenhar** (do `battery-charging`) | outline | battery |  |
-| `battery_alert` | `battery-exclamation-point` | **desenhar** (do `battery-exclamation-point`) | outline | battery | bateria baixa |
+| — | `battery-charging-0` | **desenhar** (do `battery-charging`) | outline | battery | carregando, 0 de 4 células |
+| — | `battery-charging-1` | **desenhar** (do `battery-charging`) | outline | battery | carregando, 1 de 4 células |
+| — | `battery-charging-2` | **desenhar** (do `battery-charging`) | outline | battery | carregando, 2 de 4 células |
+| — | `battery-charging-3` | **desenhar** (do `battery-charging`) | outline | battery | carregando, 3 de 4 células |
+| `battery_charging_full` | `battery-charging-4` | **desenhar** (do `battery-charging`) | outline | battery | carregando, cheia |
+| `battery_alert` | `battery-exclamation-point` | **desenhar** (do `battery-exclamation-point`) | own | battery | bateria baixa; a exceção da família, como no Material: o preenchido é o corpo cheio com a “!” recortada |
 | `signal_wifi_0_bar` | `wifi-0` | `wifi-zero` | outline | wifi | só o ponto |
 | `network_wifi_1_bar` | `wifi-1` | `wifi-low` | outline | wifi | 1 arco |
 | `network_wifi_2_bar`, `network_wifi_3_bar` | `wifi-2` | `wifi-high` | outline | wifi | 2 arcos; o Material tem 5 níveis e o Lucide 4, então o shell passa a dividir o sinal em 4 faixas na migração |
@@ -296,21 +300,21 @@ Os controles usados em várias telas (fechar, confirmar, expandir…).
 
 | | Ícones |
 |---|---|
-| Total de ícones (glifos de contorno) | 196 |
+| Total de ícones (glifos de contorno) | 200 |
 | Ligaduras do Material substituídas | 210 |
 | Vindos do Lucide | 170 |
 | Aproximados (≈), a conferir | 20 |
-| Para desenhar (contorno novo) | 26 |
-| Com preenchido (`own`) | 124 |
-| … dos quais o contorno também é para desenhar | 15 |
-| Sem preenchido próprio (`outline`, o `-fill` usa o contorno: sem área, e a família `battery`) | 72 |
+| Para desenhar (contorno novo) | 30 |
+| Com preenchido (`own`) | 125 |
+| … dos quais o contorno também é para desenhar | 16 |
+| Sem preenchido próprio (`outline`, o `-fill` usa o contorno: sem área, e a família `battery`) | 75 |
 
-Todo preenchido é desenhado aqui, porque o Lucide só tem contorno: são **124 preenchidos para desenhar** (109 sobre um contorno do Lucide e 15 sobre um contorno novo). Somando os 26 contornos novos, são **150 desenhos** ao todo, além dos ajustes que a galeria pedir.
+Todo preenchido é desenhado aqui, porque o Lucide só tem contorno: são **125 preenchidos para desenhar** (109 sobre um contorno do Lucide e 16 sobre um contorno novo). Somando os 30 contornos novos, são **155 desenhos** ao todo, além dos ajustes que a galeria pedir.
 
 Nomes do Lucide terminados em dígito que não são estados: `gamepad-2` e `picture-in-picture-2` (variantes do Lucide, sem relação com uma família `gamepad` ou `picture-in-picture`). `volume-1` e `volume-2` são do Lucide e também são estados da família `volume`.
 
 **Fora do pacote.** Cinco propriedades do `Icons.qml` não têm uso no shell e saíram do inventário: `soon`/`auto_awesome` (`sparkles`), `unlink`/`link_off` (`unlink`), `lockOpen`/`lock_open` (`lock-open`), `rain`/`water_drop` (`droplet`) e `clearAll`/`clear_all` (só a ligadura; o `brush-cleaning` fica por causa do `delete_sweep`). Elas saem do `Icons.qml` na migração do shell.
 
-**Bateria com 5 níveis.** A bateria é desenho nosso, derivado do `battery` do Lucide: deitada, mais fina e comprida (corpo de 8 de altura), com o polo curto colado no corpo como no Material, 4 células cheias e 5 níveis (`battery-0` a `battery-4`); a carga e o alerta têm o mesmo corpo, cheio, com o raio e o "!" recortados. Cada nível é um número inteiro de células, então o shell passa a dividir a porcentagem em 5 faixas na migração, e duas ligaduras do Material vão para o mesmo nível. Sem preenchido próprio, como no Material; o nível é o preenchimento (`filled: outline`, o `-fill` mostra o contorno).
+**Bateria com 5 níveis.** A bateria é desenho nosso, derivado do `battery` do Lucide: deitada, mais fina e comprida (corpo de 8 de altura), com o polo curto colado no corpo como no Material, 4 células cheias e 5 níveis (`battery-0` a `battery-4`); a carga mostra o nível, como no Material (`battery_charging_20`…`full`): `battery-charging-0` a `battery-charging-4` têm o corpo e as células do nível, com o raio por cima, recortado das células; o alerta (`battery-exclamation-point`) tem o corpo em traço com a "!" dentro e é a exceção da família, como o `battery_alert` do Material: tem preenchido próprio, o corpo cheio com a "!" recortada. Cada nível é um número inteiro de células, então o shell passa a dividir a porcentagem em 5 faixas na migração e, carregando, escolhe a variante de carga pelo mesmo nível (`battery-charging-N`); e duas ligaduras do Material vão para o mesmo nível. Fora o alerta, sem preenchido próprio, como no Material; o nível é o preenchimento (`filled: outline`, o `-fill` mostra o contorno).
 
 **Wi-Fi com 4 níveis.** O Lucide tem 4 níveis (`wifi-0` a `wifi-3`, de 0 a 3 arcos), então o shell passa a dividir o sinal em 4 faixas na migração. O `wifi-alert` continua a desenhar.
