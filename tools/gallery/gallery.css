@@ -313,7 +313,7 @@ main { padding: 24px clamp(16px, 4vw, 48px) 8px; display: grid; gap: 28px; }
   vertical-align: middle;
   color: var(--text);
 }
-.m.cheio, .cheio .m { --fill: 1; }
+.m.cheio, .cheio .m, .todos-cheios .tamanhos .m, .todos-cheios .blocos .m { --fill: 1; }
 .m-nada { color: var(--text-faint); }
 .sem-material .m { visibility: hidden; }
 .sem-material .rot-m::after { content: " (indisponível)"; font-weight: 400; }
@@ -329,8 +329,10 @@ main { padding: 24px clamp(16px, 4vw, 48px) 8px; display: grid; gap: 28px; }
   transform: scale(0.6);
   transition: opacity var(--dur) var(--curva), transform var(--dur) var(--curva);
 }
-.cheio .par > .cont { opacity: 0; transition-timing-function: var(--sai); }
-.cheio .par > .fill { opacity: 1; transform: none; }
+.cheio .par > .cont,
+.todos-cheios .tamanhos .par > .cont { opacity: 0; transition-timing-function: var(--sai); }
+.cheio .par > .fill,
+.todos-cheios .tamanhos .par > .fill { opacity: 1; transform: none; }
 .m.anim { transition: font-variation-settings var(--dur) var(--curva); }
 
 /* --- O bloco (o Tile da central) ----------------------------------------------------- */
@@ -361,9 +363,12 @@ main { padding: 24px clamp(16px, 4vw, 48px) 8px; display: grid; gap: 28px; }
 .bloco .txt { display: grid; min-width: 0; line-height: 1.25; }
 .bloco b { font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bloco small { font-size: 11px; color: var(--text-muted); transition: color var(--dur-cor) var(--curva-cor); }
-.bloco.ativo { background: var(--accent-container); color: var(--on-accent-container); }
-.bloco.ativo .circulo { background: var(--circulo-ativo); color: var(--accent-icon); }
-.bloco.ativo small { color: var(--on-accent-container); }
+.bloco.ativo, .todos-cheios .blocos .bloco { background: var(--accent-container); color: var(--on-accent-container); }
+.bloco.ativo .circulo, .todos-cheios .blocos .bloco .circulo { background: var(--circulo-ativo); color: var(--accent-icon); }
+.bloco.ativo small, .todos-cheios .blocos .bloco small { color: var(--on-accent-container); }
+/* "Preencher todos": o corpo leva .todos-cheios e o resto da página acompanha
+   (a tabela de tamanhos, os blocos de exemplo e o Material); a seção de
+   animação tem o próprio .cheio e fica como está. */
 
 .nota { margin: -6px 0 0; font-size: 12px; color: var(--text-faint); }
 
@@ -393,3 +398,23 @@ main { padding: 24px clamp(16px, 4vw, 48px) 8px; display: grid; gap: 28px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* As camadas: o ícone na cor normal e a camada de cima (layer) na cor do estado. */
+.faixas + .faixas { margin-top: 12px; }
+.cor .cor-linha { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 24px; margin-bottom: 12px; }
+.cor .cor-linha:last-child { margin-bottom: 0; }
+.cor h5 { flex-basis: 100%; margin: 0; font-size: 11.5px; font-weight: 500; color: var(--text-muted); }
+.cor p { flex-basis: 100%; margin: 0; font-size: 10.5px; color: var(--text-faint); }
+.cor-tam { display: flex; flex-direction: column; gap: 4px; }
+.cor-tam small { font-size: 10px; color: var(--text-faint); }
+.camadas { position: relative; display: inline-block; width: 1em; height: 1em; vertical-align: middle; }
+.camadas > .g { position: absolute; inset: 0; }
+.camadas > .baixo { color: var(--text); }
+.estado-accent > .cima { color: var(--accent); }
+.estado-success > .cima { color: var(--success); }
+.estado-warning > .cima { color: var(--warning); }
+.estado-danger > .cima { color: var(--danger); }
+
+/* Os tamanhos abaixo do minSize do ícone: fora do uso no shell. */
+.tamanhos td.fora-do-uso > :not(.rot-fora) { opacity: 0.3; }
+.tamanhos td.fora-do-uso .rot-fora { display: block; margin-top: 2px; font-size: 9px; color: var(--text-faint); white-space: nowrap; }

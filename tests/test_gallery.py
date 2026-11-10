@@ -358,3 +358,67 @@ def test_resposta_cortada_nao_derruba_a_galeria(repo_galeria, tmp_path, fontes, 
 
     monkeypatch.setattr(fetch, "_baixar", baixar)
     assert fetch.original(repo_galeria.raiz, "0.460.0", "arrow-right") is None
+
+
+def test_preencher_todos_tem_botao_e_ganchos(repo_galeria, tmp_path, fontes):
+    texto, saida = gerar(repo_galeria, ["bateria", "caixa"], tmp_path, fontes)
+    assert 'id="alternar-todos"' in texto
+    # O botão liga a classe do corpo, que o CSS propaga para a tabela, os blocos e o Material.
+    js = (PASTA_GALERIA / "gallery.js").read_text(encoding="utf-8")
+    css = (PASTA_GALERIA / "gallery.css").read_text(encoding="utf-8")
+    assert 'toggle("todos-cheios"' in js
+    for alvo in (".todos-cheios .tamanhos .par", ".todos-cheios .blocos .bloco", ".todos-cheios .blocos .m"):
+        assert alvo in css
+    # A linha "Contorno" da tabela é um par (contorno + preenchido sobrepostos), com o id no contorno.
+    m = re.search(r'<tr id="ic-bateria-escuro-contorno">.*?</tr>', texto, re.S)
+    assert m and m.group(0).count('class="par"') == len(TAMANHOS)
+    assert "cont" in classes_de(texto, "ic-bateria-escuro-contorno-24")
+    # Sem o preenchido desenhado, não há par na linha (nada para trocar).
+    m = re.search(r'<tr id="ic-caixa-escuro-contorno">.*?</tr>', texto, re.S)
+    assert m and 'class="par"' not in m.group(0)
+    # A seção de animação segue com o próprio botão.
+    assert "data-alternar" in texto
+
+
+def test_camadas_mostram_a_composicao_na_cor_do_estado(repo_galeria, tmp_path, fontes):
+    dados = json.loads((repo_galeria.raiz / "manifest.json").read_text())
+    dados["icons"] += [
+        icone("battery-0", family="battery", status="pendente", layer="battery-fill-1"),
+        icone("battery-fill-1", family="battery", status="pendente"),
+    ]
+    (repo_galeria.raiz / "manifest.json").write_text(json.dumps(dados))
+    for n in ("battery-0", "battery-fill-1"):
+        repo_galeria.svg("outline", n)
+    texto, _ = gerar(repo_galeria, ["battery-0"], tmp_path, fontes)
+    achados = ids(texto)
+    for tema in TEMAS:
+        assert f"familia-battery-{tema}-cor" in achados
+        for px in gallery.CAMADAS_PX:
+            ident = f"ic-battery-0-{tema}-camadas-{px}"
+            assert ident in achados
+            assert {"camadas", "estado-danger"} <= classes_de(texto, ident)
+    # A camada de cima vai sobre a de baixo.
+    assert re.search(r'class="g baixo"[^>]*>battery-0<.*?class="g cima"[^>]*>battery-fill-1<', texto)
+    # A cor de estado vem do temas.json.
+    temas = json.loads((PASTA_GALERIA / "temas.json").read_text())
+    for papel in TEMAS:
+        assert f"--danger: {temas['temas'][papel]['cores']['danger']}" in texto
+
+
+def test_sem_camada_nao_tem_composicao(repo_galeria, tmp_path, fontes):
+    texto, _ = gerar(repo_galeria, ["wifi-2"], tmp_path, fontes)
+    assert not any(i.endswith("-cor") for i in ids(texto))
+
+
+def test_tamanhos_abaixo_do_min_size_ficam_fora_do_uso(repo_galeria, tmp_path, fontes):
+    dados = json.loads((repo_galeria.raiz / "manifest.json").read_text())
+    for i in dados["icons"]:
+        if i["name"] == "seta":
+            i["minSize"] = 18
+    (repo_galeria.raiz / "manifest.json").write_text(json.dumps(dados))
+    texto, _ = gerar(repo_galeria, ["seta", "caixa"], tmp_path, fontes)
+    for t in TAMANHOS:
+        fora = "fora-do-uso" in re.search(rf'<td[^>]*>(?:(?!</td>).)*id="ic-seta-escuro-contorno-{t}"', texto, re.S).group(0)
+        assert fora == (t < 18)
+    # Sem o campo, vale 14: nenhum tamanho da tabela fica fora.
+    assert not re.search(r'class="fora-do-uso"[^>]*>(?:(?!</td>).)*id="ic-caixa-', texto, re.S)

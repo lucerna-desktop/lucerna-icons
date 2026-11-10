@@ -1,0 +1,316 @@
+{
+  "lotes": [
+    {
+      "n": 1,
+      "icones": [
+        "battery-0",
+        "battery-1",
+        "battery-2",
+        "battery-3",
+        "battery-4",
+        "battery-charging",
+        "battery-exclamation-point",
+        "battery-fill-1",
+        "volume-0",
+        "volume-1",
+        "volume-2",
+        "volume-off"
+      ],
+      "data": "2026-11-09",
+      "decisao": {
+        "resultado": "aprovado",
+        "data": "2026-11-10"
+      }
+    },
+    {
+      "n": 2,
+      "icones": [
+        "wifi-0",
+        "wifi-1",
+        "wifi-2",
+        "wifi-3",
+        "wifi-off",
+        "wifi-alert",
+        "bluetooth",
+        "bluetooth-connected",
+        "bluetooth-off",
+        "bluetooth-searching",
+        "sun-dim",
+        "sun-medium",
+        "sun"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 3,
+      "icones": [
+        "network",
+        "gamepad-2",
+        "bell",
+        "bell-ring",
+        "bell-snooze",
+        "coffee",
+        "moon-star",
+        "cloud-off",
+        "mic",
+        "mic-off",
+        "leaf",
+        "scale",
+        "rocket",
+        "zap"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 4,
+      "icones": [
+        "headphones",
+        "headset",
+        "keyboard",
+        "gamepad-directional",
+        "smartphone",
+        "watch",
+        "laptop",
+        "tv",
+        "mouse",
+        "speaker"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 5,
+      "icones": [
+        "square",
+        "brush-cleaning",
+        "sliders-horizontal",
+        "panel-right",
+        "audio-lines",
+        "refresh-ccw",
+        "trash",
+        "power",
+        "log-out",
+        "rotate-ccw",
+        "moon",
+        "lock",
+        "triangle-exclamation-point",
+        "square-terminal"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 6,
+      "icones": [
+        "layout-dashboard",
+        "eighth-note",
+        "eighth-note-off",
+        "play",
+        "pause",
+        "skip-forward",
+        "skip-back",
+        "mic-vocal",
+        "disc",
+        "gauge",
+        "cpu",
+        "memory-stick",
+        "hard-drive",
+        "gamepad"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 7,
+      "icones": [
+        "arrow-down-up",
+        "download",
+        "upload",
+        "thermometer",
+        "clock",
+        "calendar-days",
+        "user",
+        "map-pin",
+        "droplets",
+        "wind"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 8,
+      "icones": [
+        "cloud",
+        "cloud-sun",
+        "cloud-moon",
+        "cloud-fog",
+        "cloud-drizzle",
+        "cloud-rain",
+        "cloud-rain-wind",
+        "cloud-hail",
+        "cloud-snow",
+        "cloud-lightning",
+        "sunrise"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 9,
+      "icones": [
+        "layout-grid",
+        "blocks",
+        "search",
+        "folder",
+        "folder-open",
+        "file-text",
+        "file-pdf",
+        "folder-archive",
+        "image",
+        "clapperboard"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 10,
+      "icones": [
+        "globe",
+        "earth",
+        "rotate-ccw-clock",
+        "hourglass",
+        "star",
+        "eye-off",
+        "copy",
+        "corner-down-left",
+        "clipboard",
+        "clipboard-paste",
+        "clipboard-off",
+        "text-align-start",
+        "list-ordered"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 11,
+      "icones": [
+        "camera",
+        "video",
+        "scan",
+        "app-window",
+        "fullscreen",
+        "square-dashed",
+        "screen-record",
+        "circle-dot",
+        "mouse-pointer",
+        "timer"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 12,
+      "icones": [
+        "counter-1",
+        "counter-2",
+        "counter-3",
+        "counter-4",
+        "counter-5",
+        "counter-6",
+        "counter-7",
+        "counter-8",
+        "counter-9",
+        "square-arrow-right-enter",
+        "move",
+        "maximize-2",
+        "maximize",
+        "picture-in-picture-2"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 13,
+      "icones": [
+        "pin",
+        "ban",
+        "gallery-horizontal",
+        "command",
+        "x",
+        "check",
+        "circle-x",
+        "plus",
+        "pencil",
+        "refresh-cw",
+        "refresh-ccw-dot",
+        "list-check",
+        "list-x",
+        "info",
+        "external-link"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 14,
+      "icones": [
+        "arrow-up",
+        "arrow-down",
+        "arrow-left",
+        "arrow-right",
+        "arrow-left-right",
+        "chevron-left",
+        "chevron-right",
+        "chevron-up",
+        "chevron-down",
+        "chevron-first",
+        "chevron-last",
+        "chevrons-right",
+        "move-vertical"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 15,
+      "icones": [
+        "settings",
+        "palette",
+        "wallpaper",
+        "image-plus",
+        "monitor",
+        "monitor-off",
+        "proportions",
+        "zoom-in",
+        "rotate-ccw-square",
+        "screen-share",
+        "motion-blur",
+        "swatch-book"
+      ],
+      "data": null,
+      "decisao": null
+    },
+    {
+      "n": 16,
+      "icones": [
+        "layers",
+        "panel-top",
+        "blur",
+        "blur-off",
+        "blend",
+        "animation",
+        "touchpad",
+        "pointer",
+        "hand",
+        "mouse-pointer-click",
+        "grip",
+        "hand-heart"
+      ],
+      "data": null,
+      "decisao": null
+    }
+  ]
+}

@@ -17,12 +17,15 @@ Ids previsíveis (os testes e o controlador contam com eles):
     ic-<nome>-lucide                       o original do Lucide (só derivados)
     ic-<nome>-{contorno,preenchido}-<peso> o desenho em cada peso (200…600)
     ic-<nome>-<tema>-<tipo>                a linha de um tipo num tema
-    ic-<nome>-<tema>-<tipo>-<tamanho>      a célula de um tamanho
+    ic-<nome>-<tema>-<tipo>-<tamanho>      a célula de um tamanho (com a classe
+                                           `fora-do-uso` abaixo do minSize)
     ic-<nome>-<tema>-bloco-<estado>        os blocos (ativo, inativo,
                                            material-ativo, material-inativo)
     ic-<nome>-<tema>-anima                 a animação do preenchimento
     ic-<nome>-a-desenhar                   o aviso de um ícone ainda sem SVG
     familia-<família>                      a seção de uma família
+    familia-<família>-<tema>-cor           a composição dos ícones com `layer`
+    ic-<nome>-<tema>-camadas-<tamanho>     o ícone e a camada de cima, na cor do estado
 
 `<tema>` é `escuro` ou `claro`; `<tipo>` é `contorno`, `preenchido`,
 `material` ou `material-fill`. O que ainda não foi desenhado leva a classe
@@ -45,6 +48,11 @@ ARQUIVO_PESO = {p.classe: f"LucernaIcons-{p.estilo}.ttf" for p in build.PESOS}
 DESENHO_PX = 72  # 3 px por unidade da grade de 24
 BLOCO_PX = 20  # o ícone do Tile da central
 ANIMA_PX = 40
+CAMADAS_PX = (18, 20, 64)
+
+# A cor da camada de cima (`layer`) na composição: o ícone de baixo fica na cor
+# normal (`text`) e a camada de cima vai na cor do estado em que o shell a usa.
+COR_DA_CAMADA = {"battery-fill-1": ("bateria baixa", "danger")}
 
 
 class ErroDeGaleria(Exception):
@@ -142,12 +150,12 @@ def _vazio(ident: str, texto: str = "a desenhar", classe: str = "") -> str:
     return f'<span id="{ident}" class="vazio a-desenhar {classe}">{_e(texto)}</span>'
 
 
-def _par(item: Item, px: int) -> str:
-    """O contorno e o preenchido sobrepostos, para a animação."""
+def _par(item: Item, px: int, ident: str = "") -> str:
+    """O contorno e o preenchido sobrepostos, para a animação (o id fica no contorno)."""
     peso = peso_do_tamanho(px)
     return (
         f'<span class="par" style="font-size:{px}px">'
-        f'{_glifo(item.nome, px, peso, classe="cont")}'
+        f'{_glifo(item.nome, px, peso, ident, classe="cont")}'
         f'{_glifo(item.nome + "-fill", px, peso, classe="fill")}'
         "</span>"
     )
@@ -173,6 +181,8 @@ def _cabecalho(item: Item, lucide: str) -> str:
     linhas = [("Origem", origem), ("Material", material), ("Preenchido", preench)]
     if ic.family:
         linhas.append(("Família", f"<code>{_e(ic.family)}</code>"))
+    if ic.layer:
+        linhas.append(("Camada de cima", f"<code>{_e(ic.layer)}</code>"))
     dl = "".join(f"<div><dt>{a}</dt><dd>{b}</dd></div>" for a, b in linhas)
     status = _e(ic.status)
     return (
@@ -237,6 +247,7 @@ def _tabela(item: Item, tema: str) -> str:
         f'<th scope="col">{t}<span>traço {TRACO[peso_do_tamanho(t)]}</span></th>' for t in TAMANHOS
     )
     linhas = []
+    minimo = item.icone.min_size  # abaixo dele, o tamanho fica "fora do uso"
 
     def linha(tipo: str, rotulo: str, celula, vazio: str | None = None):
         ident = f"ic-{n}-{tema}-{tipo}"
@@ -244,11 +255,21 @@ def _tabela(item: Item, tema: str) -> str:
             corpo = f'<td colspan="{len(TAMANHOS)}" class="a-desenhar"><span class="vazio">{_e(vazio)}</span></td>'
             linhas.append(f'<tr id="{ident}" class="a-desenhar"><th scope="row">{rotulo}</th>{corpo}</tr>')
             return
-        corpo = "".join(f"<td>{celula(t, f'{ident}-{t}')}</td>" for t in TAMANHOS)
+        corpo = "".join(
+            f'<td class="fora-do-uso" title="abaixo do minSize ({minimo} px)">{celula(t, f"{ident}-{t}")}'
+            '<small class="rot-fora">fora do uso</small></td>'
+            if t < minimo
+            else f"<td>{celula(t, f'{ident}-{t}')}</td>"
+            for t in TAMANHOS
+        )
         linhas.append(f'<tr id="{ident}"><th scope="row">{rotulo}</th>{corpo}</tr>')
 
     if item.contorno is not None:
-        linha("contorno", "Contorno", lambda t, i: _glifo(n, t, peso_do_tamanho(t), i))
+        # O contorno é um par, para o "Preencher todos" trocá-lo pelo preenchido com a animação.
+        if item.preenchido_a_desenhar:
+            linha("contorno", "Contorno", lambda t, i: _glifo(n, t, peso_do_tamanho(t), i))
+        else:
+            linha("contorno", "Contorno", lambda t, i: _par(item, t, i))
         if item.preenchido_a_desenhar:
             linha("preenchido", "Preenchido", None, vazio="preenchido a desenhar")
         else:
@@ -354,6 +375,44 @@ def _faixa(itens: list[Item], temas: dict) -> str:
     return f'<div class="faixas">{"".join(paineis)}</div>'
 
 
+def _camadas(nome: str, cima: str, estado: str, px: int, ident: str = "") -> str:
+    """O ícone na cor normal e, por cima, a camada `cima` na cor do estado."""
+    peso = peso_do_tamanho(px)
+    ida = f' id="{ident}"' if ident else ""
+    return (
+        f'<span{ida} class="camadas estado-{estado}" style="font-size:{px}px">'
+        f'{_glifo(nome, px, peso, classe="baixo")}{_glifo(cima, px, peso, classe="cima")}</span>'
+    )
+
+
+def _cor_por_estado(itens: list[Item], temas: dict) -> str:
+    """A composição dos ícones com `layer`: o de baixo em `text` e a camada de cima na cor do estado."""
+    nomes = {it.nome for it in itens if it.contorno is not None}
+    com_camada = [it for it in itens if it.icone.layer and it.contorno is not None and it.icone.layer in nomes]
+    if not com_camada:
+        return ""
+    fam = itens[0].icone.family
+    paineis = []
+    for papel, tema in temas.items():
+        linhas = []
+        for it in com_camada:
+            rotulo, estado = COR_DA_CAMADA.get(it.icone.layer, ("camada", "accent"))
+            cels = "".join(
+                f'<div class="cor-tam"><div class="pilha">'
+                f'{_camadas(it.nome, it.icone.layer, estado, px, f"ic-{it.nome}-{papel}-camadas-{px}")}'
+                f"</div><small>{px} px</small></div>"
+                for px in CAMADAS_PX
+            )
+            legenda = f"<code>{_e(it.nome)}</code> em <b>text</b> + <code>{_e(it.icone.layer)}</code> em <b>{estado}</b>"
+            linhas.append(f'<div class="cor-linha"><h5>{_e(rotulo)}</h5>{cels}<p>{legenda}</p></div>')
+        paineis.append(
+            f'<div id="familia-{_e(fam)}-{papel}-cor" class="tema tema-{papel} faixa cor">'
+            f'<h4>{_e(tema["nome"])}: camadas (o ícone na cor normal, a camada de cima na cor do estado)</h4>'
+            f'{"".join(linhas)}</div>'
+        )
+    return f'<div class="faixas">{"".join(paineis)}</div>'
+
+
 def _svg_embutido(origem: "Path | str") -> str:
     texto = origem if isinstance(origem, str) else origem.read_text(encoding="utf-8")
     inicio = texto.find("<svg")
@@ -384,6 +443,12 @@ def _css_temas(temas: dict) -> str:
             "--accent-container": c["accentContainer"],
             "--on-accent-container": c["onAccentContainer"],
             "--accent-icon": c["accentIcon"],
+            "--success": c.get("success", c["accent"]),
+            "--warning": c.get("warning", c["accent"]),
+            "--danger": c["danger"],
+            "--on-success": c.get("onSuccess", c["base"]),
+            "--on-warning": c.get("onWarning", c["base"]),
+            "--on-danger": c.get("onDanger", c["base"]),
             "--circulo": rgba(c["text"], 0.07),
             "--circulo-ativo": rgba(c["base"], 0.1),
             "--grad": "-25" if tema["dark"] else "0",
@@ -466,7 +531,7 @@ def pagina(
                 f'<section id="familia-{_e(fam)}" class="familia">'
                 f'<header class="cab-familia"><h2>Família <code>{_e(fam)}</code></h2>'
                 f"<span>{n} {'estado' if n == 1 else 'estados'}, aprovados juntos</span></header>"
-                f"{_faixa(grupo, temas)}{cartoes}</section>"
+                f"{_faixa(grupo, temas)}{_cor_por_estado(grupo, temas)}{cartoes}</section>"
             )
         else:
             corpo.append(cartoes)

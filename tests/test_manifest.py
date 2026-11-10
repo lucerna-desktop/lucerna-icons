@@ -226,3 +226,54 @@ def test_svg_com_use_e_proibido(repo):
     repo.svg("outline", "x", SVG_OK.replace("</svg>", '<use width="1"/></svg>'))
     repo.manifesto([icone("x")])
     assert "svg-elemento" in codigos(repo.raiz)
+
+
+def test_camada_da_mesma_familia_passa(repo):
+    for n in ("bat-1", "raio"):
+        repo.svg("outline", n)
+    repo.manifesto([icone("bat-1", family="bat", layer="raio"), icone("raio", family="bat")])
+    assert manifest.validar(repo.raiz) == []
+    _, icones, _ = manifest.carregar(repo.raiz)
+    assert {ic.name: ic.layer for ic in icones} == {"bat-1": "raio", "raio": None}
+
+
+@pytest.mark.parametrize(
+    "entradas",
+    [
+        [icone("bat-1", family="bat", layer="raio")],  # a camada não existe
+        [icone("bat-1", family="bat", layer="raio"), icone("raio", family="outra")],  # outra família
+        [icone("bat-1", layer="raio"), icone("raio")],  # sem família
+        [icone("bat-1", family="bat", layer="bat-1")],  # o próprio ícone
+        [icone("bat-1", family="bat", layer="Raio!")],  # nome inválido
+        [icone("bat-1", family="bat", layer=None)],  # não é texto
+    ],
+)
+def test_camada_invalida(repo, entradas):
+    for e in entradas:
+        repo.svg("outline", e["name"])
+    repo.manifesto(entradas)
+    assert "camada-invalida" in codigos(repo.raiz)
+
+
+def test_min_size_padrao_e_declarado(repo):
+    for n in ("a", "bat-0", "bat-1"):
+        repo.svg("outline", n)
+    repo.manifesto([icone("a"), icone("bat-0", family="bat", minSize=18), icone("bat-1", family="bat", minSize=18)])
+    assert manifest.validar(repo.raiz) == []
+    _, icones, _ = manifest.carregar(repo.raiz)
+    assert {ic.name: ic.min_size for ic in icones} == {"a": manifest.MIN_SIZE_PADRAO, "bat-0": 18, "bat-1": 18}
+
+
+def test_min_size_misto_na_familia(repo):
+    for n in ("bat-0", "bat-1"):
+        repo.svg("outline", n)
+    # Um estado sem o campo vale o padrão (14), diferente dos 18 do outro.
+    repo.manifesto([icone("bat-0", family="bat", minSize=18), icone("bat-1", family="bat")])
+    assert "familia-min-size-misto" in codigos(repo.raiz)
+
+
+@pytest.mark.parametrize("valor", ["18", 18.5, True, 0, 500, None])
+def test_min_size_invalido(repo, valor):
+    repo.svg("outline", "a")
+    repo.manifesto([icone("a", minSize=valor)])
+    assert "min-size-invalido" in codigos(repo.raiz)

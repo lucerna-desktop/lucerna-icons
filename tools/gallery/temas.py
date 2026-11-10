@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 TEMAS = {"escuro": "catppuccin-mocha", "claro": "catppuccin-latte"}
-COPIADAS = ["base", "surface", "raised", "border", "text", "textMuted", "textFaint", "accent", "danger"]
+COPIADAS = ["base", "surface", "raised", "border", "text", "textMuted", "textFaint", "accent", "danger", "success", "warning"]
 
 Cor = tuple[float, float, float, float]
 PRETO: Cor = (0.0, 0.0, 0.0, 1.0)
@@ -124,7 +124,14 @@ def derivados(cores: dict, dark: bool) -> dict:
     preenchimento = (
         de_hex(cores["accentFill"]) if "accentFill" in cores else fill_of(get("accent"), get("surface"), track)
     )
+    # O conteúdo sobre uma cor de estado (o raio sobre o preenchimento da carga):
+    # o onContainerOf do shell, com a cor de estado como fundo.
+    estados = {
+        f"on{nome.capitalize()}": para_hex(on_container_of(get(nome), get("text"), get("base")))
+        for nome in ("success", "warning", "danger")
+    }
     return {
+        **estados,
         "track": para_hex(track),
         "accentContainer": para_hex(container),
         "onAccentContainer": para_hex(on_container),
