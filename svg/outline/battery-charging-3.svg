@@ -2,11 +2,16 @@
   <defs>
     <mask id="corte" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
       <rect width="24" height="24" fill="white" stroke="none" />
-      <path d="M13.9 5.75 8.3 12.6 11.3 12.6 9.3 18.25 14.9 11.4 11.9 11.4z" fill="black" stroke="black" stroke-width="3.25" />
+      <path d="M20.1 6.25 16.1 12.5 17.9 12.5 16.7 17.75 20.7 11.5 18.9 11.5z" fill="black" stroke="black" stroke-width="4" />
+    </mask>
+    <mask id="nivel" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="white" stroke="none" />
+      <path d="M15.25 6v12" stroke="black" stroke-width="1" />
+      <path d="M20.1 6.25 16.1 12.5 17.9 12.5 16.7 17.75 20.7 11.5 18.9 11.5z" fill="black" stroke="black" stroke-width="4" />
     </mask>
   </defs>
   <rect x="3.625" y="8" width="15.5" height="8" rx="2" mask="url(#corte)" />
-  <path d="M19.125 10.75h1.25v2.5h-1.25z" fill="currentColor" />
-  <path d="M14.25 8v8H5.625a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2z" fill="currentColor" mask="url(#corte)" />
-  <path d="M13.9 5.75 8.3 12.6 11.3 12.6 9.3 18.25 14.9 11.4 11.9 11.4z" fill="currentColor" stroke-width="0.75" />
+  <path d="M19.125 10.75h1.25v2.5h-1.25z" fill="currentColor" mask="url(#corte)" />
+  <path d="M15.25 8v8H5.625a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2z" fill="currentColor" stroke="none" mask="url(#nivel)" />
+  <path d="M20.1 6.25 16.1 12.5 17.9 12.5 16.7 17.75 20.7 11.5 18.9 11.5z" fill="currentColor" stroke-width="1.5" />
 </svg>
