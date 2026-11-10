@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <mask id="corte" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="white" stroke="none" />
+      <path d="m2 2 20 20" stroke="black" stroke-width="4.5" />
+    </mask>
+  </defs>
+  <rect x="9" y="2" width="6" height="13" rx="3" fill="currentColor" mask="url(#corte)" />
+  <path d="M12 19v3" />
+  <path d="M16.95 16.95A7 7 0 0 1 5 12v-2" />
+  <path d="M18.89 13.23A7 7 0 0 0 19 12v-2" />
+  <path d="m2 2 20 20" />
+</svg>

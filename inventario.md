@@ -48,7 +48,7 @@ O sino da barra e da central, e limpar tudo.
 |---|---|---|---|---|---|
 | `notifications` | `bell` | `bell` | own | bell |  |
 | `notifications_active` | `bell-ring` | `bell-ring` | own | bell | há notificações |
-| `notifications_paused` | `bell-snooze` | **desenhar** | own | bell | não perturbe: sino com “z”; o Lucide só tem o bell-off |
+| `notifications_paused` | `bell-snooze` | **desenhar** | own | bell | não perturbe: o sino com um “z” no canto de cima à direita e o corpo aberto em volta, como o `bell-dot` do Lucide; o Lucide só tem o bell-off |
 | `delete_sweep` | `brush-cleaning` | `brush-cleaning` ≈ | own | — | limpar o histórico (o `clear_all` do `Icons.clearAll` não tem uso) |
 
 ## Central (Ações)
