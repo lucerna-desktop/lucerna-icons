@@ -623,6 +623,33 @@
       "minSize": 19
     },
     {
+      "name": "layout-dashboard-a",
+      "origin": "lucerna",
+      "material": [],
+      "filled": "own",
+      "family": null,
+      "status": "pendente",
+      "minSize": 19
+    },
+    {
+      "name": "layout-dashboard-b",
+      "origin": "lucerna",
+      "material": [],
+      "filled": "own",
+      "family": null,
+      "status": "pendente",
+      "minSize": 19
+    },
+    {
+      "name": "layout-dashboard-c",
+      "origin": "lucerna",
+      "material": [],
+      "filled": "own",
+      "family": null,
+      "status": "pendente",
+      "minSize": 19
+    },
+    {
       "name": "eighth-note",
       "origin": "lucide:eighth-note",
       "material": [
