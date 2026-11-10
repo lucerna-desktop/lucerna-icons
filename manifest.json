@@ -619,7 +619,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 19
     },
     {
       "name": "eighth-note",
@@ -629,7 +630,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 20
     },
     {
       "name": "eighth-note-off",
@@ -639,7 +641,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 26
     },
     {
       "name": "play",
@@ -649,7 +652,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 20
     },
     {
       "name": "pause",
@@ -659,7 +663,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 20
     },
     {
       "name": "skip-forward",
@@ -669,7 +674,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 20
     },
     {
       "name": "skip-back",
@@ -679,7 +685,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 20
     },
     {
       "name": "mic-vocal",
@@ -689,7 +696,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "disc",
@@ -699,7 +707,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 26
     },
     {
       "name": "gauge",
@@ -707,9 +716,10 @@
       "material": [
         "speed"
       ],
-      "filled": "outline",
+      "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "cpu",
@@ -719,7 +729,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "memory-stick",
@@ -729,7 +740,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "hard-drive",
@@ -739,7 +751,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "gamepad",
@@ -749,7 +762,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "arrow-down-up",
