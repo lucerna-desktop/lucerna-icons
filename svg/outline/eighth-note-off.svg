@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <mask id="corte" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="white" stroke="none" />
+      <path d="m2 2 20 20" stroke="black" stroke-width="4.5" />
+    </mask>
+  </defs>
+  <path d="m17.75 6-5.2-3.9a.5.5 0 0 0-.8.4V18" mask="url(#corte)" />
+  <circle cx="7.75" cy="18" r="4" mask="url(#corte)" />
+  <path d="m2 2 20 20" />
+</svg>

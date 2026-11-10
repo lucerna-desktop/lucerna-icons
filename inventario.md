@@ -104,14 +104,14 @@ O painel, a mídia, o desempenho e o clima.
 |---|---|---|---|---|---|
 | `dashboard` | `layout-dashboard` | `layout-dashboard` | own | — |  |
 | `music_note` | `eighth-note` | `eighth-note` | own | — | mídia (o music do Lucide virou eighth-note no 1.x) |
-| `music_off` | `eighth-note-off` | **desenhar** | own | — | sem mídia: a nota com um corte |
+| `music_off` | `eighth-note-off` | **desenhar** | own | — | sem mídia: a nota do `eighth-note` com o corte em `m2 2 20 20`, como o `volume-off`; a nota vai 1,25 para a esquerda para o corte passar longe da cabeça |
 | `play_arrow` | `play` | `play` | own | — |  |
 | `pause` | `pause` | `pause` | own | — |  |
 | `skip_next` | `skip-forward` | `skip-forward` | own | — |  |
 | `skip_previous` | `skip-back` | `skip-back` | own | — |  |
 | `lyrics` | `mic-vocal` | `mic-vocal` ≈ | own | — | letra da música |
 | `album` | `disc` | `disc` ≈ | own | — |  |
-| `speed` | `gauge` | `gauge` | outline | — | desempenho; taxa de atualização; velocidade do ponteiro |
+| `speed` | `gauge` | `gauge` | own | — | desempenho; taxa de atualização; velocidade do ponteiro. O preenchido enche o mostrador (o arco fechado embaixo) com o ponteiro recortado: é a aba Desempenho do painel, que enche quando ativa, como as abas vizinhas |
 | `developer_board` | `cpu` | `cpu` | own | — |  |
 | `memory_alt` | `memory-stick` | `memory-stick` | own | — |  |
 | `hard_drive` | `hard-drive` | `hard-drive` | own | — |  |
@@ -303,11 +303,11 @@ Os controles usados em várias telas (fechar, confirmar, expandir…).
 | Vindos do Lucide | 170 |
 | Aproximados (≈), a conferir | 23 |
 | Para desenhar (contorno novo) | 28 |
-| Com preenchido (`own`) | 124 |
+| Com preenchido (`own`) | 125 |
 | … dos quais o contorno também é para desenhar | 16 |
-| Sem preenchido próprio (`outline`, o `-fill` usa o contorno: sem área, a família `battery` e o `network`) | 74 |
+| Sem preenchido próprio (`outline`, o `-fill` usa o contorno: sem área, a família `battery` e o `network`) | 73 |
 
-Todo preenchido é desenhado aqui, porque o Lucide só tem contorno: são **124 preenchidos para desenhar** (108 sobre um contorno do Lucide e 16 sobre um contorno novo). Somando os 28 contornos novos, são **152 desenhos** ao todo, além dos ajustes que a galeria pedir.
+Todo preenchido é desenhado aqui, porque o Lucide só tem contorno: são **125 preenchidos para desenhar** (109 sobre um contorno do Lucide e 16 sobre um contorno novo). Somando os 28 contornos novos, são **153 desenhos** ao todo, além dos ajustes que a galeria pedir.
 
 Nomes do Lucide terminados em dígito que não são estados: o `picture-in-picture-2` (variante do Lucide, sem relação com uma família `picture-in-picture`). O `gamepad-2` virou `game-mode`, o nome do uso, com `origin: "lucide:gamepad-2"`. `volume-1` e `volume-2` são do Lucide e também são estados da família `volume`.
 

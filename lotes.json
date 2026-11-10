@@ -132,8 +132,11 @@
         "hard-drive",
         "gamepad"
       ],
-      "data": null,
-      "decisao": null
+      "data": "2026-11-10",
+      "decisao": {
+        "resultado": "aprovado",
+        "data": "2026-11-10"
+      }
     },
     {
       "n": 7,

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <mask id="marcas" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="white" stroke="none" />
+      <path d="M8 12v-2" stroke="black" />
+      <path d="M12 12v-2" stroke="black" />
+      <path d="M16 12v-2" stroke="black" />
+      <path d="M2 11h1.5" stroke="black" />
+      <path d="M20.5 11H22" stroke="black" />
+    </mask>
+  </defs>
+  <path d="M4 18v-2" />
+  <path d="M8 18v-2" />
+  <path d="M12 18v-2" />
+  <path d="M16 18v-2" />
+  <path d="M20 18v-2" />
+  <rect x="2" y="6" width="20" height="10" rx="2" fill="currentColor" mask="url(#marcas)" />
+</svg>
