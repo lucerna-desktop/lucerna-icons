@@ -1,0 +1,48 @@
+{
+  "fonte": "lucerna-shell: themes/*.json; derivados como no core/theme/ThemeManager.qml (gerado por tools/gallery/temas.py)",
+  "commit": "ae65557",
+  "temas": {
+    "escuro": {
+      "id": "catppuccin-mocha",
+      "nome": "Catppuccin Mocha",
+      "dark": true,
+      "cores": {
+        "base": "#1e1e2e",
+        "surface": "#313244",
+        "raised": "#45475a",
+        "border": "#585b70",
+        "text": "#cdd6f4",
+        "textMuted": "#bac2de",
+        "textFaint": "#7f849c",
+        "accent": "#89b4fa",
+        "danger": "#f38ba8",
+        "track": "#45475a",
+        "accentContainer": "#4b5d84",
+        "onAccentContainer": "#cdd6f4",
+        "accentIcon": "#89b4fa",
+        "accentFill": "#7ca1df"
+      }
+    },
+    "claro": {
+      "id": "catppuccin-latte",
+      "nome": "Catppuccin Latte",
+      "dark": false,
+      "cores": {
+        "base": "#eff1f5",
+        "surface": "#e6e9ef",
+        "raised": "#dce0e8",
+        "border": "#bcc0cc",
+        "text": "#4c4f69",
+        "textMuted": "#5c5f77",
+        "textFaint": "#8c8fa1",
+        "accent": "#1e66f5",
+        "danger": "#d20f39",
+        "track": "#ccd0da",
+        "accentContainer": "#aac3f5",
+        "onAccentContainer": "#4c4f69",
+        "accentIcon": "#1c61e9",
+        "accentFill": "#1e66f5"
+      }
+    }
+  }
+}

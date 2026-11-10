@@ -1,0 +1,395 @@
+/* A galeria de revisão. A página em si é neutra e escura; os painéis de cada
+   tema usam as cores do retrato (temas.json), definidas em .tema-escuro e
+   .tema-claro antes deste arquivo. */
+
+:root {
+  --pag: #0f0f14;
+  --cartao: #17171e;
+  --cartao-2: #1d1d26;
+  --linha: #2a2a36;
+  --texto: #e4e4ee;
+  --texto-2: #a2a2b4;
+  --texto-3: #6f6f82;
+  --destaque: #8fb3ff;
+  --pendente: #e8b65a;
+  --aprovado: #7fd18b;
+  --raio: 14px;
+
+  /* O preenchimento: o FastEffects do shell (150 ms, a curva effects rápida). */
+  --x: 1;
+  --dur: calc(150ms * var(--x));
+  --curva: cubic-bezier(0.31, 0.94, 0.34, 1);
+  --sai: cubic-bezier(0.3, 0, 1, 1);
+  --entra: cubic-bezier(0, 0, 0, 1);
+  /* As cores do bloco: o anim.large (600 ms) com a curva standard. */
+  --dur-cor: calc(600ms * var(--x));
+  --curva-cor: cubic-bezier(0.2, 0, 0, 1);
+
+  color-scheme: dark;
+}
+
+body.lento { --x: 8; }
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+
+body {
+  margin: 0;
+  background: var(--pag);
+  color: var(--texto);
+  font: 14px/1.45 "Rubik", "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+code { font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", ui-monospace, monospace; font-size: 0.92em; }
+
+a { color: var(--destaque); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* --- Topo ---------------------------------------------------------------- */
+
+.topo {
+  padding: 28px clamp(16px, 4vw, 48px) 20px;
+  border-bottom: 1px solid var(--linha);
+  background: linear-gradient(180deg, #15151d 0%, var(--pag) 100%);
+}
+
+.topo-linha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.marca span:not(.ponto) { color: var(--texto-3); font-weight: 400; }
+.ponto {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--destaque);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--destaque) 60%, transparent);
+}
+
+.controles { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; color: var(--texto-2); }
+
+.troca { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; user-select: none; }
+.troca input { accent-color: var(--destaque); margin: 0; }
+
+.botao {
+  font: inherit;
+  font-size: 13px;
+  color: var(--texto);
+  background: var(--cartao-2);
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: background 120ms, border-color 120ms;
+}
+.botao:hover { background: #262632; border-color: #3a3a4a; }
+.botao:focus-visible { outline: 2px solid var(--destaque); outline-offset: 2px; }
+
+.material-estado { font-size: 12px; color: var(--texto-3); }
+.material-estado[data-estado="ok"] { color: var(--aprovado); }
+.material-estado[data-estado="falta"] { color: var(--pendente); }
+
+.titulo { margin-top: 22px; }
+.titulo h1 { margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.01em; }
+.sub { margin: 4px 0 0; color: var(--texto-2); }
+.sub-lote:not(:empty)::before { content: " · "; }
+
+.legenda { margin: 14px 0 0; color: var(--texto-3); font-size: 12.5px; }
+.legenda b { color: var(--texto-2); font-weight: 500; }
+
+.indice { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px 3px 8px;
+  border-radius: 999px;
+  background: var(--cartao);
+  border: 1px solid var(--linha);
+  color: var(--texto-2);
+  font: 12px/1.6 "JetBrainsMono Nerd Font", "JetBrains Mono", ui-monospace, monospace;
+}
+.chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--pendente); }
+.chip-aprovado::before { background: var(--aprovado); }
+.chip-vazio { border-style: dashed; color: var(--texto-3); }
+.chip:hover { color: var(--texto); text-decoration: none; border-color: #3a3a4a; }
+
+main { padding: 24px clamp(16px, 4vw, 48px) 8px; display: grid; gap: 28px; }
+
+.rodape { padding: 8px clamp(16px, 4vw, 48px) 40px; color: var(--texto-3); font-size: 12px; }
+
+/* --- Família ---------------------------------------------------------------- */
+
+.familia {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--linha);
+  border-radius: calc(var(--raio) + 6px);
+  background: #121218;
+}
+.cab-familia { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+.cab-familia h2 { margin: 0; font-size: 19px; font-weight: 600; }
+.cab-familia span { color: var(--texto-3); font-size: 13px; }
+
+.faixas { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr)); }
+.faixa { padding: 14px 16px; border-radius: var(--raio); background: var(--base); color: var(--text); }
+.faixa h4 { margin: 0 0 10px; font-size: 12px; font-weight: 500; color: var(--text-faint); }
+.estados { display: flex; flex-wrap: wrap; gap: 8px; }
+.estado {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  min-width: 84px;
+  padding: 12px 8px 8px;
+  border-radius: 10px;
+  background: var(--surface);
+}
+.estado code { font-size: 10.5px; color: var(--text-faint); }
+.pilha { display: flex; align-items: center; gap: 12px; min-height: 28px; }
+
+/* --- Cartão de um ícone ----------------------------------------------------- */
+
+.icone {
+  border-radius: var(--raio);
+  background: var(--cartao);
+  border: 1px solid var(--linha);
+  overflow: hidden;
+}
+
+.cab {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--linha);
+}
+.cab h3 { margin: 0; font-size: 18px; font-weight: 600; }
+.cab h3 code { font-size: 1em; }
+.selo {
+  padding: 1px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid currentColor;
+}
+.selo-pendente { color: var(--pendente); }
+.selo-aprovado { color: var(--aprovado); }
+.cab dl { display: flex; flex-wrap: wrap; gap: 4px 22px; margin: 0 0 0 auto; color: var(--texto-2); font-size: 13px; }
+.cab dl div { display: flex; gap: 6px; }
+.cab dt { color: var(--texto-3); }
+.cab dd { margin: 0; }
+.falta { color: var(--pendente); }
+
+/* O desenho: o original e os 4 pesos, grandes. */
+.desenho {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 32px;
+  padding: 20px;
+  background: var(--cartao-2);
+  border-bottom: 1px solid var(--linha);
+}
+.grupo h4 { margin: 0 0 10px; font-size: 12px; font-weight: 500; color: var(--texto-3); text-transform: uppercase; letter-spacing: 0.06em; }
+.cels { display: flex; gap: 10px; }
+.cel { margin: 0; display: grid; justify-items: center; gap: 8px; }
+.cel figcaption { font-size: 12px; color: var(--texto-2); text-align: center; line-height: 1.3; }
+.cel figcaption span { color: var(--texto-3); font-size: 11px; }
+.quadro {
+  width: 96px; height: 96px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  background: var(--cartao);
+  border: 1px solid var(--linha);
+  color: var(--texto);
+}
+.quadro.orig svg { width: 72px; height: 72px; display: block; }
+/* A grade de 24 (3 px por unidade) por trás dos desenhos grandes. */
+.com-grade .quadro:not(.vazio) > .g,
+.com-grade .quadro.orig svg {
+  background:
+    linear-gradient(to right, rgba(143, 179, 255, 0.35) 1px, transparent 1px) 0 0 / 36px 36px,
+    linear-gradient(to bottom, rgba(143, 179, 255, 0.35) 1px, transparent 1px) 0 0 / 36px 36px,
+    linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 3px 3px,
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px) 0 0 / 3px 3px;
+  outline: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.aviso {
+  flex: 1;
+  padding: 18px 20px;
+  border: 1px dashed #4a4a5c;
+  border-radius: 12px;
+  color: var(--texto-2);
+}
+.aviso strong { color: var(--pendente); font-weight: 600; }
+
+/* "A desenhar": tracejado, discreto. */
+.vazio {
+  display: inline-grid;
+  place-items: center;
+  border: 1px dashed #4a4a5c;
+  border-radius: 10px;
+  color: var(--texto-3);
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  background: transparent;
+}
+.quadro.vazio { width: 96px; height: 96px; }
+.tema .vazio { border-color: color-mix(in srgb, var(--text-faint) 70%, transparent); color: var(--text-faint); padding: 6px 12px; }
+.vazio.mini { padding: 2px 8px; font-size: 10.5px; border-radius: 6px; }
+
+/* --- Os temas ------------------------------------------------------------------- */
+
+.temas { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 640px), 1fr)); }
+.tema {
+  background: var(--base);
+  color: var(--text);
+  padding: 18px 20px 20px;
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+.tema > h4 { margin: 0; font-size: 13px; font-weight: 600; color: var(--text); }
+.tema > h4 span { font-weight: 400; color: var(--text-faint); margin-left: 6px; }
+
+.tamanhos { border-collapse: collapse; width: 100%; table-layout: fixed; }
+.tamanhos th, .tamanhos td { text-align: center; vertical-align: middle; padding: 6px 2px; }
+.tamanhos thead th { font-size: 12px; font-weight: 600; color: var(--text-muted); padding-bottom: 8px; }
+.tamanhos thead th span { display: block; font-size: 10.5px; font-weight: 400; color: var(--text-faint); }
+.tamanhos tbody th {
+  width: 104px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.tamanhos tbody tr { border-top: 1px solid color-mix(in srgb, var(--border) 45%, transparent); }
+.tamanhos tbody td { height: 80px; }
+.tamanhos td.a-desenhar { padding: 6px 8px; }
+.tamanhos td.a-desenhar .vazio { width: 100%; height: 44px; }
+.rot-m { color: var(--text-faint); }
+
+/* --- Os glifos ---------------------------------------------------------------------- */
+
+.g {
+  font-family: "Lucerna Icons";
+  font-weight: var(--peso, 400);
+  font-style: normal;
+  font-feature-settings: "liga" 1;
+  font-variant-ligatures: common-ligatures;
+  line-height: 1;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.m {
+  font-family: "Material local", "Material Symbols Rounded";
+  font-weight: 400;
+  font-style: normal;
+  font-feature-settings: "liga" 1;
+  font-variation-settings: "FILL" var(--fill, 0), "wght" 400, "GRAD" var(--grad, 0), "opsz" var(--opsz, 24);
+  line-height: 1;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: var(--text);
+}
+.m.cheio, .cheio .m { --fill: 1; }
+.m-nada { color: var(--text-faint); }
+.sem-material .m { visibility: hidden; }
+.sem-material .rot-m::after { content: " (indisponível)"; font-weight: 400; }
+
+/* O contorno e o preenchido sobrepostos, como no Icon do shell: o
+   preenchido cresce e aparece; o contorno sai no fim (e volta logo no começo
+   da volta), para a troca não piscar. */
+.par { position: relative; display: inline-block; width: 1em; height: 1em; vertical-align: middle; }
+.par > .g { position: absolute; inset: 0; }
+.par > .cont { opacity: 1; transition: opacity var(--dur) var(--entra); }
+.par > .fill {
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity var(--dur) var(--curva), transform var(--dur) var(--curva);
+}
+.cheio .par > .cont { opacity: 0; transition-timing-function: var(--sai); }
+.cheio .par > .fill { opacity: 1; transform: none; }
+.m.anim { transition: font-variation-settings var(--dur) var(--curva); }
+
+/* --- O bloco (o Tile da central) ----------------------------------------------------- */
+
+.blocos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+
+.bloco {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 60px;
+  padding: 0 14px 0 10px;
+  border-radius: 14px;
+  background: var(--raised);
+  color: var(--text);
+  transition: background-color var(--dur-cor) var(--curva-cor), color var(--dur-cor) var(--curva-cor);
+}
+.bloco .circulo {
+  flex: none;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--circulo);
+  color: var(--text-muted);
+  transition: background-color var(--dur-cor) var(--curva-cor), color var(--dur-cor) var(--curva-cor);
+}
+.bloco .circulo .m { color: inherit; }
+.bloco .txt { display: grid; min-width: 0; line-height: 1.25; }
+.bloco b { font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bloco small { font-size: 11px; color: var(--text-muted); transition: color var(--dur-cor) var(--curva-cor); }
+.bloco.ativo { background: var(--accent-container); color: var(--on-accent-container); }
+.bloco.ativo .circulo { background: var(--circulo-ativo); color: var(--accent-icon); }
+.bloco.ativo small { color: var(--on-accent-container); }
+
+.nota { margin: -6px 0 0; font-size: 12px; color: var(--text-faint); }
+
+/* --- A animação ---------------------------------------------------------------------- */
+
+.anima {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 22px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px dashed color-mix(in srgb, var(--border) 80%, transparent);
+}
+.anima .lado { display: grid; justify-items: center; gap: 6px; }
+.anima .lado small { font-size: 11px; color: var(--text-faint); }
+.g-anima { color: var(--text); display: inline-flex; }
+.anima .bloco.alterna { flex: 1 1 200px; max-width: 260px; cursor: pointer; }
+.tema .botao {
+  color: var(--text);
+  background: var(--surface);
+  border-color: var(--border);
+}
+.tema .botao:hover { background: var(--raised); }
+.anima .botao { margin-left: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

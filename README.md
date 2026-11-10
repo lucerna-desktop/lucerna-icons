@@ -4,7 +4,7 @@
 
 Baseado no [Lucide](https://lucide.dev).
 
-**Situação:** o repositório acabou de nascer. Ainda não há nenhum ícone nem ferramenta de build; o desenho está no [spec](https://github.com/lucerna-desktop/lucerna-shell/blob/main/docs/superpowers/specs/2026-11-09-lucerna-icons-design.md) do `lucerna-shell`.
+**Situação:** o build da fonte e a validação já existem, e o [inventário](inventario.md) dos ícones do shell está no `manifest.json`, todos `pendente` (os do Lucide 1.70.0 já com o contorno baixado; os outros, para desenhar). Nenhum foi aprovado ainda. O desenho está no [spec](https://github.com/lucerna-desktop/lucerna-shell/blob/main/docs/superpowers/specs/2026-11-09-lucerna-icons-design.md) do `lucerna-shell`.
 
 ## O que é
 
@@ -18,21 +18,91 @@ Baseado no [Lucide](https://lucide.dev).
 
 Marcado com `[x]` o que já existe.
 
-- [x] `manifest.json`: uma entrada por ícone (`name`, `origin`, `material`, `status`, variações). Hoje está vazio.
-- [ ] `svg/outline/<nome>.svg` e `svg/filled/<nome>.svg`: a fonte da verdade, na grade de 24. Hoje só as pastas existem.
-- [ ] `tools/gallery`: a página estática de galeria usada na revisão.
-- [ ] A fonte **"Lucerna Icons"**, gerada a partir dos SVGs aprovados, com uma ligadura por ícone: `<nome>` para o contorno e `<nome>-fill` para o preenchido. A ferramenta de build ainda não foi escolhida.
-- [ ] Alvo de instalação para `/usr/share/fonts` e `/usr/share/lucerna-icons/svg`.
-- [ ] Um check de CI que valida o manifesto e os SVGs.
+- [x] `manifest.json`: a versão do Lucide de onde vêm os derivados e uma entrada por ícone (veja "O manifesto").
+- [x] `inventario.md`: a tabela legível do inventário, por área do shell: a ligadura do Material, o nome Lucerna, o ícone do Lucide (ou "desenhar"), o `filled` e a família.
+- [ ] `svg/outline/<nome>.svg` e `svg/filled/<nome>.svg`: a fonte da verdade, na grade de 24. Hoje só os contornos vindos do Lucide; os preenchidos e os ícones novos ainda serão desenhados.
+- [x] `tools/gallery`: a página estática de galeria usada na revisão (`make gallery`).
+- [x] `tools/lucerna_icons`: o `check` (manifesto e SVGs), o `fetch` (traz um ícone do Lucide) e o `build` da fonte **"Lucerna Icons"**, com uma ligadura por ícone: `<nome>` para o contorno e `<nome>-fill` para o preenchido.
+- [x] Alvo de instalação (`make install`) para `share/fonts/lucerna-icons` e `share/lucerna-icons/svg`.
+- [x] O CI (`.github/workflows/ci.yml`): `check` e `build` em PR e no `main`; a release nas tags `v*`.
+
+## O manifesto
+
+```json
+{
+  "lucideVersion": "1.70.0",
+  "icons": [
+    {
+      "name": "battery-2",
+      "origin": "lucide:battery-low",
+      "material": ["battery_2_bar"],
+      "filled": "own",
+      "family": "battery",
+      "status": "pendente"
+    }
+  ]
+}
+```
+
+- `lucideVersion`: a tag do Lucide de onde vêm os derivados (hoje `1.70.0`; as tags do Lucide 1.x não têm o `v`). Enquanto nenhum ícone vier do Lucide, pode ficar como `"pendente"`.
+- `name`: o nome do Lucerna, em kebab-case (igual ao do Lucide quando derivado); não termina em `-fill`.
+- `origin`: `"lucide:<nome>"` ou `"lucerna"`, para os originais.
+- `material`: as ligaduras do Material Symbols que ele substitui (cada uma em um só ícone).
+- `filled`: `"own"` quando tem `svg/filled/<nome>.svg`; `"outline"` para os sem área a preencher (fechar, setas), em que o `<nome>-fill` mostra o próprio contorno.
+- `family`: os estados de uma família (`battery-0`…`battery-7`) levam o mesmo nome aqui, e a família é aprovada junta; `null` quando não tem.
+- `status`: `"pendente"` ou `"aprovado"`. Só os aprovados entram na fonte instalada; um pendente pode não ter SVG ainda.
+
+## Os SVGs
+
+- `viewBox="0 0 24 24"`, como o Lucide: traço 2, `stroke-linecap` e `stroke-linejoin` `round` no `<svg>`.
+- Cor só `currentColor` ou `none`, nunca fixa.
+- Para recortar um traço de dentro de um preenchido (o raio dentro da bateria cheia), usa-se uma `<mask>`: um retângulo `white` (o que fica) e o traço `black` (o que sai), e o elemento pintado leva `mask="url(#id)"`. Um exemplo está em `tests/fixtures/svg/filled/bateria.svg`. Furos geométricos também valem com `fill-rule="evenodd"`.
+
+## Desenvolvimento
+
+As dependências Python ficam num `.venv` local, criado sozinho pelo Makefile (ou com `make venv`); nada vai para o sistema.
+
+```sh
+make check          # valida o manifesto e os SVGs
+make check-tests    # os testes (pytest)
+make build          # dist/: os 4 TTFs, os SVGs e o manifesto, só dos aprovados
+make build-all      # dist/todos/: o mesmo com os pendentes, para a galeria
+make gallery ICONS="battery-0 wifi"   # a galeria de revisão em gallery-out/
+make gallery LOTE=1                   # ... ou a de um lote do lotes.json
+```
+
+A galeria (`python -m lucerna_icons gallery <nome>... | --lote <n> --out <pasta> [--dist dist/todos]`) gera um `index.html` com os TTFs em `fontes/`, que abre direto do disco. Cada ícone vem com a família inteira e mostra o original do Lucide (quando derivado), o contorno e o preenchido nos 4 pesos, os tamanhos 14 a 64 com o peso automático, os temas catppuccin-mocha e catppuccin-latte, o bloco ativo e o inativo, a animação do preenchimento e o Material Symbols ao lado (o do sistema ou, com rede, o do Google Fonts). O que ainda não foi desenhado aparece como "a desenhar". As cores dos temas são um retrato do shell em `tools/gallery/temas.json`, refeito com `python3 tools/gallery/temas.py <caminho do lucerna-shell> > tools/gallery/temas.json`.
+
+Para instalar, primeiro o build como usuário e depois a cópia como root (o `install` só copia o que está em `dist/` e falha se o build não foi feito):
+
+```sh
+make build
+sudo make install PREFIX=/usr   # TTFs em $(PREFIX)/share/fonts/lucerna-icons/,
+                                # SVGs e manifesto em $(PREFIX)/share/lucerna-icons/
+                                # LICENSE e LICENSE-LUCIDE em $(PREFIX)/share/licenses/lucerna-icons/
+```
+
+Direto pela ferramenta: `PYTHONPATH=tools .venv/bin/python -m lucerna_icons check` e `... build [--all] --out dist/`.
+
+Para trazer um ícone do Lucide (da tag `lucideVersion`, pelo raw.githubusercontent.com):
+
+```sh
+PYTHONPATH=tools .venv/bin/python -m lucerna_icons fetch battery-full --as battery-7 \
+    --material battery_full --filled own --family battery
+```
+
+O `fetch` grava `svg/outline/<nome>.svg` com os atributos normalizados (grade de 24, `currentColor`, traço 2, pontas e junções redondas) e cria a entrada `pendente` com `origin: "lucide:<nome>"`. Um ícone aprovado nunca é sobrescrito; num pendente, o SVG e a origem são refeitos, e `material`, `filled` e `family` só mudam se vierem na chamada. A variável `LUCERNA_LUCIDE_URL` (ou `--url`) troca a URL, com `{tag}` e `{nome}`.
+
+A fonte tem 4 pesos, gerados dos mesmos SVGs com o traço reescrito: traço 1 → `LucernaIcons-ExtraLight.ttf` (200), 1,5 → `Light` (300), 2 → `Regular` (400) e 2,5 → `SemiBold` (600). Os traços viram contornos com o [picosvg](https://github.com/googlefonts/picosvg) e o skia-pathops, e a fonte é montada com o fontTools.
 
 ## Como um ícone entra
 
-Nenhum ícone entra no pacote sem ser aprovado, **um de cada vez**:
+Nenhum ícone entra no pacote sem ser aprovado. A revisão é **em lotes de 10–15 ícones**, cada um com a família inteira:
 
-1. Escolhe-se o próximo ícone do `manifest.json` (começa como `pendente`).
-2. Monta-se o contorno, o preenchido e os estados, com o original do Lucide ao lado quando houver.
-3. A galeria mostra o ícone em 16, 20, 24 e 28 px, nos temas escuro e claro, num bloco ativo e com a animação do preenchimento, ao lado do Material atual.
-4. Só depois da aprovação o ícone vira `aprovado`.
+1. Escolhe-se o próximo lote do `manifest.json` (os ícones começam como `pendente`).
+2. Para cada ícone do lote, monta-se o contorno, o preenchido e todos os estados (os 8 da bateria, por exemplo), com o original do Lucide ao lado quando houver.
+3. A galeria mostra cada ícone em 14, 16, 20, 24, 32, 40 e 64 px (com o peso automático), nos temas escuro e claro, num bloco ativo e com a animação do preenchimento, ao lado do Material atual.
+4. O lote é aprovado, ou os que precisam de ajuste voltam no lote seguinte. Só um ícone aprovado vira `aprovado`, e a família é aprovada junta.
 
 ## Licença
 

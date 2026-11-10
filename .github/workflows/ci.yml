@@ -1,0 +1,104 @@
+# CI do `lucerna-icons`: os checks do main (check, build) e a release nas tags.
+# Os comandos são os mesmos que se roda na máquina local (README, "Desenvolvimento");
+# o Makefile cria o .venv com o requirements.txt.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# PR: um grupo por ref, a execução nova cancela a antiga. Fora de PR (main,
+# tag, manual): um grupo por execução, para nenhuma ficar cancelada na fila.
+concurrency:
+  group: ci-${{ github.event_name == 'pull_request' && github.ref || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  # O manifesto, os SVGs e os testes do build.
+  check:
+    name: check
+    if: github.ref_type != 'tag'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Dependências (.venv)
+        run: make venv
+
+      - name: Manifesto e SVGs
+        run: make check
+
+      - name: Testes
+        run: make check-tests
+
+  # A fonte de todos os ícones, pendentes inclusive (o que a galeria usa), e a
+  # dos aprovados (o que se instala).
+  build:
+    name: build
+    if: github.ref_type != 'tag'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Dependências (.venv)
+        run: make venv
+
+      - name: Build com os pendentes
+        run: make build-all
+
+      - name: Build dos aprovados
+        run: make build
+
+  # Numa tag v*: a fonte dos aprovados, o manifesto e os SVGs anexados à release.
+  release:
+    name: release
+    if: github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Dependências (.venv)
+        run: make venv
+
+      - name: Check
+        run: make check && make check-tests
+
+      - name: Build dos aprovados
+        run: make build
+
+      - name: SVGs (.tar.gz)
+        run: |
+          cp LICENSE LICENSE-LUCIDE dist/
+          tar -czf "dist/lucerna-icons-svg-$GITHUB_REF_NAME.tar.gz" -C dist svg LICENSE LICENSE-LUCIDE
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          arquivos=(dist/*.ttf dist/manifest.json dist/LICENSE dist/LICENSE-LUCIDE dist/lucerna-icons-svg-*.tar.gz)
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "${arquivos[@]}" --clobber --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$GITHUB_REF_NAME" "${arquivos[@]}" --verify-tag --generate-notes --repo "$GITHUB_REPOSITORY"
+          fi
