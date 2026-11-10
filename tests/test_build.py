@@ -223,3 +223,25 @@ def test_install_leva_as_duas_licencas(tmp_path):
     lic = tmp_path / "raiz" / "usr" / "share" / "licenses" / "lucerna-icons"
     assert (lic / "LICENSE").read_text() == (raiz / "LICENSE").read_text()
     assert (lic / "LICENSE-LUCIDE").read_text() == (raiz / "LICENSE-LUCIDE").read_text()
+
+
+def test_recorte_da_mascara_cresce_com_o_traco(tmp_path):
+    # O traço preto de uma <mask> também é reescrito pelo peso: o vão do
+    # recorte cresce junto com o traço do desenho (as cargas da bateria).
+    svg = tmp_path / "corte.svg"
+    svg.write_text(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+        ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+        '<defs><mask id="m" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">'
+        '<rect width="24" height="24" fill="white" stroke="none"/>'
+        '<path d="M12 4v16" stroke="black" stroke-width="4"/></mask></defs>'
+        '<rect x="4" y="4" width="16" height="16" fill="currentColor" stroke="none" mask="url(#m)"/></svg>'
+    )
+    def area(traco):
+        pen = AreaPen()
+        build.contorno_svg(svg, traco).draw(pen)
+        return abs(pen.value)
+    # 16 × (16 − 4·traço/2): o recorte tem 2, 4 e 5 de largura.
+    assert area(1.0) == pytest.approx(16 * 14, rel=1e-3)
+    assert area(2.0) == pytest.approx(16 * 12, rel=1e-3)
+    assert area(2.5) == pytest.approx(16 * 11, rel=1e-3)
