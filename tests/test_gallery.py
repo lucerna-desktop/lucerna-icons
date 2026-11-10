@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 from conftest import SVG_OK, icone
-from lucerna_icons import build, fetch, gallery
+from lucerna_icons import build, fetch, gallery, manifest
 from lucerna_icons.__main__ import main
 
 PESOS = (200, 300, 400, 600)
@@ -403,6 +403,34 @@ def test_camadas_mostram_a_composicao_na_cor_do_estado(repo_galeria, tmp_path, f
     temas = json.loads((PASTA_GALERIA / "temas.json").read_text())
     for papel in TEMAS:
         assert f"--danger: {temas['temas'][papel]['cores']['danger']}" in texto
+
+
+def test_fundo_apagado_mostra_os_niveis_sobre_o_fundo(repo_galeria, tmp_path, fontes):
+    dados = json.loads((repo_galeria.raiz / "manifest.json").read_text())
+    dados["icons"] += [
+        icone("sinal-0", family="sinal", status="pendente", background="sinal-1"),
+        icone("sinal-1", family="sinal", status="pendente"),
+    ]
+    (repo_galeria.raiz / "manifest.json").write_text(json.dumps(dados))
+    for n in ("sinal-0", "sinal-1"):
+        repo_galeria.svg("outline", n)
+    texto, _ = gerar(repo_galeria, ["sinal-0"], tmp_path, fontes)
+    achados = ids(texto)
+    for tema in TEMAS:
+        assert f"familia-sinal-{tema}-fundo" in achados
+        for px in gallery.FUNDO_PX:
+            assert {f"ic-sinal-0-{tema}-fundo-{px}", f"ic-sinal-1-{tema}-fundo-{px}"} <= achados
+            assert "sobre-fundo" in classes_de(texto, f"ic-sinal-0-{tema}-fundo-{px}")
+    # O fundo vai atrás, apagado, e o nível na frente; o próprio fundo aparece sozinho.
+    assert re.search(r'class="g atras"[^>]*>sinal-1<.*?class="g frente"[^>]*>sinal-0<', texto)
+    m = re.search(r'<span id="ic-sinal-1-escuro-fundo-18"[^>]*>(.*?)</span></div>', texto)
+    assert m and "atras" not in m.group(1)
+    assert f"--opacidade-fundo: {manifest.OPACIDADE_FUNDO:g}" in texto
+
+
+def test_sem_fundo_nao_tem_composicao_do_fundo(repo_galeria, tmp_path, fontes):
+    texto, _ = gerar(repo_galeria, ["wifi-2"], tmp_path, fontes)
+    assert not any(i.endswith("-fundo") for i in ids(texto))
 
 
 def test_sem_camada_nao_tem_composicao(repo_galeria, tmp_path, fontes):
