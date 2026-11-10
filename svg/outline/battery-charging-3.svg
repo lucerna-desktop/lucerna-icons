@@ -1,14 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <defs>
-    <mask id="raio" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+    <mask id="folga" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
       <rect width="24" height="24" fill="white" stroke="none" />
-      <path d="M12.875 9.5 9.875 12h3l-3 2.5" stroke="black" stroke-width="3.5" />
+      <path d="M12.75 9.75 9.75 12h3l-3 2.25" stroke="black" stroke-width="1.75" />
+    </mask>
+    <mask id="fora" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="white" stroke="none" />
+      <path d="M13.75 8v8H5.625a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2z" fill="black" stroke="black" stroke-width="3.5" />
     </mask>
   </defs>
   <rect x="3.625" y="8" width="15.5" height="8" rx="2" />
   <path d="M19.125 10.75h1.25v2.5h-1.25z" fill="currentColor" />
-  <rect x="6.125" y="10" width="1.6875" height="4" rx="0.5" fill="currentColor" stroke="none" mask="url(#raio)" />
-  <rect x="9.0625" y="10" width="1.6875" height="4" rx="0.5" fill="currentColor" stroke="none" mask="url(#raio)" />
-  <rect x="12" y="10" width="1.6875" height="4" rx="0.5" fill="currentColor" stroke="none" mask="url(#raio)" />
-  <path d="M12.875 9.5 9.875 12h3l-3 2.5" />
+  <path d="M13.75 8v8H5.625a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2z" fill="currentColor" mask="url(#folga)" />
+  <path d="M12.75 9.75 9.75 12h3l-3 2.25" stroke-width="1.75" mask="url(#fora)" />
 </svg>

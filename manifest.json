@@ -102,7 +102,7 @@
       "material": [
         "battery_alert"
       ],
-      "filled": "own",
+      "filled": "outline",
       "family": "battery",
       "status": "pendente"
     },
