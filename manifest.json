@@ -329,7 +329,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "headset",
@@ -339,7 +340,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "keyboard",
@@ -349,7 +351,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "gamepad-directional",
@@ -359,7 +362,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "smartphone",
@@ -369,7 +373,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "watch",
@@ -379,7 +384,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "laptop",
@@ -389,7 +395,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "tv",
@@ -399,7 +406,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "speaker",
@@ -409,7 +417,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "mic",
@@ -1779,7 +1788,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 19
     },
     {
       "name": "touchpad",
@@ -2021,6 +2031,17 @@
       "filled": "outline",
       "family": null,
       "status": "pendente"
+    },
+    {
+      "name": "devices",
+      "origin": "lucide:monitor-smartphone",
+      "material": [
+        "devices_other"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "aprovado",
+      "minSize": 20
     }
   ]
 }
