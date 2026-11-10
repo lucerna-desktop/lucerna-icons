@@ -14,6 +14,7 @@ Além dos TTFs, a saída leva os SVGs incluídos (`svg/{outline,filled}`) e o
 """
 
 import copy
+import json
 import re
 import shutil
 import sys
@@ -324,7 +325,7 @@ def construir(raiz: Path, saida: Path, todos: bool = False) -> list[Path]:
     erros = manifest.validar(raiz)
     if erros:
         raise ErroDeBuild("o check falhou:\n" + "\n".join(f"  {e}" for e in erros))
-    _, icones, _ = manifest.carregar(raiz)
+    dados, icones, _ = manifest.carregar(raiz)
     entradas = _entradas(raiz, icones, todos)
 
     saida.mkdir(parents=True, exist_ok=True)
@@ -342,5 +343,9 @@ def construir(raiz: Path, saida: Path, todos: bool = False) -> list[Path]:
         shutil.copy(e.contorno, saida / "svg" / "outline" / e.contorno.name)
         if e.preenchido is not None:
             shutil.copy(e.preenchido, saida / "svg" / "filled" / e.preenchido.name)
-    shutil.copy(raiz / "manifest.json", saida / "manifest.json")
+    # O manifesto da saída só com os ícones que entraram no build: o instalado
+    # nunca anuncia um pendente.
+    incluidos = {e.icone.name for e in entradas}
+    dados = dict(dados, icons=[i for i in dados["icons"] if i["name"] in incluidos])
+    (saida / "manifest.json").write_text(json.dumps(dados, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return arquivos

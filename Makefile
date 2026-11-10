@@ -46,7 +46,11 @@ build-all: $(VENV)/.ok
 	rm -rf $(DISTALL)
 	$(RUN) build --all --out $(DISTALL)
 
-install: build
+# Só copia o que o `make build` deixou em dist/: assim o `sudo make install`
+# não roda o build como root (o dist/ e o .venv ficariam com dono root).
+install:
+	@test -f $(DIST)/LucernaIcons-Regular.ttf -a -f $(DIST)/manifest.json -a -d $(DIST)/svg || \
+	  { echo "falta o build: rode 'make build' (sem sudo) antes do 'make install'" >&2; exit 1; }
 	install -d $(FONTDIR) $(DATADIR)/svg/outline $(DATADIR)/svg/filled
 	install -m644 $(DIST)/*.ttf $(FONTDIR)/
 	install -m644 $(DIST)/manifest.json $(DATADIR)/manifest.json

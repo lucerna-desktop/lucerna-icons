@@ -66,6 +66,12 @@ make check          # valida o manifesto e os SVGs
 make check-tests    # os testes (pytest)
 make build          # dist/: os 4 TTFs, os SVGs e o manifesto, só dos aprovados
 make build-all      # dist/todos/: o mesmo com os pendentes, para a galeria
+```
+
+Para instalar, primeiro o build como usuário e depois a cópia como root (o `install` só copia o que está em `dist/` e falha se o build não foi feito):
+
+```sh
+make build
 sudo make install PREFIX=/usr   # TTFs em $(PREFIX)/share/fonts/lucerna-icons/,
                                 # SVGs e manifesto em $(PREFIX)/share/lucerna-icons/
 ```
@@ -76,12 +82,12 @@ A fonte tem 4 pesos, gerados dos mesmos SVGs com o traço reescrito: traço 1 �
 
 ## Como um ícone entra
 
-Nenhum ícone entra no pacote sem ser aprovado, **um de cada vez**:
+Nenhum ícone entra no pacote sem ser aprovado. A revisão é **em lotes de 10–15 ícones**, cada um com a família inteira:
 
-1. Escolhe-se o próximo ícone do `manifest.json` (começa como `pendente`).
-2. Monta-se o contorno, o preenchido e os estados, com o original do Lucide ao lado quando houver.
-3. A galeria mostra o ícone em 16, 20, 24 e 28 px, nos temas escuro e claro, num bloco ativo e com a animação do preenchimento, ao lado do Material atual.
-4. Só depois da aprovação o ícone vira `aprovado`.
+1. Escolhe-se o próximo lote do `manifest.json` (os ícones começam como `pendente`).
+2. Para cada ícone do lote, monta-se o contorno, o preenchido e todos os estados (os 8 da bateria, por exemplo), com o original do Lucide ao lado quando houver.
+3. A galeria mostra cada ícone em 16, 20, 24 e 28 px, nos temas escuro e claro, num bloco ativo e com a animação do preenchimento, ao lado do Material atual.
+4. O lote é aprovado, ou os que precisam de ajuste voltam no lote seguinte. Só um ícone aprovado vira `aprovado`, e a família é aprovada junta.
 
 ## Licença
 

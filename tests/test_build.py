@@ -1,5 +1,7 @@
 """O build: os 4 TTFs, as ligaduras e a forma dos glifos, sobre as fixtures."""
 
+import json
+
 import pytest
 import uharfbuzz as hb
 from fontTools.pens.areaPen import AreaPen
@@ -142,8 +144,6 @@ def test_glifo_dentro_da_grade(dist):
 
 
 def test_build_so_inclui_aprovados(repo_fixtures, tmp_path):
-    import json
-
     dados = json.loads((repo_fixtures.raiz / "manifest.json").read_text())
     dados["icons"][0]["status"] = "pendente"  # seta
     (repo_fixtures.raiz / "manifest.json").write_text(json.dumps(dados))
@@ -155,11 +155,15 @@ def test_build_so_inclui_aprovados(repo_fixtures, tmp_path):
     assert not (so_aprovados / "svg" / "outline" / "seta.svg").exists()
     assert (so_aprovados / "svg" / "outline" / "wifi.svg").exists()
     assert (so_aprovados / "svg" / "filled" / "bateria.svg").exists()
-    assert (so_aprovados / "manifest.json").exists()
+    nomes = [i["name"] for i in json.loads((so_aprovados / "manifest.json").read_text())["icons"]]
+    assert nomes == ["wifi", "wifi-2", "bateria"]
 
     todos = tmp_path / "b"
     build.construir(repo_fixtures.raiz, todos, todos=True)
     assert moldar(todos / "LucernaIcons-Regular.ttf", "seta") == [build.nome_glifo("seta")]
+    dados = json.loads((todos / "manifest.json").read_text())
+    assert dados["lucideVersion"] == "0.460.0"
+    assert [i["name"] for i in dados["icons"]] == ["seta", "wifi", "wifi-2", "bateria"]
 
 
 def test_build_com_pendente_sem_svg(repo, tmp_path):
@@ -170,6 +174,9 @@ def test_build_com_pendente_sem_svg(repo, tmp_path):
     # Sem o preenchido ainda, o -fill mostra o contorno; sem SVG, o ícone fica de fora.
     assert moldar(fonte, "a-fill") == [build.nome_glifo("a")]
     assert len(moldar(fonte, "b")) == 1 and moldar(fonte, "b") != [build.nome_glifo("b")]
+    # E o manifesto da saída só tem o que entrou.
+    dados = json.loads((tmp_path / "d" / "manifest.json").read_text())
+    assert [i["name"] for i in dados["icons"]] == ["a"]
 
 
 def test_build_com_manifesto_vazio(repo, tmp_path):
