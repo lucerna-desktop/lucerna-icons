@@ -148,9 +148,9 @@ O menu de energia, a tela de bloqueio e o modo de segurança.
 | `logout` | `log-out` | `log-out` | outline | — |  |
 | `restart_alt` | `rotate-ccw` | `rotate-ccw` | outline | — | reiniciar |
 | `bedtime`, `clear_night` | `moon` | `moon` | own | — | suspender; também a noite limpa e o pôr do sol |
-| `lock` | `lock` | `lock` | own | — |  |
+| `lock` | `lock` | `lock` ≈ | own | — | com o buraco da fechadura (um ponto), como o Material: em traço no contorno e vazado no preenchido |
 | `warning` | `triangle-exclamation-point` | `triangle-exclamation-point` | own | — | modo de segurança |
-| `terminal` | `square-terminal` | `square-terminal` ≈ | own | — | o terminal do Lucide é só “>_”; este tem a moldura, como o Material |
+| `terminal` | `square-terminal` | `square-terminal` ≈ | own | — | o terminal do Lucide é só “>_”; este tem a moldura, como o Material, e o “>_” maior e centrado (`m7 9 3 3-3 3`, `M13 15h4`), como no Material |
 
 ## Lançador
 
@@ -301,7 +301,7 @@ Os controles usados em várias telas (fechar, confirmar, expandir…).
 | Total de ícones (glifos de contorno) | 198 |
 | Ligaduras do Material substituídas | 211 |
 | Vindos do Lucide | 170 |
-| Aproximados (≈), a conferir | 22 |
+| Aproximados (≈), a conferir | 23 |
 | Para desenhar (contorno novo) | 28 |
 | Com preenchido (`own`) | 124 |
 | … dos quais o contorno também é para desenhar | 16 |
