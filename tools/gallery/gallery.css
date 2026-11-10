@@ -415,6 +415,12 @@ main { padding: 24px clamp(16px, 4vw, 48px) 8px; display: grid; gap: 28px; }
 .estado-warning > .cima { color: var(--warning); }
 .estado-danger > .cima { color: var(--danger); }
 
+/* O fundo apagado (background): o fundo na cor do ícone, com a opacidade do
+   manifesto (--opacidade-fundo), e o nível por cima na cor cheia. */
+.sobre-fundo { position: relative; display: inline-block; width: 1em; height: 1em; vertical-align: middle; color: var(--text); }
+.sobre-fundo > .g { position: absolute; inset: 0; }
+.sobre-fundo > .atras { opacity: var(--opacidade-fundo); }
+
 /* Os tamanhos abaixo do minSize do ícone: fora do uso no shell. */
 .tamanhos td.fora-do-uso > :not(.rot-fora) { opacity: 0.3; }
 .tamanhos td.fora-do-uso .rot-fora { display: block; margin-top: 2px; font-size: 9px; color: var(--text-faint); white-space: nowrap; }

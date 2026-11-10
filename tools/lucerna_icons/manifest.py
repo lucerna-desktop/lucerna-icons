@@ -15,6 +15,8 @@ Esquema:
           "status": "aprovado",          # ou "pendente"
           "layer": "battery-fill-1",     # opcional: o glifo da camada de cima,
                                          # da mesma família (a bateria baixa)
+          "background": "wifi-3",        # opcional: o glifo de fundo, desenhado
+                                         # apagado por baixo (o sinal que falta)
           "minSize": 18                  # opcional: o menor tamanho (px) em que
                                          # precisa funcionar; sem ele, 14
         }
@@ -24,6 +26,13 @@ Esquema:
 `layer` diz que o ícone é a camada de baixo de um ícone em duas camadas: o
 shell sobrepõe o glifo `layer`, em outra cor, a ele. A camada precisa existir no
 manifesto, ser da mesma família e não ser o próprio ícone.
+
+`background` diz que o ícone é um nível desenhado sobre um fundo apagado: o
+shell desenha o glifo `background` por baixo, na cor do ícone com a opacidade
+`OPACIDADE_FUNDO`, e o ícone por cima, na cor cheia (o Wi-Fi com os arcos que
+faltam apagados, como no Android). O fundo precisa existir no manifesto, ser da
+mesma família e não ser o próprio ícone, e precisa cobrir o glifo: o desenho do
+nível é um subconjunto do desenho do fundo, nos 4 pesos (`fundo-nao-cobre`).
 
 `minSize` é o menor tamanho, em px, em que o ícone precisa funcionar no shell
 (sem o campo, vale `MIN_SIZE_PADRAO`, o menor token de tamanho). A família tem
@@ -44,8 +53,13 @@ from pathlib import Path
 from . import svgcheck
 
 CAMPOS = {"name", "origin", "material", "filled", "family", "status"}
-OPCIONAIS = {"layer", "minSize"}
+OPCIONAIS = {"layer", "background", "minSize"}
 MIN_SIZE_PADRAO = 14
+# A opacidade do fundo (`background`) sobre a cor do ícone; o shell usa a mesma.
+OPACIDADE_FUNDO = 0.3
+# A área (em unidades² da grade de 24) que o nível pode ter fora do fundo: só o
+# ruído da conversão do traço em contorno.
+FOLGA_FUNDO = 0.01
 NOME = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 ORIGEM_LUCIDE = re.compile(r"^lucide:[a-z0-9]+(-[a-z0-9]+)*$")
 MATERIAL = re.compile(r"^[a-z0-9_]+$")
@@ -75,6 +89,7 @@ class Icone:
     status: str
     layer: str | None = None
     min_size: int = MIN_SIZE_PADRAO
+    background: str | None = None
 
     @property
     def aprovado(self) -> bool:
@@ -151,6 +166,11 @@ def _validar_entrada(i: int, e, erros: list[Erro]) -> Icone | None:
         erros.append(Erro("camada-invalida", rotulo, f"layer {camada!r}: precisa ser o nome de um ícone"))
         ok = False
 
+    fundo = e.get("background")
+    if "background" in e and not (isinstance(fundo, str) and NOME.match(fundo)):
+        erros.append(Erro("fundo-invalido", rotulo, f"background {fundo!r}: precisa ser o nome de um ícone"))
+        ok = False
+
     minimo = e.get("minSize", MIN_SIZE_PADRAO)
     if not (isinstance(minimo, int) and not isinstance(minimo, bool) and 8 <= minimo <= 128):
         erros.append(Erro("min-size-invalido", rotulo, f"minSize {minimo!r}: precisa ser um inteiro de 8 a 128 (px)"))
@@ -158,7 +178,7 @@ def _validar_entrada(i: int, e, erros: list[Erro]) -> Icone | None:
 
     if not ok:
         return None
-    return Icone(nome, origem, tuple(material), e["filled"], familia, e["status"], camada, minimo)
+    return Icone(nome, origem, tuple(material), e["filled"], familia, e["status"], camada, minimo, fundo)
 
 
 def carregar(raiz: Path) -> tuple[dict, list[Icone], list[Erro]]:
@@ -228,6 +248,19 @@ def carregar(raiz: Path) -> tuple[dict, list[Icone], list[Erro]]:
                 Erro("camada-invalida", ic.name, f"layer {ic.layer!r} precisa ser da mesma família ({ic.family!r})")
             )
 
+    for ic in icones:
+        if ic.background is None:
+            continue
+        alvo = por_nome.get(ic.background)
+        if ic.background == ic.name:
+            erros.append(Erro("fundo-invalido", ic.name, "background não pode ser o próprio ícone"))
+        elif alvo is None:
+            erros.append(Erro("fundo-invalido", ic.name, f"background {ic.background!r} não está no manifesto"))
+        elif not ic.family or alvo.family != ic.family:
+            erros.append(
+                Erro("fundo-invalido", ic.name, f"background {ic.background!r} precisa ser da mesma família ({ic.family!r})")
+            )
+
     derivados = [ic.name for ic in icones if ic.origin.startswith("lucide:")]
     if derivados and isinstance(versao, str) and not VERSAO.match(versao):
         erros.append(
@@ -265,6 +298,8 @@ def validar(raiz: Path) -> list[Erro]:
                 Erro("preenchido-sobrando", ic.name, f'filled é "outline", mas existe {preenchido.relative_to(raiz)}')
             )
 
+    erros += _fundos_cobrem(raiz, icones, erros)
+
     nomes = {ic.name for ic in icones}
     for tipo in ("outline", "filled"):
         for svg in sorted((raiz / "svg" / tipo).glob("*.svg")):
@@ -272,3 +307,42 @@ def validar(raiz: Path) -> list[Erro]:
                 erros.append(Erro("svg-orfao", svg.stem, f"{svg.relative_to(raiz)} não está no manifesto"))
 
     return erros
+
+
+def _fundos_cobrem(raiz: Path, icones: list[Icone], erros: list[Erro]) -> list[Erro]:
+    """O desenho de cada nível com `background` fica dentro do desenho do fundo, nos 4 pesos."""
+    import pathops
+
+    from . import build
+
+    invalidos = {e.icone for e in erros if e.codigo == "fundo-invalido"}
+    com_svg_ruim = {e.icone for e in erros if e.codigo.startswith("svg-")}
+    novos = []
+    for ic in icones:
+        if ic.background is None or ic.name in invalidos or {ic.name, ic.background} & com_svg_ruim:
+            continue
+        nivel, fundo = svg_contorno(raiz, ic.name), svg_contorno(raiz, ic.background)
+        if not (nivel.exists() and fundo.exists()):
+            continue
+        for peso in build.PESOS:
+            try:
+                fora = pathops.op(
+                    build.contorno_svg(nivel, peso.traco),
+                    build.contorno_svg(fundo, peso.traco),
+                    pathops.PathOp.DIFFERENCE,
+                    fix_winding=True,
+                )
+            except build.ErroDeBuild as e:
+                novos.append(Erro("fundo-nao-cobre", ic.name, f"não deu para comparar com o fundo: {e}"))
+                break
+            area = abs(fora.area)
+            if area > FOLGA_FUNDO:
+                novos.append(
+                    Erro(
+                        "fundo-nao-cobre",
+                        ic.name,
+                        f"no traço {peso.traco:g}, {area:.3f} unidades² do desenho ficam fora de {ic.background!r}",
+                    )
+                )
+                break
+    return novos

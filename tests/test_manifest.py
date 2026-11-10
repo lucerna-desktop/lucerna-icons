@@ -255,6 +255,56 @@ def test_camada_invalida(repo, entradas):
     assert "camada-invalida" in codigos(repo.raiz)
 
 
+ARCOS = (
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
+    ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round">{}</svg>'
+)
+PONTO = '<path d="M12 20h.01" />'
+ARCO_1 = '<path d="M8.5 16.429a5 5 0 0 1 7 0" />'
+ARCO_2 = '<path d="M5 12.859a10 10 0 0 1 14 0" />'
+
+
+def test_fundo_que_cobre_o_nivel_passa(repo):
+    # O wifi-1 (ponto e um arco) sobre o wifi-2 (ponto e dois arcos) apagado.
+    repo.svg("outline", "w-1", ARCOS.format(PONTO + ARCO_1))
+    repo.svg("outline", "w-2", ARCOS.format(PONTO + ARCO_1 + ARCO_2))
+    repo.manifesto([icone("w-1", family="w", background="w-2"), icone("w-2", family="w")])
+    assert manifest.validar(repo.raiz) == []
+    _, icones, _ = manifest.carregar(repo.raiz)
+    assert {ic.name: ic.background for ic in icones} == {"w-1": "w-2", "w-2": None}
+
+
+def test_fundo_que_nao_cobre_o_nivel(repo):
+    # O arco do nível deslocado meia unidade para baixo sai do fundo.
+    repo.svg("outline", "w-1", ARCOS.format(PONTO + '<path d="M8.5 16.929a5 5 0 0 1 7 0" />'))
+    repo.svg("outline", "w-2", ARCOS.format(PONTO + ARCO_1 + ARCO_2))
+    repo.manifesto([icone("w-1", family="w", background="w-2"), icone("w-2", family="w")])
+    assert codigos(repo.raiz) == {"fundo-nao-cobre"}
+
+
+@pytest.mark.parametrize(
+    "entradas",
+    [
+        [icone("w-1", family="w", background="w-2")],  # o fundo não existe
+        [icone("w-1", family="w", background="w-2"), icone("w-2", family="outra")],  # outra família
+        [icone("w-1", background="w-2"), icone("w-2")],  # sem família
+        [icone("w-1", family="w", background="w-1")],  # o próprio ícone
+        [icone("w-1", family="w", background="W2!")],  # nome inválido
+        [icone("w-1", family="w", background=None)],  # não é texto
+    ],
+)
+def test_fundo_invalido(repo, entradas):
+    for e in entradas:
+        repo.svg("outline", e["name"])
+    repo.manifesto(entradas)
+    assert "fundo-invalido" in codigos(repo.raiz)
+
+
+def test_opacidade_do_fundo():
+    # O valor que o shell e a galeria usam para o fundo apagado.
+    assert manifest.OPACIDADE_FUNDO == 0.3
+
+
 def test_min_size_padrao_e_declarado(repo):
     for n in ("a", "bat-0", "bat-1"):
         repo.svg("outline", n)

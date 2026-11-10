@@ -26,6 +26,8 @@ Ids previsíveis (os testes e o controlador contam com eles):
     familia-<família>                      a seção de uma família
     familia-<família>-<tema>-cor           a composição dos ícones com `layer`
     ic-<nome>-<tema>-camadas-<tamanho>     o ícone e a camada de cima, na cor do estado
+    familia-<família>-<tema>-fundo         os níveis sobre o fundo apagado (`background`)
+    ic-<nome>-<tema>-fundo-<tamanho>       um nível sobre o fundo, ou o próprio fundo
 
 `<tema>` é `escuro` ou `claro`; `<tipo>` é `contorno`, `preenchido`,
 `material` ou `material-fill`. O que ainda não foi desenhado leva a classe
@@ -49,6 +51,7 @@ DESENHO_PX = 72  # 3 px por unidade da grade de 24
 BLOCO_PX = 20  # o ícone do Tile da central
 ANIMA_PX = 40
 CAMADAS_PX = (18, 20, 64)
+FUNDO_PX = (18, 20, 64)
 
 # A cor da camada de cima (`layer`) na composição: o ícone de baixo fica na cor
 # normal (`text`) e a camada de cima vai na cor do estado em que o shell a usa.
@@ -413,6 +416,45 @@ def _cor_por_estado(itens: list[Item], temas: dict) -> str:
     return f'<div class="faixas">{"".join(paineis)}</div>'
 
 
+def _sobre_o_fundo(nome: str, fundo: str | None, px: int, ident: str) -> str:
+    """O nível na cor cheia sobre o fundo apagado (a opacidade de manifest.OPACIDADE_FUNDO)."""
+    peso = peso_do_tamanho(px)
+    atras = _glifo(fundo, px, peso, classe="atras") if fundo else ""
+    return (
+        f'<span id="{ident}" class="sobre-fundo" style="font-size:{px}px">'
+        f'{atras}{_glifo(nome, px, peso, classe="frente")}</span>'
+    )
+
+
+def _fundo_apagado(itens: list[Item], temas: dict) -> str:
+    """Os níveis com `background` lado a lado, cada um sobre o fundo apagado, mais o próprio fundo."""
+    nomes = {it.nome for it in itens if it.contorno is not None}
+    com_fundo = [it for it in itens if it.icone.background and it.contorno is not None and it.icone.background in nomes]
+    if not com_fundo:
+        return ""
+    fundos = {it.icone.background for it in com_fundo}
+    mostrados = [it for it in itens if it in com_fundo or it.nome in fundos]
+    fam = itens[0].icone.family
+    pct = round(manifest.OPACIDADE_FUNDO * 100)
+    paineis = []
+    for papel, tema in temas.items():
+        linhas = []
+        for px in FUNDO_PX:
+            cels = "".join(
+                f'<div class="cor-tam"><div class="pilha">'
+                f'{_sobre_o_fundo(it.nome, it.icone.background, px, f"ic-{it.nome}-{papel}-fundo-{px}")}'
+                f"</div><small>{_e(it.nome)}</small></div>"
+                for it in mostrados
+            )
+            linhas.append(f'<div class="cor-linha"><h5>{px} px</h5>{cels}</div>')
+        paineis.append(
+            f'<div id="familia-{_e(fam)}-{papel}-fundo" class="tema tema-{papel} faixa cor">'
+            f'<h4>{_e(tema["nome"])}: o nível na cor cheia sobre o fundo a {pct} %</h4>'
+            f'{"".join(linhas)}</div>'
+        )
+    return f'<div class="faixas">{"".join(paineis)}</div>'
+
+
 def _svg_embutido(origem: "Path | str") -> str:
     texto = origem if isinstance(origem, str) else origem.read_text(encoding="utf-8")
     inicio = texto.find("<svg")
@@ -453,9 +495,14 @@ def _css_temas(temas: dict) -> str:
             "--circulo-ativo": rgba(c["base"], 0.1),
             "--grad": "-25" if tema["dark"] else "0",
         }
+        props["--opacidade-fundo"] = _numero_css(manifest.OPACIDADE_FUNDO)
         corpo = "; ".join(f"{k}: {v}" for k, v in props.items())
         blocos.append(f".tema-{papel} {{ {corpo}; color-scheme: {'dark' if tema['dark'] else 'light'}; }}")
     return "\n".join(blocos)
+
+
+def _numero_css(v: float) -> str:
+    return f"{v:g}"
 
 
 def _css_fontes() -> str:
@@ -531,7 +578,7 @@ def pagina(
                 f'<section id="familia-{_e(fam)}" class="familia">'
                 f'<header class="cab-familia"><h2>Família <code>{_e(fam)}</code></h2>'
                 f"<span>{n} {'estado' if n == 1 else 'estados'}, aprovados juntos</span></header>"
-                f"{_faixa(grupo, temas)}{_cor_por_estado(grupo, temas)}{cartoes}</section>"
+                f"{_faixa(grupo, temas)}{_fundo_apagado(grupo, temas)}{_cor_por_estado(grupo, temas)}{cartoes}</section>"
             )
         else:
             corpo.append(cartoes)
