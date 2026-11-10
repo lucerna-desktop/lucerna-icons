@@ -329,7 +329,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -340,7 +340,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -351,7 +351,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -362,7 +362,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -373,7 +373,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -384,7 +384,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -395,7 +395,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -406,7 +406,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -417,7 +417,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -1788,7 +1788,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 19
     },
     {
@@ -2040,7 +2040,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     }
   ]
