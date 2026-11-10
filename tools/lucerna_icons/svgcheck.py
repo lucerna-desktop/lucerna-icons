@@ -8,7 +8,8 @@ As regras:
   de dentro de um preenchido;
 - `stroke-linecap` e `stroke-linejoin` são `round` no `<svg>` e nenhum
   elemento troca por outro valor;
-- nada de texto, imagem, gradiente, filtro, script nem `<style>`.
+- nada de texto, imagem, gradiente, filtro, script nem `<style>`;
+- nenhum atributo de evento (`on*`) nem `href`/`xlink:href`: o SVG é só desenho.
 """
 
 import re
@@ -73,6 +74,12 @@ def validar_svg(caminho: Path) -> list[tuple[str, str]]:
         nome = _local(el.tag)
         if nome in PROIBIDOS:
             erros.append(("svg-elemento", f"<{nome}> não é permitido"))
+        for atributo in el.attrib:
+            local = _local(atributo).lower()
+            if local.startswith("on"):
+                erros.append(("svg-evento", f'<{nome}> tem o atributo de evento "{_local(atributo)}"'))
+            elif local == "href":
+                erros.append(("svg-href", f'<{nome}> tem o atributo "{_local(atributo)}" (href não é permitido)'))
         na_mascara = na_mascara or nome == "mask"
         props = _estilo(el)
         for prop in ("fill", "stroke"):

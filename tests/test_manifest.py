@@ -205,3 +205,18 @@ def test_cli_check_passa(repo_fixtures, capsys):
     from lucerna_icons.__main__ import main
 
     assert main(["check", "--root", str(repo_fixtures.raiz)]) == 0
+
+
+@pytest.mark.parametrize("atributo", ["onclick", "onLoad", "ONMOUSEOVER"])
+def test_svg_com_atributo_de_evento(repo, atributo):
+    repo.svg("outline", "x", SVG_OK.replace("<path ", f'<path {atributo}="alert(1)" '))
+    repo.manifesto([icone("x")])
+    assert "svg-evento" in codigos(repo.raiz)
+
+
+@pytest.mark.parametrize("atributo", ["href", "xlink:href"])
+def test_svg_com_href(repo, atributo):
+    texto = SVG_OK.replace("<svg ", '<svg xmlns:xlink="http://www.w3.org/1999/xlink" ', 1)
+    repo.svg("outline", "x", texto.replace("<path ", f'<path {atributo}="https://exemplo.org/x" '))
+    repo.manifesto([icone("x")])
+    assert "svg-href" in codigos(repo.raiz)
