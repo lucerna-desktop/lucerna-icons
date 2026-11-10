@@ -9,7 +9,7 @@
       ],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
+      "status": "aprovado",
       "layer": "battery-fill-1",
       "minSize": 18
     },
@@ -22,7 +22,7 @@
       ],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -34,7 +34,7 @@
       ],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -46,7 +46,7 @@
       ],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -57,7 +57,7 @@
       ],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -68,7 +68,7 @@
       ],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -79,7 +79,7 @@
       ],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -88,7 +88,7 @@
       "material": [],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -171,7 +171,7 @@
       ],
       "filled": "own",
       "family": "volume",
-      "status": "pendente"
+      "status": "aprovado"
     },
     {
       "name": "volume-1",
@@ -181,7 +181,7 @@
       ],
       "filled": "own",
       "family": "volume",
-      "status": "pendente"
+      "status": "aprovado"
     },
     {
       "name": "volume-2",
@@ -191,7 +191,7 @@
       ],
       "filled": "own",
       "family": "volume",
-      "status": "pendente"
+      "status": "aprovado"
     },
     {
       "name": "volume-off",
@@ -201,7 +201,7 @@
       ],
       "filled": "own",
       "family": "volume",
-      "status": "pendente"
+      "status": "aprovado"
     },
     {
       "name": "gamepad-2",
