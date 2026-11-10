@@ -153,7 +153,10 @@
         "wind"
       ],
       "data": "2026-11-10",
-      "decisao": null
+      "decisao": {
+        "resultado": "aprovado",
+        "data": "2026-11-10"
+      }
     },
     {
       "n": 8,
