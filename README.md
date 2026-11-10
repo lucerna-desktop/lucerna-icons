@@ -10,7 +10,7 @@ Baseado no [Lucide](https://lucide.dev).
 
 - **Só os ícones usados.** O pacote cresce sob demanda, quando um ícone novo for preciso; não inclui o Lucide inteiro.
 - **Contorno e preenchido.** O Lucide só tem contorno, então o preenchido é desenhado aqui.
-- **Variações no nível do Material**: onde o Material Symbols tem mais estados (os 8 níveis da bateria, os do Wi-Fi, o volume), desenhamos os que faltam.
+- **Variações no nível do Material**: onde o Material Symbols tem mais estados (os do Wi-Fi, o volume), desenhamos os que faltam. A bateria é desenho nosso, com 5 níveis de 4 barras.
 - **Ícones originais** onde o Lucide não tem, na mesma linguagem: grade de 24, traço 2, pontas e junções redondas.
 - Só ícones de interface; ícones de aplicativos e de tipos de arquivo do tema do sistema ficam de fora.
 
@@ -33,9 +33,9 @@ Marcado com `[x]` o que já existe.
   "lucideVersion": "1.70.0",
   "icons": [
     {
-      "name": "battery-2",
-      "origin": "lucide:battery-low",
-      "material": ["battery_2_bar"],
+      "name": "battery-1",
+      "origin": "lucerna",
+      "material": ["battery_1_bar", "battery_2_bar"],
       "filled": "own",
       "family": "battery",
       "status": "pendente"
@@ -49,7 +49,7 @@ Marcado com `[x]` o que já existe.
 - `origin`: `"lucide:<nome>"` ou `"lucerna"`, para os originais.
 - `material`: as ligaduras do Material Symbols que ele substitui (cada uma em um só ícone).
 - `filled`: `"own"` quando tem `svg/filled/<nome>.svg`; `"outline"` para os sem área a preencher (fechar, setas), em que o `<nome>-fill` mostra o próprio contorno.
-- `family`: os estados de uma família (`battery-0`…`battery-7`) levam o mesmo nome aqui, e a família é aprovada junta; `null` quando não tem.
+- `family`: os estados de uma família (`battery-0`…`battery-4`) levam o mesmo nome aqui, e a família é aprovada junta; `null` quando não tem.
 - `status`: `"pendente"` ou `"aprovado"`. Só os aprovados entram na fonte instalada; um pendente pode não ter SVG ainda.
 
 ## Os SVGs
@@ -87,8 +87,8 @@ Direto pela ferramenta: `PYTHONPATH=tools .venv/bin/python -m lucerna_icons chec
 Para trazer um ícone do Lucide (da tag `lucideVersion`, pelo raw.githubusercontent.com):
 
 ```sh
-PYTHONPATH=tools .venv/bin/python -m lucerna_icons fetch battery-full --as battery-7 \
-    --material battery_full --filled own --family battery
+PYTHONPATH=tools .venv/bin/python -m lucerna_icons fetch volume-2 \
+    --material volume_up --filled own --family volume
 ```
 
 O `fetch` grava `svg/outline/<nome>.svg` com os atributos normalizados (grade de 24, `currentColor`, traço 2, pontas e junções redondas) e cria a entrada `pendente` com `origin: "lucide:<nome>"`. Um ícone aprovado nunca é sobrescrito; num pendente, o SVG e a origem são refeitos, e `material`, `filled` e `family` só mudam se vierem na chamada. A variável `LUCERNA_LUCIDE_URL` (ou `--url`) troca a URL, com `{tag}` e `{nome}`.
@@ -100,7 +100,7 @@ A fonte tem 4 pesos, gerados dos mesmos SVGs com o traço reescrito: traço 1 �
 Nenhum ícone entra no pacote sem ser aprovado. A revisão é **em lotes de 10–15 ícones**, cada um com a família inteira:
 
 1. Escolhe-se o próximo lote do `manifest.json` (os ícones começam como `pendente`).
-2. Para cada ícone do lote, monta-se o contorno, o preenchido e todos os estados (os 8 da bateria, por exemplo), com o original do Lucide ao lado quando houver.
+2. Para cada ícone do lote, monta-se o contorno, o preenchido e todos os estados (os 5 da bateria, por exemplo), com o original do Lucide ao lado quando houver.
 3. A galeria mostra cada ícone em 14, 16, 20, 24, 32, 40 e 64 px (com o peso automático), nos temas escuro e claro, num bloco ativo e com a animação do preenchimento, ao lado do Material atual.
 4. O lote é aprovado, ou os que precisam de ajuste voltam no lote seguinte. Só um ícone aprovado vira `aprovado`, e a família é aprovada junta.
 

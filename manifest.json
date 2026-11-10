@@ -3,11 +3,11 @@
   "icons": [
     {
       "name": "battery-0",
-      "origin": "lucide:battery",
+      "origin": "lucerna",
       "material": [
         "battery_0_bar"
       ],
-      "filled": "own",
+      "filled": "outline",
       "family": "battery",
       "status": "pendente"
     },
@@ -15,19 +15,21 @@
       "name": "battery-1",
       "origin": "lucerna",
       "material": [
-        "battery_1_bar"
+        "battery_1_bar",
+        "battery_2_bar"
       ],
-      "filled": "own",
+      "filled": "outline",
       "family": "battery",
       "status": "pendente"
     },
     {
       "name": "battery-2",
-      "origin": "lucide:battery-low",
+      "origin": "lucerna",
       "material": [
-        "battery_2_bar"
+        "battery_3_bar",
+        "battery_4_bar"
       ],
-      "filled": "own",
+      "filled": "outline",
       "family": "battery",
       "status": "pendente"
     },
@@ -35,9 +37,10 @@
       "name": "battery-3",
       "origin": "lucerna",
       "material": [
-        "battery_3_bar"
+        "battery_5_bar",
+        "battery_6_bar"
       ],
-      "filled": "own",
+      "filled": "outline",
       "family": "battery",
       "status": "pendente"
     },
@@ -45,59 +48,29 @@
       "name": "battery-4",
       "origin": "lucerna",
       "material": [
-        "battery_4_bar"
-      ],
-      "filled": "own",
-      "family": "battery",
-      "status": "pendente"
-    },
-    {
-      "name": "battery-5",
-      "origin": "lucide:battery-medium",
-      "material": [
-        "battery_5_bar"
-      ],
-      "filled": "own",
-      "family": "battery",
-      "status": "pendente"
-    },
-    {
-      "name": "battery-6",
-      "origin": "lucerna",
-      "material": [
-        "battery_6_bar"
-      ],
-      "filled": "own",
-      "family": "battery",
-      "status": "pendente"
-    },
-    {
-      "name": "battery-7",
-      "origin": "lucide:battery-full",
-      "material": [
         "battery_full"
       ],
-      "filled": "own",
+      "filled": "outline",
       "family": "battery",
       "status": "pendente"
     },
     {
       "name": "battery-charging",
-      "origin": "lucide:battery-charging",
+      "origin": "lucerna",
       "material": [
         "battery_charging_full"
       ],
-      "filled": "own",
+      "filled": "outline",
       "family": "battery",
       "status": "pendente"
     },
     {
       "name": "battery-exclamation-point",
-      "origin": "lucide:battery-exclamation-point",
+      "origin": "lucerna",
       "material": [
         "battery_alert"
       ],
-      "filled": "own",
+      "filled": "outline",
       "family": "battery",
       "status": "pendente"
     },
