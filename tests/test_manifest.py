@@ -226,3 +226,30 @@ def test_svg_com_use_e_proibido(repo):
     repo.svg("outline", "x", SVG_OK.replace("</svg>", '<use width="1"/></svg>'))
     repo.manifesto([icone("x")])
     assert "svg-elemento" in codigos(repo.raiz)
+
+
+def test_camada_da_mesma_familia_passa(repo):
+    for n in ("bat-1", "raio"):
+        repo.svg("outline", n)
+    repo.manifesto([icone("bat-1", family="bat", layer="raio"), icone("raio", family="bat")])
+    assert manifest.validar(repo.raiz) == []
+    _, icones, _ = manifest.carregar(repo.raiz)
+    assert {ic.name: ic.layer for ic in icones} == {"bat-1": "raio", "raio": None}
+
+
+@pytest.mark.parametrize(
+    "entradas",
+    [
+        [icone("bat-1", family="bat", layer="raio")],  # a camada não existe
+        [icone("bat-1", family="bat", layer="raio"), icone("raio", family="outra")],  # outra família
+        [icone("bat-1", layer="raio"), icone("raio")],  # sem família
+        [icone("bat-1", family="bat", layer="bat-1")],  # o próprio ícone
+        [icone("bat-1", family="bat", layer="Raio!")],  # nome inválido
+        [icone("bat-1", family="bat", layer=None)],  # não é texto
+    ],
+)
+def test_camada_invalida(repo, entradas):
+    for e in entradas:
+        repo.svg("outline", e["name"])
+    repo.manifesto(entradas)
+    assert "camada-invalida" in codigos(repo.raiz)

@@ -23,6 +23,8 @@ Ids previsíveis (os testes e o controlador contam com eles):
     ic-<nome>-<tema>-anima                 a animação do preenchimento
     ic-<nome>-a-desenhar                   o aviso de um ícone ainda sem SVG
     familia-<família>                      a seção de uma família
+    familia-<família>-<tema>-cor           a composição colorida (com `layer`)
+    ic-<nome>-<tema>-camadas-<tamanho>     um ícone em duas camadas, na cor do estado
 
 `<tema>` é `escuro` ou `claro`; `<tipo>` é `contorno`, `preenchido`,
 `material` ou `material-fill`. O que ainda não foi desenhado leva a classe
@@ -45,6 +47,15 @@ ARQUIVO_PESO = {p.classe: f"LucernaIcons-{p.estilo}.ttf" for p in build.PESOS}
 DESENHO_PX = 72  # 3 px por unidade da grade de 24
 BLOCO_PX = 20  # o ícone do Tile da central
 ANIMA_PX = 40
+CAMADAS_PX = (16, 20, 64)
+
+# A regra de cor por estado do shell, para a composição colorida: o ícone (a
+# camada de baixo) vai na cor do estado, e a camada de cima (`layer`) no
+# onContainer dela. Os ícones com `layer` estão "carregando" (success); os
+# estados abaixo mostram a mesma regra sem camada.
+ESTADOS_SEM_CAMADA = {
+    "battery": [("bateria baixa", [("battery-1", "warning"), ("battery-exclamation-point", "danger")])],
+}
 
 
 class ErroDeGaleria(Exception):
@@ -173,6 +184,8 @@ def _cabecalho(item: Item, lucide: str) -> str:
     linhas = [("Origem", origem), ("Material", material), ("Preenchido", preench)]
     if ic.family:
         linhas.append(("Família", f"<code>{_e(ic.family)}</code>"))
+    if ic.layer:
+        linhas.append(("Camada de cima", f"<code>{_e(ic.layer)}</code>"))
     dl = "".join(f"<div><dt>{a}</dt><dd>{b}</dd></div>" for a, b in linhas)
     status = _e(ic.status)
     return (
@@ -358,6 +371,52 @@ def _faixa(itens: list[Item], temas: dict) -> str:
     return f'<div class="faixas">{"".join(paineis)}</div>'
 
 
+def _camadas(nome: str, cima: str | None, estado: str, px: int, ident: str = "") -> str:
+    """O ícone na cor do estado e, por cima, a camada `cima` no onContainer dela."""
+    peso = peso_do_tamanho(px)
+    topo = _glifo(cima, px, peso, classe="cima") if cima else ""
+    ida = f' id="{ident}"' if ident else ""
+    return (
+        f'<span{ida} class="camadas estado-{estado}" style="font-size:{px}px">'
+        f'{_glifo(nome, px, peso, classe="baixo")}{topo}</span>'
+    )
+
+
+def _cor_por_estado(itens: list[Item], temas: dict) -> str:
+    """A composição colorida da família: as cargas em duas camadas e os outros estados de cor."""
+    com_camada = [it for it in itens if it.icone.layer and it.contorno is not None]
+    if not com_camada:
+        return ""
+    fam = itens[0].icone.family
+    nomes = {it.nome for it in itens if it.contorno is not None}
+    grupos = [("carregando", [(it.nome, it.icone.layer, "success") for it in com_camada])]
+    for rotulo, membros in ESTADOS_SEM_CAMADA.get(fam, []):
+        grupos.append((rotulo, [(n, None, e) for n, e in membros if n in nomes]))
+    paineis = []
+    for papel, tema in temas.items():
+        linhas = []
+        for rotulo, membros in grupos:
+            if not membros:
+                continue
+            cels = []
+            for px in CAMADAS_PX:
+                glifos = "".join(
+                    _camadas(n, cima, e, px, f"ic-{n}-{papel}-camadas-{px}" if cima else "") for n, cima, e in membros
+                )
+                cels.append(f'<div class="cor-tam"><div class="pilha">{glifos}</div><small>{px} px</small></div>')
+            legenda = " · ".join(
+                f"<code>{_e(n)}</code>" + (f" + <code>{_e(c)}</code>" if c else "") + f" em <b>{e}</b>"
+                for n, c, e in membros
+            )
+            linhas.append(f'<div class="cor-linha"><h5>{_e(rotulo)}</h5>{"".join(cels)}<p>{legenda}</p></div>')
+        paineis.append(
+            f'<div id="familia-{_e(fam)}-{papel}-cor" class="tema tema-{papel} faixa cor">'
+            f'<h4>{_e(tema["nome"])}: cor por estado (a camada de cima no onContainer do estado)</h4>'
+            f'{"".join(linhas)}</div>'
+        )
+    return f'<div class="faixas">{"".join(paineis)}</div>'
+
+
 def _svg_embutido(origem: "Path | str") -> str:
     texto = origem if isinstance(origem, str) else origem.read_text(encoding="utf-8")
     inicio = texto.find("<svg")
@@ -388,6 +447,12 @@ def _css_temas(temas: dict) -> str:
             "--accent-container": c["accentContainer"],
             "--on-accent-container": c["onAccentContainer"],
             "--accent-icon": c["accentIcon"],
+            "--success": c.get("success", c["accent"]),
+            "--warning": c.get("warning", c["accent"]),
+            "--danger": c["danger"],
+            "--on-success": c.get("onSuccess", c["base"]),
+            "--on-warning": c.get("onWarning", c["base"]),
+            "--on-danger": c.get("onDanger", c["base"]),
             "--circulo": rgba(c["text"], 0.07),
             "--circulo-ativo": rgba(c["base"], 0.1),
             "--grad": "-25" if tema["dark"] else "0",
@@ -470,7 +535,7 @@ def pagina(
                 f'<section id="familia-{_e(fam)}" class="familia">'
                 f'<header class="cab-familia"><h2>Família <code>{_e(fam)}</code></h2>'
                 f"<span>{n} {'estado' if n == 1 else 'estados'}, aprovados juntos</span></header>"
-                f"{_faixa(grupo, temas)}{cartoes}</section>"
+                f"{_faixa(grupo, temas)}{_cor_por_estado(grupo, temas)}{cartoes}</section>"
             )
         else:
             corpo.append(cartoes)

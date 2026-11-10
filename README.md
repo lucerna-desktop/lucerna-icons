@@ -51,6 +51,7 @@ Marcado com `[x]` o que já existe.
 - `filled`: `"own"` quando tem `svg/filled/<nome>.svg`; `"outline"` para os sem área a preencher (fechar, setas), em que o `<nome>-fill` mostra o próprio contorno.
 - `family`: os estados de uma família (`battery-0`…`battery-4`) levam o mesmo nome aqui, e a família é aprovada junta; `null` quando não tem.
 - `status`: `"pendente"` ou `"aprovado"`. Só os aprovados entram na fonte instalada; um pendente pode não ter SVG ainda.
+- `layer` (opcional): o glifo da camada de cima de um ícone em duas camadas. O shell sobrepõe os dois em cores diferentes, e a galeria mostra a composição na cor do estado. É o caso das cargas (`battery-charging-0`…`-4`), que levam `"layer": "battery-bolt"`: a camada de baixo vai na cor do estado (`success`, carregando), com um furo do raio, e o raio vai por cima, no onContainer dela. A camada precisa existir no manifesto e ser da mesma família.
 
 ## Os SVGs
 

@@ -60,7 +60,8 @@
       "material": [],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente"
+      "status": "pendente",
+      "layer": "battery-bolt"
     },
     {
       "name": "battery-charging-1",
@@ -68,7 +69,8 @@
       "material": [],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente"
+      "status": "pendente",
+      "layer": "battery-bolt"
     },
     {
       "name": "battery-charging-2",
@@ -76,7 +78,8 @@
       "material": [],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente"
+      "status": "pendente",
+      "layer": "battery-bolt"
     },
     {
       "name": "battery-charging-3",
@@ -84,7 +87,8 @@
       "material": [],
       "filled": "outline",
       "family": "battery",
-      "status": "pendente"
+      "status": "pendente",
+      "layer": "battery-bolt"
     },
     {
       "name": "battery-charging-4",
@@ -92,6 +96,15 @@
       "material": [
         "battery_charging_full"
       ],
+      "filled": "outline",
+      "family": "battery",
+      "status": "pendente",
+      "layer": "battery-bolt"
+    },
+    {
+      "name": "battery-bolt",
+      "origin": "lucerna",
+      "material": [],
       "filled": "outline",
       "family": "battery",
       "status": "pendente"

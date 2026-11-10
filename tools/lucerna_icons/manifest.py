@@ -12,10 +12,16 @@ Esquema:
           "filled": "own",               # "own": tem svg/filled/<name>.svg;
                                          # "outline": o -fill usa o contorno
           "family": "wifi",              # os estados de uma família, ou null
-          "status": "aprovado"           # ou "pendente"
+          "status": "aprovado",          # ou "pendente"
+          "layer": "battery-bolt"        # opcional: o glifo da camada de cima,
+                                         # da mesma família (as cargas da bateria)
         }
       ]
     }
+
+`layer` diz que o ícone é a camada de baixo de um ícone em duas camadas: o
+shell sobrepõe o glifo `layer` (outra cor) a ele. A camada precisa existir no
+manifesto, ser da mesma família e não ser o próprio ícone.
 
 `lucideVersion` pode ficar como um texto qualquer (ex.: "pendente") enquanto
 nenhum ícone vier do Lucide; com um derivado, precisa ser uma tag `X.Y.Z`.
@@ -32,6 +38,7 @@ from pathlib import Path
 from . import svgcheck
 
 CAMPOS = {"name", "origin", "material", "filled", "family", "status"}
+OPCIONAIS = {"layer"}
 NOME = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 ORIGEM_LUCIDE = re.compile(r"^lucide:[a-z0-9]+(-[a-z0-9]+)*$")
 MATERIAL = re.compile(r"^[a-z0-9_]+$")
@@ -59,6 +66,7 @@ class Icone:
     filled: str
     family: str | None
     status: str
+    layer: str | None = None
 
     @property
     def aprovado(self) -> bool:
@@ -89,7 +97,7 @@ def _validar_entrada(i: int, e, erros: list[Erro]) -> Icone | None:
     rotulo = nome if isinstance(nome, str) and nome else f"#{i}"
     ok = True
 
-    faltam, sobram = CAMPOS - e.keys(), e.keys() - CAMPOS
+    faltam, sobram = CAMPOS - e.keys(), e.keys() - CAMPOS - OPCIONAIS
     if faltam or sobram:
         partes = []
         if faltam:
@@ -130,9 +138,14 @@ def _validar_entrada(i: int, e, erros: list[Erro]) -> Icone | None:
         erros.append(Erro("campo-invalido", rotulo, f'status {e["status"]!r}: precisa ser "pendente" ou "aprovado"'))
         ok = False
 
+    camada = e.get("layer")
+    if "layer" in e and not (isinstance(camada, str) and NOME.match(camada)):
+        erros.append(Erro("camada-invalida", rotulo, f"layer {camada!r}: precisa ser o nome de um ícone"))
+        ok = False
+
     if not ok:
         return None
-    return Icone(nome, origem, tuple(material), e["filled"], familia, e["status"])
+    return Icone(nome, origem, tuple(material), e["filled"], familia, e["status"], camada)
 
 
 def carregar(raiz: Path) -> tuple[dict, list[Icone], list[Erro]]:
@@ -177,6 +190,20 @@ def carregar(raiz: Path) -> tuple[dict, list[Icone], list[Erro]]:
     for fam, status in sorted(familias.items()):
         if len(status) > 1:
             erros.append(Erro("familia-status-misto", fam, "a família é aprovada junta; os status estão misturados"))
+
+    por_nome = {ic.name: ic for ic in icones}
+    for ic in icones:
+        if ic.layer is None:
+            continue
+        alvo = por_nome.get(ic.layer)
+        if ic.layer == ic.name:
+            erros.append(Erro("camada-invalida", ic.name, "layer não pode ser o próprio ícone"))
+        elif alvo is None:
+            erros.append(Erro("camada-invalida", ic.name, f"layer {ic.layer!r} não está no manifesto"))
+        elif not ic.family or alvo.family != ic.family:
+            erros.append(
+                Erro("camada-invalida", ic.name, f"layer {ic.layer!r} precisa ser da mesma família ({ic.family!r})")
+            )
 
     derivados = [ic.name for ic in icones if ic.origin.startswith("lucide:")]
     if derivados and isinstance(versao, str) and not VERSAO.match(versao):

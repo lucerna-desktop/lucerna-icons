@@ -378,3 +378,37 @@ def test_preencher_todos_tem_botao_e_ganchos(repo_galeria, tmp_path, fontes):
     assert m and 'class="par"' not in m.group(0)
     # A seção de animação segue com o próprio botão.
     assert "data-alternar" in texto
+
+
+def test_camadas_mostram_a_composicao_na_cor_do_estado(repo_galeria, tmp_path, fontes):
+    dados = json.loads((repo_galeria.raiz / "manifest.json").read_text())
+    dados["icons"] += [
+        icone("battery-1", family="battery", status="pendente"),
+        icone("battery-charging-1", family="battery", status="pendente", layer="battery-bolt"),
+        icone("battery-bolt", family="battery", status="pendente"),
+        icone("battery-exclamation-point", family="battery", status="pendente"),
+    ]
+    (repo_galeria.raiz / "manifest.json").write_text(json.dumps(dados))
+    for n in ("battery-1", "battery-charging-1", "battery-bolt", "battery-exclamation-point"):
+        repo_galeria.svg("outline", n)
+    texto, _ = gerar(repo_galeria, ["battery-1"], tmp_path, fontes)
+    achados = ids(texto)
+    for tema in TEMAS:
+        assert f"familia-battery-{tema}-cor" in achados
+        for px in gallery.CAMADAS_PX:
+            ident = f"ic-battery-charging-1-{tema}-camadas-{px}"
+            assert ident in achados
+            assert {"camadas", "estado-success"} <= classes_de(texto, ident)
+    # A camada de cima vai sobre a de baixo; a bateria baixa e o alerta, na cor deles.
+    assert re.search(r'class="g baixo"[^>]*>battery-charging-1<.*?class="g cima"[^>]*>battery-bolt<', texto)
+    assert 'class="camadas estado-warning"' in texto and 'class="camadas estado-danger"' in texto
+    # As cores de estado e o onContainer delas vêm do temas.json.
+    temas = json.loads((PASTA_GALERIA / "temas.json").read_text())
+    for papel in TEMAS:
+        cores = temas["temas"][papel]["cores"]
+        assert f"--success: {cores['success']}" in texto and f"--on-success: {cores['onSuccess']}" in texto
+
+
+def test_sem_camada_nao_tem_composicao(repo_galeria, tmp_path, fontes):
+    texto, _ = gerar(repo_galeria, ["wifi-2"], tmp_path, fontes)
+    assert not any(i.endswith("-cor") for i in ids(texto))

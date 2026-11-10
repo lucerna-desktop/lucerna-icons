@@ -398,3 +398,20 @@ main { padding: 24px clamp(16px, 4vw, 48px) 8px; display: grid; gap: 28px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* A composição colorida: o ícone na cor do estado e a camada de cima no onContainer dela. */
+.faixas + .faixas { margin-top: 12px; }
+.cor .cor-linha { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 24px; margin-bottom: 12px; }
+.cor .cor-linha:last-child { margin-bottom: 0; }
+.cor h5 { flex-basis: 100%; margin: 0; font-size: 11.5px; font-weight: 500; color: var(--text-muted); }
+.cor p { flex-basis: 100%; margin: 0; font-size: 10.5px; color: var(--text-faint); }
+.cor-tam { display: flex; flex-direction: column; gap: 4px; }
+.cor-tam small { font-size: 10px; color: var(--text-faint); }
+.camadas { position: relative; display: inline-block; width: 1em; height: 1em; vertical-align: middle; }
+.camadas > .g { position: absolute; inset: 0; }
+.estado-success > .baixo { color: var(--success); }
+.estado-success > .cima { color: var(--on-success); }
+.estado-warning > .baixo { color: var(--warning); }
+.estado-warning > .cima { color: var(--on-warning); }
+.estado-danger > .baixo { color: var(--danger); }
+.estado-danger > .cima { color: var(--on-danger); }
