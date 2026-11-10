@@ -99,7 +99,7 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente",
+      "status": "aprovado",
       "background": "wifi-3",
       "minSize": 18
     },
@@ -111,7 +111,7 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente",
+      "status": "aprovado",
       "background": "wifi-3",
       "minSize": 18
     },
@@ -124,7 +124,7 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente",
+      "status": "aprovado",
       "background": "wifi-3",
       "minSize": 18
     },
@@ -137,7 +137,7 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -148,7 +148,7 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -159,7 +159,7 @@
       ],
       "filled": "outline",
       "family": "wifi",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -280,7 +280,7 @@
       ],
       "filled": "outline",
       "family": "bluetooth",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -291,7 +291,7 @@
       ],
       "filled": "outline",
       "family": "bluetooth",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -302,7 +302,7 @@
       ],
       "filled": "outline",
       "family": "bluetooth",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -313,7 +313,7 @@
       ],
       "filled": "outline",
       "family": "bluetooth",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -554,7 +554,7 @@
       ],
       "filled": "own",
       "family": "brightness",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 14
     },
     {
@@ -565,7 +565,7 @@
       ],
       "filled": "own",
       "family": "brightness",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 14
     },
     {
@@ -578,7 +578,7 @@
       ],
       "filled": "own",
       "family": "brightness",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 14
     },
     {
