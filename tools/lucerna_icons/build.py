@@ -65,6 +65,9 @@ _COR_MANTEM = {"white", "#fff", "#ffffff"}
 _COR_RECORTA = {"black", "#000", "#000000"}
 
 
+URL_LICENCA = "https://github.com/lucerna-desktop/lucerna-icons/blob/main/LICENSE-LUCIDE"
+
+
 class ErroDeBuild(Exception):
     pass
 
@@ -297,8 +300,16 @@ def fonte(entradas: list[Entrada], peso: Peso):
             "fullName": f"{FAMILIA} {peso.estilo}",
             "psName": f"LucernaIcons-{peso.estilo}",
             "version": f"Version {VERSAO_FONTE}",
-            "copyright": "Copyright (c) 2026 Lucerna. Ícones derivados do Lucide (ISC) e do Feather (MIT).",
-            "licenseDescription": "MIT; os derivados do Lucide seguem o LICENSE-LUCIDE.",
+            "copyright": (
+                "Copyright (c) 2026 Lucerna. "
+                "Partes derivadas do Lucide: Copyright (c) 2026 Lucide Icons and Contributors (ISC). "
+                "Partes derivadas do Feather: Copyright (c) 2013-present Cole Bemis (MIT)."
+            ),
+            "licenseDescription": (
+                "Licença MIT. Partes derivadas do Lucide seguem a licença ISC e, do Feather, a MIT; "
+                "os textos estão nos arquivos LICENSE e LICENSE-LUCIDE."
+            ),
+            "licenseInfoURL": URL_LICENCA,
         }
     )
     fb.setupOS2(

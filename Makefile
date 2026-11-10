@@ -12,6 +12,7 @@ PREFIX  ?= /usr/local
 DESTDIR ?=
 FONTDIR := $(DESTDIR)$(PREFIX)/share/fonts/lucerna-icons
 DATADIR := $(DESTDIR)$(PREFIX)/share/lucerna-icons
+LICDIR  := $(DESTDIR)$(PREFIX)/share/licenses/lucerna-icons
 
 DIST     := dist
 DISTALL  := $(DIST)/todos
@@ -57,7 +58,8 @@ gallery: build-all
 install:
 	@test -f $(DIST)/LucernaIcons-Regular.ttf -a -f $(DIST)/manifest.json -a -d $(DIST)/svg || \
 	  { echo "falta o build: rode 'make build' (sem sudo) antes do 'make install'" >&2; exit 1; }
-	install -d $(FONTDIR) $(DATADIR)/svg/outline $(DATADIR)/svg/filled
+	install -d $(FONTDIR) $(DATADIR)/svg/outline $(DATADIR)/svg/filled $(LICDIR)
+	install -m644 LICENSE LICENSE-LUCIDE $(LICDIR)/
 	install -m644 $(DIST)/*.ttf $(FONTDIR)/
 	install -m644 $(DIST)/manifest.json $(DATADIR)/manifest.json
 	for tipo in outline filled; do \
@@ -68,7 +70,7 @@ install:
 	done
 
 uninstall:
-	rm -rf $(FONTDIR) $(DATADIR)
+	rm -rf $(FONTDIR) $(DATADIR) $(LICDIR)
 
 clean:
 	rm -rf $(DIST) $(GALLERY)

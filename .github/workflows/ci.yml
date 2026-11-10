@@ -88,13 +88,15 @@ jobs:
         run: make build
 
       - name: SVGs (.tar.gz)
-        run: tar -czf "dist/lucerna-icons-svg-$GITHUB_REF_NAME.tar.gz" -C dist svg
+        run: |
+          cp LICENSE LICENSE-LUCIDE dist/
+          tar -czf "dist/lucerna-icons-svg-$GITHUB_REF_NAME.tar.gz" -C dist svg LICENSE LICENSE-LUCIDE
 
       - name: Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          arquivos=(dist/*.ttf dist/manifest.json dist/lucerna-icons-svg-*.tar.gz)
+          arquivos=(dist/*.ttf dist/manifest.json dist/LICENSE dist/LICENSE-LUCIDE dist/lucerna-icons-svg-*.tar.gz)
           if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
             gh release upload "$GITHUB_REF_NAME" "${arquivos[@]}" --clobber --repo "$GITHUB_REPOSITORY"
           else

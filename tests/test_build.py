@@ -8,6 +8,8 @@ from fontTools.pens.areaPen import AreaPen
 from fontTools.pens.recordingPen import RecordingPen
 from fontTools.ttLib import TTFont
 
+from pathlib import Path
+
 from conftest import icone
 from lucerna_icons import build
 
@@ -189,3 +191,35 @@ def test_build_recusa_manifesto_invalido(repo, tmp_path):
     repo.manifesto([icone("a")])  # aprovado sem SVG
     with pytest.raises(build.ErroDeBuild):
         build.construir(repo.raiz, tmp_path / "d")
+
+
+def test_a_fonte_traz_os_avisos_do_lucide_e_do_feather(dist):
+    nomes = TTFont(dist / "LucernaIcons-Regular.ttf")["name"]
+    aviso = nomes.getDebugName(0)
+    assert "Copyright (c) 2026 Lucerna" in aviso
+    assert "Copyright (c) 2026 Lucide Icons and Contributors" in aviso
+    assert "Copyright (c) 2013-present Cole Bemis" in aviso
+    assert "MIT" in nomes.getDebugName(13) and "LICENSE-LUCIDE" in nomes.getDebugName(13)
+    assert nomes.getDebugName(14) == "https://github.com/lucerna-desktop/lucerna-icons/blob/main/LICENSE-LUCIDE"
+
+
+def test_install_leva_as_duas_licencas(tmp_path):
+    import shutil
+    import subprocess
+
+    raiz = Path(__file__).resolve().parent.parent
+    dist = tmp_path / "dist"
+    (dist / "svg").mkdir(parents=True)
+    (dist / "LucernaIcons-Regular.ttf").write_bytes(b"x")
+    (dist / "manifest.json").write_text("{}")
+    copia = tmp_path / "repo"
+    copia.mkdir()
+    for arq in ("Makefile", "LICENSE", "LICENSE-LUCIDE"):
+        shutil.copy(raiz / arq, copia / arq)
+    shutil.move(str(dist), copia / "dist")
+    subprocess.run(
+        ["make", "install", "PREFIX=/usr", f"DESTDIR={tmp_path / 'raiz'}"], cwd=copia, check=True, capture_output=True
+    )
+    lic = tmp_path / "raiz" / "usr" / "share" / "licenses" / "lucerna-icons"
+    assert (lic / "LICENSE").read_text() == (raiz / "LICENSE").read_text()
+    assert (lic / "LICENSE-LUCIDE").read_text() == (raiz / "LICENSE-LUCIDE").read_text()
