@@ -2,13 +2,9 @@
   <defs>
     <mask id="nervura" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
       <rect width="24" height="24" fill="white" stroke="none" />
-      <path d="M2 21a5 5 0 012.911-4.544C7.613 15.212 8.351 15.24 11 13" stroke="black" />
-    </mask>
-    <mask id="fora" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
-      <rect width="24" height="24" fill="white" stroke="none" />
-      <path d="M11 20a10 10 0 0010-10 25.9 25.9 0 00-1.04-7.281 1 1 0 00-1.755-.325C15.833 5.5 13 5.5 9.8 6.1A7 7 0 0011 20z" fill="black" stroke="black" />
+      <path d="M7.459 15.347C8.509 14.872 9.411 14.344 11 13" stroke="black" />
     </mask>
   </defs>
   <path d="M11 20a10 10 0 0010-10 25.9 25.9 0 00-1.04-7.281 1 1 0 00-1.755-.325C15.833 5.5 13 5.5 9.8 6.1A7 7 0 0011 20z" fill="currentColor" mask="url(#nervura)" />
-  <path d="M2 21a5 5 0 012.911-4.544C7.613 15.212 8.351 15.24 11 13" mask="url(#fora)" />
+  <path d="M2 21a5 5 0 012.911-4.544C5.451 16.207 5.913 16.009 6.328 15.834" />
 </svg>

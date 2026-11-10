@@ -32,12 +32,12 @@ Os indicadores da barra (rede, volume, bateria) e as ações dela.
 | `signal_wifi_4_bar`, `wifi` | `wifi-3` | `wifi` | outline | wifi | cheio (3 arcos); também o bloco do Wi-Fi ligado (wifiOn) |
 | `wifi_off` | `wifi-off` | `wifi-off` | outline | wifi |  |
 | `signal_wifi_bad` | `wifi-alert` | **desenhar** (do `wifi`) | outline | wifi | sem internet (offline): o `wifi-3` com a “!” à direita, recortada do arco do meio; o shell o pinta em `warning` |
-| `lan` | `network` | `network` ≈ | own | — | cabo (ethernet) |
+| `lan` | `network` | `network` ≈ | outline | — | cabo (ethernet); só traço, porque divide o bloco do Wi-Fi com a família `wifi`, que também é só traço |
 | `volume_mute` | `volume-0` | `volume` | own | volume | volume baixo: só o alto-falante |
 | `volume_down` | `volume-1` | `volume-1` | own | volume | volume médio; também “abaixar o volume” |
 | `volume_up` | `volume-2` | `volume-2` | own | volume | volume alto; também “aumentar o volume” |
 | `volume_off` | `volume-off` | `volume-off` | own | volume | mudo |
-| `sports_esports` | `gamepad-2` | `gamepad-2` | own | — | modo jogo |
+| `sports_esports` | `game-mode` | `gamepad-2` | own | — | modo jogo; o nome é o do uso, porque o `gamepad-2` do Lucide é só uma variante, sem relação com o `gamepad` e o `gamepad-directional` |
 | `stop` | `square` | `square` | own | — | parar a gravação |
 
 ## Notificações
@@ -78,7 +78,7 @@ Os blocos, as páginas de Bluetooth, som e energia.
 | `eco` | `leaf` | `leaf` | own | — | perfil economia |
 | `balance` | `scale` | `scale` | own | — | perfil equilibrado |
 | `rocket_launch` | `rocket` | `rocket` | own | — | perfil desempenho |
-| `electric_bolt` | `zap` | `zap` | own | — | carregando / energia |
+| `electric_bolt` | `zap` | **desenhar** (do raio do `battery-charging`) | own | — | carregando / energia; o raio da `battery-charging` ampliado para a altura da grade (mais esguio e de pontas mais afiadas que o `zap` do Lucide), para o raio ser um desenho só no pacote |
 | `sync` | `refresh-ccw` | `refresh-ccw` ≈ | outline | — | sincronizar |
 | `coffee` | `coffee` | `coffee` | own | — | cafeína |
 | `nightlight` | `moon-star` | `moon-star` | own | — | luz noturna |
@@ -299,16 +299,16 @@ Os controles usados em várias telas (fechar, confirmar, expandir…).
 |---|---|
 | Total de ícones (glifos de contorno) | 197 |
 | Ligaduras do Material substituídas | 210 |
-| Vindos do Lucide | 170 |
+| Vindos do Lucide | 169 |
 | Aproximados (≈), a conferir | 20 |
-| Para desenhar (contorno novo) | 27 |
-| Com preenchido (`own`) | 124 |
-| … dos quais o contorno também é para desenhar | 15 |
-| Sem preenchido próprio (`outline`, o `-fill` usa o contorno: sem área, e a família `battery`) | 73 |
+| Para desenhar (contorno novo) | 28 |
+| Com preenchido (`own`) | 123 |
+| … dos quais o contorno também é para desenhar | 16 |
+| Sem preenchido próprio (`outline`, o `-fill` usa o contorno: sem área, a família `battery` e o `network`) | 74 |
 
-Todo preenchido é desenhado aqui, porque o Lucide só tem contorno: são **124 preenchidos para desenhar** (109 sobre um contorno do Lucide e 15 sobre um contorno novo). Somando os 27 contornos novos, são **151 desenhos** ao todo, além dos ajustes que a galeria pedir.
+Todo preenchido é desenhado aqui, porque o Lucide só tem contorno: são **123 preenchidos para desenhar** (107 sobre um contorno do Lucide e 16 sobre um contorno novo). Somando os 28 contornos novos, são **151 desenhos** ao todo, além dos ajustes que a galeria pedir.
 
-Nomes do Lucide terminados em dígito que não são estados: `gamepad-2` e `picture-in-picture-2` (variantes do Lucide, sem relação com uma família `gamepad` ou `picture-in-picture`). `volume-1` e `volume-2` são do Lucide e também são estados da família `volume`.
+Nomes do Lucide terminados em dígito que não são estados: o `picture-in-picture-2` (variante do Lucide, sem relação com uma família `picture-in-picture`). O `gamepad-2` virou `game-mode`, o nome do uso, com `origin: "lucide:gamepad-2"`. `volume-1` e `volume-2` são do Lucide e também são estados da família `volume`.
 
 **Fora do pacote.** Cinco propriedades do `Icons.qml` não têm uso no shell e saíram do inventário: `soon`/`auto_awesome` (`sparkles`), `unlink`/`link_off` (`unlink`), `lockOpen`/`lock_open` (`lock-open`), `rain`/`water_drop` (`droplet`) e `clearAll`/`clear_all` (só a ligadura; o `brush-cleaning` fica por causa do `delete_sweep`). Elas saem do `Icons.qml` na migração do shell.
 

@@ -168,9 +168,9 @@
       "material": [
         "lan"
       ],
-      "filled": "own",
+      "filled": "outline",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -214,14 +214,14 @@
       "status": "aprovado"
     },
     {
-      "name": "gamepad-2",
+      "name": "game-mode",
       "origin": "lucide:gamepad-2",
       "material": [
         "sports_esports"
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -242,7 +242,7 @@
       ],
       "filled": "own",
       "family": "bell",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -253,7 +253,7 @@
       ],
       "filled": "own",
       "family": "bell",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -264,7 +264,7 @@
       ],
       "filled": "own",
       "family": "bell",
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -419,7 +419,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -430,7 +430,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -471,7 +471,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -482,7 +482,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
@@ -493,18 +493,18 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 20
     },
     {
       "name": "zap",
-      "origin": "lucide:zap",
+      "origin": "lucerna",
       "material": [
         "electric_bolt"
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 19
     },
     {
@@ -525,7 +525,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -536,7 +536,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
@@ -557,7 +557,7 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente",
+      "status": "aprovado",
       "minSize": 18
     },
     {
