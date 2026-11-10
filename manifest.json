@@ -862,7 +862,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "cloud-sun",
@@ -872,7 +873,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 28
     },
     {
       "name": "cloud-moon",
@@ -882,7 +884,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 28
     },
     {
       "name": "cloud-fog",
@@ -892,7 +895,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 28
     },
     {
       "name": "cloud-drizzle",
@@ -902,7 +906,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 28
     },
     {
       "name": "cloud-rain",
@@ -912,7 +917,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 28
     },
     {
       "name": "cloud-rain-wind",
@@ -922,7 +928,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 28
     },
     {
       "name": "cloud-hail",
@@ -932,7 +939,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 28
     },
     {
       "name": "cloud-snow",
@@ -942,7 +950,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 28
     },
     {
       "name": "cloud-lightning",
@@ -952,7 +961,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 28
     },
     {
       "name": "droplets",
@@ -984,7 +994,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "power",
