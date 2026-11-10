@@ -1,8 +1,12 @@
-"""Linha de comando: `python -m lucerna_icons check|build`.
+"""Linha de comando: `python -m lucerna_icons check|build|fetch`.
 
     check [--root .]                     valida o manifesto e os SVGs
     build [--all] [--out dist] [--root .]  gera a fonte (só aprovados; --all
                                            inclui os pendentes, para a galeria)
+    fetch <nome-no-lucide> [--as <nome>] [--material <ligadura>]...
+          [--filled own|outline] [--family <família>] [--root .] [--url <modelo>]
+                                         baixa um ícone do Lucide (na tag
+                                         lucideVersion) como pendente
 """
 
 import argparse
@@ -22,7 +26,35 @@ def main(argv=None) -> int:
     p_build.add_argument("--out", type=Path, default=Path("dist"), help="a pasta de saída")
     p_build.add_argument("--all", action="store_true", help="inclui os ícones pendentes")
 
+    p_fetch = sub.add_parser("fetch", help="baixa um ícone do Lucide e o registra como pendente")
+    p_fetch.add_argument("nome", help="o nome do ícone no Lucide (ex.: battery-full)")
+    p_fetch.add_argument("--as", dest="como", help="o nome no Lucerna (padrão: o do Lucide)")
+    p_fetch.add_argument("--material", action="append", help="uma ligadura do Material que ele substitui (repetível)")
+    p_fetch.add_argument("--filled", choices=["own", "outline"], help='"own" se tem área para preencher')
+    p_fetch.add_argument("--family", help="a família de estados")
+    p_fetch.add_argument("--root", type=Path, default=Path("."), help="a raiz do repositório")
+    p_fetch.add_argument("--url", help="modelo da URL, com {tag} e {nome} (padrão: o raw do GitHub)")
+
     args = parser.parse_args(argv)
+
+    if args.comando == "fetch":
+        from . import fetch
+
+        try:
+            caminho = fetch.buscar(
+                args.root,
+                args.nome,
+                args.como,
+                material=args.material,
+                filled=args.filled,
+                family=args.family,
+                url=args.url,
+            )
+        except fetch.ErroDeFetch as e:
+            print(f"fetch {args.nome}: {e}", file=sys.stderr)
+            return 1
+        print(caminho)
+        return 0
 
     if args.comando == "check":
         from . import manifest
