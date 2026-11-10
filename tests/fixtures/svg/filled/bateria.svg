@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <!-- O raio é recortado do corpo: branco mantém, preto tira. -->
+    <mask id="raio" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+      <rect width="24" height="24" fill="white" stroke="none"/>
+      <path d="m11 9-2 3h4l-2 3" stroke="black"/>
+    </mask>
+  </defs>
+  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" fill="currentColor" mask="url(#raio)"/>
+  <path d="M22 11v2"/>
+</svg>

@@ -4,7 +4,7 @@
 
 Baseado no [Lucide](https://lucide.dev).
 
-**Situação:** o repositório acabou de nascer. Ainda não há nenhum ícone nem ferramenta de build; o desenho está no [spec](https://github.com/lucerna-desktop/lucerna-shell/blob/main/docs/superpowers/specs/2026-11-09-lucerna-icons-design.md) do `lucerna-shell`.
+**Situação:** o build da fonte e a validação já existem; ainda não há nenhum ícone. O desenho está no [spec](https://github.com/lucerna-desktop/lucerna-shell/blob/main/docs/superpowers/specs/2026-11-09-lucerna-icons-design.md) do `lucerna-shell`.
 
 ## O que é
 
@@ -18,12 +18,61 @@ Baseado no [Lucide](https://lucide.dev).
 
 Marcado com `[x]` o que já existe.
 
-- [x] `manifest.json`: uma entrada por ícone (`name`, `origin`, `material`, `status`, variações). Hoje está vazio.
+- [x] `manifest.json`: a versão do Lucide de onde vêm os derivados e uma entrada por ícone (veja "O manifesto"). Hoje está vazio.
 - [ ] `svg/outline/<nome>.svg` e `svg/filled/<nome>.svg`: a fonte da verdade, na grade de 24. Hoje só as pastas existem.
 - [ ] `tools/gallery`: a página estática de galeria usada na revisão.
-- [ ] A fonte **"Lucerna Icons"**, gerada a partir dos SVGs aprovados, com uma ligadura por ícone: `<nome>` para o contorno e `<nome>-fill` para o preenchido. A ferramenta de build ainda não foi escolhida.
-- [ ] Alvo de instalação para `/usr/share/fonts` e `/usr/share/lucerna-icons/svg`.
-- [ ] Um check de CI que valida o manifesto e os SVGs.
+- [x] `tools/lucerna_icons`: o `check` (manifesto e SVGs) e o `build` da fonte **"Lucerna Icons"**, com uma ligadura por ícone: `<nome>` para o contorno e `<nome>-fill` para o preenchido.
+- [x] Alvo de instalação (`make install`) para `share/fonts/lucerna-icons` e `share/lucerna-icons/svg`.
+- [x] O CI (`.github/workflows/ci.yml`): `check` e `build` em PR e no `main`; a release nas tags `v*`.
+
+## O manifesto
+
+```json
+{
+  "lucideVersion": "0.460.0",
+  "icons": [
+    {
+      "name": "wifi-2",
+      "origin": "lucide:wifi",
+      "material": ["network_wifi_2_bar"],
+      "filled": "own",
+      "family": "wifi",
+      "status": "aprovado"
+    }
+  ]
+}
+```
+
+- `lucideVersion`: a tag do Lucide de onde vêm os derivados. Enquanto nenhum ícone vier do Lucide, pode ficar como `"pendente"`.
+- `name`: o nome do Lucerna, em kebab-case (igual ao do Lucide quando derivado); não termina em `-fill`.
+- `origin`: `"lucide:<nome>"` ou `"lucerna"`, para os originais.
+- `material`: as ligaduras do Material Symbols que ele substitui (cada uma em um só ícone).
+- `filled`: `"own"` quando tem `svg/filled/<nome>.svg`; `"outline"` para os sem área a preencher (fechar, setas), em que o `<nome>-fill` mostra o próprio contorno.
+- `family`: os estados de uma família (`battery-1`…`battery-8`) levam o mesmo nome aqui, e a família é aprovada junta; `null` quando não tem.
+- `status`: `"pendente"` ou `"aprovado"`. Só os aprovados entram na fonte instalada; um pendente pode não ter SVG ainda.
+
+## Os SVGs
+
+- `viewBox="0 0 24 24"`, como o Lucide: traço 2, `stroke-linecap` e `stroke-linejoin` `round` no `<svg>`.
+- Cor só `currentColor` ou `none`, nunca fixa.
+- Para recortar um traço de dentro de um preenchido (o raio dentro da bateria cheia), usa-se uma `<mask>`: um retângulo `white` (o que fica) e o traço `black` (o que sai), e o elemento pintado leva `mask="url(#id)"`. Um exemplo está em `tests/fixtures/svg/filled/bateria.svg`. Furos geométricos também valem com `fill-rule="evenodd"`.
+
+## Desenvolvimento
+
+As dependências Python ficam num `.venv` local, criado sozinho pelo Makefile (ou com `make venv`); nada vai para o sistema.
+
+```sh
+make check          # valida o manifesto e os SVGs
+make check-tests    # os testes (pytest)
+make build          # dist/: os 4 TTFs, os SVGs e o manifesto, só dos aprovados
+make build-all      # dist/todos/: o mesmo com os pendentes, para a galeria
+sudo make install PREFIX=/usr   # TTFs em $(PREFIX)/share/fonts/lucerna-icons/,
+                                # SVGs e manifesto em $(PREFIX)/share/lucerna-icons/
+```
+
+Direto pela ferramenta: `PYTHONPATH=tools .venv/bin/python -m lucerna_icons check` e `... build [--all] --out dist/`.
+
+A fonte tem 4 pesos, gerados dos mesmos SVGs com o traço reescrito: traço 1 → `LucernaIcons-ExtraLight.ttf` (200), 1,5 → `Light` (300), 2 → `Regular` (400) e 2,5 → `SemiBold` (600). Os traços viram contornos com o [picosvg](https://github.com/googlefonts/picosvg) e o skia-pathops, e a fonte é montada com o fontTools.
 
 ## Como um ícone entra
 
