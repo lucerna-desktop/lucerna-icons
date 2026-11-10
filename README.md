@@ -21,7 +21,7 @@ Marcado com `[x]` o que já existe.
 - [x] `manifest.json`: a versão do Lucide de onde vêm os derivados e uma entrada por ícone (veja "O manifesto").
 - [x] `inventario.md`: a tabela legível do inventário, por área do shell: a ligadura do Material, o nome Lucerna, o ícone do Lucide (ou "desenhar"), o `filled` e a família.
 - [ ] `svg/outline/<nome>.svg` e `svg/filled/<nome>.svg`: a fonte da verdade, na grade de 24. Hoje só os contornos vindos do Lucide; os preenchidos e os ícones novos ainda serão desenhados.
-- [ ] `tools/gallery`: a página estática de galeria usada na revisão.
+- [x] `tools/gallery`: a página estática de galeria usada na revisão (`make gallery`).
 - [x] `tools/lucerna_icons`: o `check` (manifesto e SVGs), o `fetch` (traz um ícone do Lucide) e o `build` da fonte **"Lucerna Icons"**, com uma ligadura por ícone: `<nome>` para o contorno e `<nome>-fill` para o preenchido.
 - [x] Alvo de instalação (`make install`) para `share/fonts/lucerna-icons` e `share/lucerna-icons/svg`.
 - [x] O CI (`.github/workflows/ci.yml`): `check` e `build` em PR e no `main`; a release nas tags `v*`.
@@ -67,7 +67,11 @@ make check          # valida o manifesto e os SVGs
 make check-tests    # os testes (pytest)
 make build          # dist/: os 4 TTFs, os SVGs e o manifesto, só dos aprovados
 make build-all      # dist/todos/: o mesmo com os pendentes, para a galeria
+make gallery ICONS="battery-0 wifi"   # a galeria de revisão em gallery-out/
+make gallery LOTE=1                   # ... ou a de um lote do lotes.json
 ```
+
+A galeria (`python -m lucerna_icons gallery <nome>... | --lote <n> --out <pasta> [--dist dist/todos]`) gera um `index.html` com os TTFs em `fontes/`, que abre direto do disco. Cada ícone vem com a família inteira e mostra o original do Lucide (quando derivado), o contorno e o preenchido nos 4 pesos, os tamanhos 14 a 64 com o peso automático, os temas catppuccin-mocha e catppuccin-latte, o bloco ativo e o inativo, a animação do preenchimento e o Material Symbols ao lado (o do sistema ou, com rede, o do Google Fonts). O que ainda não foi desenhado aparece como "a desenhar". As cores dos temas são um retrato do shell em `tools/gallery/temas.json`, refeito com `python3 tools/gallery/temas.py <caminho do lucerna-shell> > tools/gallery/temas.json`.
 
 Para instalar, primeiro o build como usuário e depois a cópia como root (o `install` só copia o que está em `dist/` e falha se o build não foi feito):
 
@@ -96,7 +100,7 @@ Nenhum ícone entra no pacote sem ser aprovado. A revisão é **em lotes de 10�
 
 1. Escolhe-se o próximo lote do `manifest.json` (os ícones começam como `pendente`).
 2. Para cada ícone do lote, monta-se o contorno, o preenchido e todos os estados (os 8 da bateria, por exemplo), com o original do Lucide ao lado quando houver.
-3. A galeria mostra cada ícone em 16, 20, 24 e 28 px, nos temas escuro e claro, num bloco ativo e com a animação do preenchimento, ao lado do Material atual.
+3. A galeria mostra cada ícone em 14, 16, 20, 24, 32, 40 e 64 px (com o peso automático), nos temas escuro e claro, num bloco ativo e com a animação do preenchimento, ao lado do Material atual.
 4. O lote é aprovado, ou os que precisam de ajuste voltam no lote seguinte. Só um ícone aprovado vira `aprovado`, e a família é aprovada junta.
 
 ## Licença

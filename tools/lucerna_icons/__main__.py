@@ -1,4 +1,4 @@
-"""Linha de comando: `python -m lucerna_icons check|build|fetch`.
+"""Linha de comando: `python -m lucerna_icons check|build|fetch|gallery`.
 
     check [--root .]                     valida o manifesto e os SVGs
     build [--all] [--out dist] [--root .]  gera a fonte (só aprovados; --all
@@ -7,6 +7,11 @@
           [--filled own|outline] [--family <família>] [--root .] [--url <modelo>]
                                          baixa um ícone do Lucide (na tag
                                          lucideVersion) como pendente
+    gallery <nome>... | --lote <n> [--lotes lotes.json] --out <pasta>
+            [--dist dist/todos] [--root .]
+                                         a página de revisão (index.html e
+                                         os TTFs em fontes/); cada ícone vem
+                                         com a família inteira
 """
 
 import argparse
@@ -35,7 +40,28 @@ def main(argv=None) -> int:
     p_fetch.add_argument("--root", type=Path, default=Path("."), help="a raiz do repositório")
     p_fetch.add_argument("--url", help="modelo da URL, com {tag} e {nome} (padrão: o raw do GitHub)")
 
+    p_gal = sub.add_parser("gallery", help="gera a página de revisão dos ícones")
+    p_gal.add_argument("nomes", nargs="*", help="os ícones (cada um vem com a família inteira)")
+    p_gal.add_argument("--lote", type=int, help="os ícones do lote <n> do lotes.json, no lugar dos nomes")
+    p_gal.add_argument("--lotes", type=Path, help="o arquivo dos lotes (padrão: <root>/lotes.json)")
+    p_gal.add_argument("--out", type=Path, required=True, help="a pasta de saída")
+    p_gal.add_argument("--dist", type=Path, help="um `build --all` já feito (padrão: faz um build temporário)")
+    p_gal.add_argument("--root", type=Path, default=Path("."), help="a raiz do repositório")
+
     args = parser.parse_args(argv)
+
+    if args.comando == "gallery":
+        from . import gallery
+
+        try:
+            pagina = gallery.gerar(
+                args.root, args.nomes, args.out, dist=args.dist, lote=args.lote, lotes=args.lotes
+            )
+        except gallery.ErroDeGaleria as e:
+            print(f"gallery: {e}", file=sys.stderr)
+            return 1
+        print(pagina)
+        return 0
 
     if args.comando == "fetch":
         from . import fetch

@@ -16,7 +16,7 @@ DATADIR := $(DESTDIR)$(PREFIX)/share/lucerna-icons
 DIST     := dist
 DISTALL  := $(DIST)/todos
 
-.PHONY: venv deps check check-tests test build build-all install uninstall clean
+.PHONY: venv deps check check-tests test build build-all gallery install uninstall clean
 
 # O venv é refeito quando o requirements.txt muda.
 $(VENV)/.ok: requirements.txt
@@ -46,6 +46,12 @@ build-all: $(VENV)/.ok
 	rm -rf $(DISTALL)
 	$(RUN) build --all --out $(DISTALL)
 
+# A galeria de revisão em gallery-out/ (abre direto do disco):
+#   make gallery ICONS="battery-0 wifi"   ou   make gallery LOTE=1
+GALLERY ?= gallery-out
+gallery: build-all
+	$(RUN) gallery $(if $(LOTE),--lote $(LOTE),$(ICONS)) --dist $(DISTALL) --out $(GALLERY)
+
 # Só copia o que o `make build` deixou em dist/: assim o `sudo make install`
 # não roda o build como root (o dist/ e o .venv ficariam com dono root).
 install:
@@ -65,4 +71,4 @@ uninstall:
 	rm -rf $(FONTDIR) $(DATADIR)
 
 clean:
-	rm -rf $(DIST)
+	rm -rf $(DIST) $(GALLERY)
