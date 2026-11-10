@@ -773,7 +773,8 @@
       ],
       "filled": "outline",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "download",
@@ -783,7 +784,8 @@
       ],
       "filled": "outline",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 16
     },
     {
       "name": "upload",
@@ -793,7 +795,8 @@
       ],
       "filled": "outline",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 16
     },
     {
       "name": "thermometer",
@@ -804,7 +807,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "clock",
@@ -814,7 +818,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 14
     },
     {
       "name": "calendar-days",
@@ -824,7 +829,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 22
     },
     {
       "name": "user",
@@ -834,7 +840,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 22
     },
     {
       "name": "map-pin",
@@ -844,7 +851,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 18
     },
     {
       "name": "cloud",
@@ -954,7 +962,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "wind",
@@ -964,7 +973,8 @@
       ],
       "filled": "outline",
       "family": null,
-      "status": "pendente"
+      "status": "aprovado",
+      "minSize": 20
     },
     {
       "name": "sunrise",
