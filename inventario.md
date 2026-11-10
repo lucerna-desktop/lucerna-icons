@@ -62,14 +62,15 @@ Os blocos, as páginas de Bluetooth, som e energia.
 | `bluetooth_disabled` | `bluetooth-off` | `bluetooth-off` | outline | bluetooth |  |
 | `bluetooth_searching` | `bluetooth-searching` | `bluetooth-searching` | outline | bluetooth |  |
 | `headphones` | `headphones` | `headphones` | own | — | dispositivo Bluetooth |
-| `headset_mic` | `headset` | `headset` | own | — | dispositivo Bluetooth |
+| `headset_mic` | `headset` | `headset` ≈ | own | — | dispositivo Bluetooth; ganhou a cápsula na ponta do microfone, como no Material |
 | `keyboard` | `keyboard` | `keyboard` | own | — | dispositivo Bluetooth |
 | `gamepad` | `gamepad-directional` | `gamepad-directional` | own | — | dispositivo Bluetooth (controle) |
-| `smartphone` | `smartphone` | `smartphone` | own | — | dispositivo Bluetooth |
-| `watch` | `watch` | `watch` | own | — | dispositivo Bluetooth |
-| `computer` | `laptop` | `laptop` ≈ | own | — | dispositivo Bluetooth (o Material computer é um notebook) |
+| `smartphone` | `smartphone` | `smartphone` ≈ | own | — | dispositivo Bluetooth; corpo mais estreito (10 × 20) e o alto-falante em cima, para não ler como tablet |
+| `watch` | `watch` | `watch` | own | — | dispositivo Bluetooth; o preenchido enche só as pulseiras, como no Material |
+| `computer` | `laptop` | `laptop` ≈ | own | — | dispositivo Bluetooth (o Material computer é um notebook); redesenhado como o Material: a tela e uma base separada, mais larga e fina |
 | `tv` | `tv` | `tv` | own | — | dispositivo Bluetooth |
 | `speaker` | `speaker` | `speaker` | own | — | saída de som / dispositivo |
+| `devices_other` | `devices` | `monitor-smartphone` | own | — | dispositivo de tipo desconhecido; na migração, o `forDevice` do shell passa a usar `devices` no lugar da runa do Bluetooth, que não enche |
 | `mic` | `mic` | `mic` | own | — |  |
 | `mic_off` | `mic-off` | `mic-off` | own | — |  |
 | `graphic_eq` | `audio-lines` | `audio-lines` | outline | — | som |
@@ -297,16 +298,16 @@ Os controles usados em várias telas (fechar, confirmar, expandir…).
 
 | | Ícones |
 |---|---|
-| Total de ícones (glifos de contorno) | 197 |
-| Ligaduras do Material substituídas | 210 |
-| Vindos do Lucide | 169 |
-| Aproximados (≈), a conferir | 20 |
+| Total de ícones (glifos de contorno) | 198 |
+| Ligaduras do Material substituídas | 211 |
+| Vindos do Lucide | 170 |
+| Aproximados (≈), a conferir | 22 |
 | Para desenhar (contorno novo) | 28 |
-| Com preenchido (`own`) | 123 |
+| Com preenchido (`own`) | 124 |
 | … dos quais o contorno também é para desenhar | 16 |
 | Sem preenchido próprio (`outline`, o `-fill` usa o contorno: sem área, a família `battery` e o `network`) | 74 |
 
-Todo preenchido é desenhado aqui, porque o Lucide só tem contorno: são **123 preenchidos para desenhar** (107 sobre um contorno do Lucide e 16 sobre um contorno novo). Somando os 28 contornos novos, são **151 desenhos** ao todo, além dos ajustes que a galeria pedir.
+Todo preenchido é desenhado aqui, porque o Lucide só tem contorno: são **124 preenchidos para desenhar** (108 sobre um contorno do Lucide e 16 sobre um contorno novo). Somando os 28 contornos novos, são **152 desenhos** ao todo, além dos ajustes que a galeria pedir.
 
 Nomes do Lucide terminados em dígito que não são estados: o `picture-in-picture-2` (variante do Lucide, sem relação com uma família `picture-in-picture`). O `gamepad-2` virou `game-mode`, o nome do uso, com `origin: "lucide:gamepad-2"`. `volume-1` e `volume-2` são do Lucide e também são estados da família `volume`.
 

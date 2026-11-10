@@ -2031,6 +2031,17 @@
       "filled": "outline",
       "family": null,
       "status": "pendente"
+    },
+    {
+      "name": "devices",
+      "origin": "lucide:monitor-smartphone",
+      "material": [
+        "devices_other"
+      ],
+      "filled": "own",
+      "family": null,
+      "status": "pendente",
+      "minSize": 20
     }
   ]
 }
