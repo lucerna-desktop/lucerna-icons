@@ -232,7 +232,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 16
     },
     {
       "name": "bell",
@@ -275,7 +276,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "bluetooth",
@@ -450,7 +452,8 @@
       ],
       "filled": "outline",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 20
     },
     {
       "name": "sliders-horizontal",
@@ -460,7 +463,8 @@
       ],
       "filled": "outline",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 22
     },
     {
       "name": "panel-right",
@@ -470,7 +474,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 22
     },
     {
       "name": "leaf",
@@ -524,7 +529,8 @@
       ],
       "filled": "outline",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "coffee",
@@ -556,7 +562,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "cloud-off",
@@ -963,7 +970,8 @@
       ],
       "filled": "outline",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "log-out",
@@ -973,7 +981,8 @@
       ],
       "filled": "outline",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 30
     },
     {
       "name": "rotate-ccw",
@@ -983,7 +992,8 @@
       ],
       "filled": "outline",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "moon",
@@ -994,7 +1004,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "lock",
@@ -1004,7 +1015,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 16
     },
     {
       "name": "triangle-exclamation-point",
@@ -1014,7 +1026,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 20
     },
     {
       "name": "square-terminal",
@@ -1024,7 +1037,8 @@
       ],
       "filled": "own",
       "family": null,
-      "status": "pendente"
+      "status": "pendente",
+      "minSize": 18
     },
     {
       "name": "layout-grid",
