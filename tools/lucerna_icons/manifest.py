@@ -13,8 +13,10 @@ Esquema:
                                          # "outline": o -fill usa o contorno
           "family": "wifi",              # os estados de uma família, ou null
           "status": "aprovado",          # ou "pendente"
-          "layer": "battery-fill-1"      # opcional: o glifo da camada de cima,
+          "layer": "battery-fill-1",     # opcional: o glifo da camada de cima,
                                          # da mesma família (a bateria baixa)
+          "minSize": 18                  # opcional: o menor tamanho (px) em que
+                                         # precisa funcionar; sem ele, 14
         }
       ]
     }
@@ -22,6 +24,10 @@ Esquema:
 `layer` diz que o ícone é a camada de baixo de um ícone em duas camadas: o
 shell sobrepõe o glifo `layer`, em outra cor, a ele. A camada precisa existir no
 manifesto, ser da mesma família e não ser o próprio ícone.
+
+`minSize` é o menor tamanho, em px, em que o ícone precisa funcionar no shell
+(sem o campo, vale `MIN_SIZE_PADRAO`, o menor token de tamanho). A família tem
+um valor só: todos os estados declaram o mesmo.
 
 `lucideVersion` pode ficar como um texto qualquer (ex.: "pendente") enquanto
 nenhum ícone vier do Lucide; com um derivado, precisa ser uma tag `X.Y.Z`.
@@ -38,7 +44,8 @@ from pathlib import Path
 from . import svgcheck
 
 CAMPOS = {"name", "origin", "material", "filled", "family", "status"}
-OPCIONAIS = {"layer"}
+OPCIONAIS = {"layer", "minSize"}
+MIN_SIZE_PADRAO = 14
 NOME = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 ORIGEM_LUCIDE = re.compile(r"^lucide:[a-z0-9]+(-[a-z0-9]+)*$")
 MATERIAL = re.compile(r"^[a-z0-9_]+$")
@@ -67,6 +74,7 @@ class Icone:
     family: str | None
     status: str
     layer: str | None = None
+    min_size: int = MIN_SIZE_PADRAO
 
     @property
     def aprovado(self) -> bool:
@@ -143,9 +151,14 @@ def _validar_entrada(i: int, e, erros: list[Erro]) -> Icone | None:
         erros.append(Erro("camada-invalida", rotulo, f"layer {camada!r}: precisa ser o nome de um ícone"))
         ok = False
 
+    minimo = e.get("minSize", MIN_SIZE_PADRAO)
+    if not (isinstance(minimo, int) and not isinstance(minimo, bool) and 8 <= minimo <= 128):
+        erros.append(Erro("min-size-invalido", rotulo, f"minSize {minimo!r}: precisa ser um inteiro de 8 a 128 (px)"))
+        ok = False
+
     if not ok:
         return None
-    return Icone(nome, origem, tuple(material), e["filled"], familia, e["status"], camada)
+    return Icone(nome, origem, tuple(material), e["filled"], familia, e["status"], camada, minimo)
 
 
 def carregar(raiz: Path) -> tuple[dict, list[Icone], list[Erro]]:
@@ -190,6 +203,16 @@ def carregar(raiz: Path) -> tuple[dict, list[Icone], list[Erro]]:
     for fam, status in sorted(familias.items()):
         if len(status) > 1:
             erros.append(Erro("familia-status-misto", fam, "a família é aprovada junta; os status estão misturados"))
+
+    minimos: dict[str, set[int]] = {}
+    for ic in icones:
+        if ic.family:
+            minimos.setdefault(ic.family, set()).add(ic.min_size)
+    for fam, valores in sorted(minimos.items()):
+        if len(valores) > 1:
+            erros.append(
+                Erro("familia-min-size-misto", fam, f"os estados declaram minSize diferentes: {sorted(valores)}")
+            )
 
     por_nome = {ic.name: ic for ic in icones}
     for ic in icones:

@@ -17,7 +17,8 @@ Ids previsíveis (os testes e o controlador contam com eles):
     ic-<nome>-lucide                       o original do Lucide (só derivados)
     ic-<nome>-{contorno,preenchido}-<peso> o desenho em cada peso (200…600)
     ic-<nome>-<tema>-<tipo>                a linha de um tipo num tema
-    ic-<nome>-<tema>-<tipo>-<tamanho>      a célula de um tamanho
+    ic-<nome>-<tema>-<tipo>-<tamanho>      a célula de um tamanho (com a classe
+                                           `fora-do-uso` abaixo do minSize)
     ic-<nome>-<tema>-bloco-<estado>        os blocos (ativo, inativo,
                                            material-ativo, material-inativo)
     ic-<nome>-<tema>-anima                 a animação do preenchimento
@@ -47,7 +48,7 @@ ARQUIVO_PESO = {p.classe: f"LucernaIcons-{p.estilo}.ttf" for p in build.PESOS}
 DESENHO_PX = 72  # 3 px por unidade da grade de 24
 BLOCO_PX = 20  # o ícone do Tile da central
 ANIMA_PX = 40
-CAMADAS_PX = (16, 20, 64)
+CAMADAS_PX = (18, 20, 64)
 
 # A cor da camada de cima (`layer`) na composição: o ícone de baixo fica na cor
 # normal (`text`) e a camada de cima vai na cor do estado em que o shell a usa.
@@ -246,6 +247,7 @@ def _tabela(item: Item, tema: str) -> str:
         f'<th scope="col">{t}<span>traço {TRACO[peso_do_tamanho(t)]}</span></th>' for t in TAMANHOS
     )
     linhas = []
+    minimo = item.icone.min_size  # abaixo dele, o tamanho fica "fora do uso"
 
     def linha(tipo: str, rotulo: str, celula, vazio: str | None = None):
         ident = f"ic-{n}-{tema}-{tipo}"
@@ -253,7 +255,13 @@ def _tabela(item: Item, tema: str) -> str:
             corpo = f'<td colspan="{len(TAMANHOS)}" class="a-desenhar"><span class="vazio">{_e(vazio)}</span></td>'
             linhas.append(f'<tr id="{ident}" class="a-desenhar"><th scope="row">{rotulo}</th>{corpo}</tr>')
             return
-        corpo = "".join(f"<td>{celula(t, f'{ident}-{t}')}</td>" for t in TAMANHOS)
+        corpo = "".join(
+            f'<td class="fora-do-uso" title="abaixo do minSize ({minimo} px)">{celula(t, f"{ident}-{t}")}'
+            '<small class="rot-fora">fora do uso</small></td>'
+            if t < minimo
+            else f"<td>{celula(t, f'{ident}-{t}')}</td>"
+            for t in TAMANHOS
+        )
         linhas.append(f'<tr id="{ident}"><th scope="row">{rotulo}</th>{corpo}</tr>')
 
     if item.contorno is not None:

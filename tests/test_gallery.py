@@ -408,3 +408,17 @@ def test_camadas_mostram_a_composicao_na_cor_do_estado(repo_galeria, tmp_path, f
 def test_sem_camada_nao_tem_composicao(repo_galeria, tmp_path, fontes):
     texto, _ = gerar(repo_galeria, ["wifi-2"], tmp_path, fontes)
     assert not any(i.endswith("-cor") for i in ids(texto))
+
+
+def test_tamanhos_abaixo_do_min_size_ficam_fora_do_uso(repo_galeria, tmp_path, fontes):
+    dados = json.loads((repo_galeria.raiz / "manifest.json").read_text())
+    for i in dados["icons"]:
+        if i["name"] == "seta":
+            i["minSize"] = 18
+    (repo_galeria.raiz / "manifest.json").write_text(json.dumps(dados))
+    texto, _ = gerar(repo_galeria, ["seta", "caixa"], tmp_path, fontes)
+    for t in TAMANHOS:
+        fora = "fora-do-uso" in re.search(rf'<td[^>]*>(?:(?!</td>).)*id="ic-seta-escuro-contorno-{t}"', texto, re.S).group(0)
+        assert fora == (t < 18)
+    # Sem o campo, vale 14: nenhum tamanho da tabela fica fora.
+    assert not re.search(r'class="fora-do-uso"[^>]*>(?:(?!</td>).)*id="ic-caixa-', texto, re.S)

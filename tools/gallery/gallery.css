@@ -414,3 +414,7 @@ main { padding: 24px clamp(16px, 4vw, 48px) 8px; display: grid; gap: 28px; }
 .estado-success > .cima { color: var(--success); }
 .estado-warning > .cima { color: var(--warning); }
 .estado-danger > .cima { color: var(--danger); }
+
+/* Os tamanhos abaixo do minSize do ícone: fora do uso no shell. */
+.tamanhos td.fora-do-uso > :not(.rot-fora) { opacity: 0.3; }
+.tamanhos td.fora-do-uso .rot-fora { display: block; margin-top: 2px; font-size: 9px; color: var(--text-faint); white-space: nowrap; }
