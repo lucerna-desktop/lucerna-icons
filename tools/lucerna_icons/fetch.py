@@ -14,7 +14,9 @@ trocado e a origem atualizada; `material`, `filled` e `family` só mudam se
 vierem na chamada.
 """
 
+import http.client
 import json
+import sys
 import os
 import re
 import tempfile
@@ -49,14 +51,25 @@ class ErroDeFetch(Exception):
     pass
 
 
-def _baixar(url: str) -> str:
+class ErroDeRede(ErroDeFetch):
+    """A rede falhou (timeout, conexão, resposta cortada); diferente de um HTTP 404."""
+
+
+# O tempo de espera do fetch e, mais curto, o da galeria (que não pode travar a geração).
+TIMEOUT = 30
+TIMEOUT_GALERIA = 5
+
+
+def _baixar(url: str, timeout: float = TIMEOUT) -> str:
     try:
-        with urllib.request.urlopen(url, timeout=30) as resposta:
+        with urllib.request.urlopen(url, timeout=timeout) as resposta:
             return resposta.read().decode("utf-8")
     except urllib.error.HTTPError as e:
         raise ErroDeFetch(f"{url}: HTTP {e.code}") from e
-    except (urllib.error.URLError, OSError, UnicodeDecodeError) as e:
+    except UnicodeDecodeError as e:
         raise ErroDeFetch(f"{url}: {e}") from e
+    except (urllib.error.URLError, OSError, http.client.HTTPException) as e:
+        raise ErroDeRede(f"{url}: {e}") from e
 
 
 def _normalizar_elemento(el, na_mascara: bool):
@@ -110,26 +123,49 @@ def guardar_original(raiz: Path, tag: str, nome_lucide: str, texto: str) -> None
     destino.write_text(texto, encoding="utf-8")
 
 
-def original(raiz: Path, tag: str, nome_lucide: str, url: str | None = None) -> str | None:
+def svg_seguro(texto: str) -> bool:
+    """O texto passa no svgcheck? (Ele vai embutido no HTML da galeria.)"""
+    with tempfile.TemporaryDirectory(prefix="lucerna-original-") as tmp:
+        arquivo = Path(tmp) / "original.svg"
+        arquivo.write_text(texto, encoding="utf-8")
+        return not svgcheck.validar_svg(arquivo)
+
+
+def original(
+    raiz: Path, tag: str, nome_lucide: str, url: str | None = None, rede: dict | None = None
+) -> str | None:
     """O SVG cru do Lucide: do cache e, se faltar, baixado da tag fixada (e guardado).
-    None quando não está no cache e não deu para baixar."""
+    None quando não está no cache, não deu para baixar ou o texto não passa no svgcheck.
+    `rede` é um estado compartilhado da geração: depois de uma falha de rede (`rede["fora"]`),
+    nenhum outro download é tentado."""
     if not manifest.VERSAO.match(tag) or not manifest.ORIGEM_LUCIDE.match(f"lucide:{nome_lucide}"):
         return None
     arquivo = caminho_original(raiz, tag, nome_lucide)
     try:
-        return arquivo.read_text(encoding="utf-8")
-    except OSError:
-        pass
-    endereco = (url or os.environ.get(VARIAVEL_URL) or URL_LUCIDE).format(tag=tag, nome=nome_lucide)
-    try:
-        texto = _baixar(endereco)
-    except ErroDeFetch:
-        return None
-    try:
-        guardar_original(raiz, tag, nome_lucide, texto)
-    except OSError:
-        pass
-    return texto
+        texto = arquivo.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        texto = None
+    if texto is None:
+        if rede is not None and rede.get("fora"):
+            return None
+        endereco = (url or os.environ.get(VARIAVEL_URL) or URL_LUCIDE).format(tag=tag, nome=nome_lucide)
+        try:
+            texto = _baixar(endereco, timeout=TIMEOUT_GALERIA)
+        except ErroDeFetch as e:
+            if isinstance(e, ErroDeRede) and rede is not None:
+                rede["fora"] = True
+                print(f"aviso: sem rede para baixar os originais do Lucide ({e}); usando o contorno atual", file=sys.stderr)
+            return None
+        except (OSError, http.client.HTTPException):
+            return None
+        if not svg_seguro(texto):
+            return None
+        try:
+            guardar_original(raiz, tag, nome_lucide, texto)
+        except OSError:
+            pass
+        return texto
+    return texto if svg_seguro(texto) else None
 
 
 def _escrever_manifesto(raiz: Path, dados: dict):

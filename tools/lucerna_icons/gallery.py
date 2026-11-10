@@ -547,8 +547,9 @@ def gerar(
 
     temas = json.loads((PASTA / "temas.json").read_text(encoding="utf-8"))
     tag = str(dados.get("lucideVersion", ""))
+    rede: dict = {}
     originais = {
-        it.nome: fetch.original(raiz, tag, it.icone.origin.removeprefix("lucide:"))
+        it.nome: fetch.original(raiz, tag, it.icone.origin.removeprefix("lucide:"), rede=rede)
         for it in itens
         if it.contorno is not None and it.icone.origin.startswith("lucide:")
     }

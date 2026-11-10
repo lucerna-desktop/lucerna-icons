@@ -220,3 +220,9 @@ def test_svg_com_href(repo, atributo):
     repo.svg("outline", "x", texto.replace("<path ", f'<path {atributo}="https://exemplo.org/x" '))
     repo.manifesto([icone("x")])
     assert "svg-href" in codigos(repo.raiz)
+
+
+def test_svg_com_use_e_proibido(repo):
+    repo.svg("outline", "x", SVG_OK.replace("</svg>", '<use width="1"/></svg>'))
+    repo.manifesto([icone("x")])
+    assert "svg-elemento" in codigos(repo.raiz)

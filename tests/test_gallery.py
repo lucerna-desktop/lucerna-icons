@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 from conftest import SVG_OK, icone
-from lucerna_icons import build, gallery
+from lucerna_icons import build, fetch, gallery
 from lucerna_icons.__main__ import main
 
 PESOS = (200, 300, 400, 600)
@@ -319,3 +319,42 @@ def test_mix_arredonda_como_o_javascript():
     t = _temas_py()
     # Meio canal (0,5) sobe para 1, como o Math.round; o round do Python daria 0.
     assert t.mix((0, 0, 0, 1), (1 / 255, 1 / 255, 1 / 255, 1), 0.5)[0] == 1 / 255
+
+
+@pytest.mark.parametrize(
+    "sujo",
+    [
+        SVG_OK.replace("<path ", '<path onload="alert(1)" '),
+        SVG_OK.replace("</svg>", "<script>alert(1)</script></svg>"),
+    ],
+)
+def test_original_inseguro_no_cache_cai_no_contorno_atual(repo_galeria, tmp_path, fontes, sujo):
+    cache = repo_galeria.raiz / ".cache" / "lucide" / "0.460.0"
+    cache.mkdir(parents=True)
+    (cache / "arrow-right.svg").write_text(sujo)
+    texto, _ = gerar(repo_galeria, ["seta"], tmp_path, fontes)
+    assert "alert(1)" not in texto
+    assert "contorno atual (original indisponível)" in texto
+
+
+def test_falha_de_rede_nao_tenta_de_novo_na_mesma_geracao(repo_galeria, tmp_path, fontes, monkeypatch, capsys):
+    chamadas = []
+
+    def baixar(url, timeout=0):
+        chamadas.append(timeout)
+        raise fetch.ErroDeRede("timeout")
+
+    monkeypatch.setattr(fetch, "_baixar", baixar)
+    texto, _ = gerar(repo_galeria, ["seta", "caixa", "wifi"], tmp_path, fontes)
+    assert chamadas == [fetch.TIMEOUT_GALERIA]
+    assert capsys.readouterr().err.count("aviso: sem rede") == 1
+
+
+def test_resposta_cortada_nao_derruba_a_galeria(repo_galeria, tmp_path, fontes, monkeypatch):
+    import http.client
+
+    def baixar(url, timeout=0):
+        raise http.client.IncompleteRead(b"x")
+
+    monkeypatch.setattr(fetch, "_baixar", baixar)
+    assert fetch.original(repo_galeria.raiz, "0.460.0", "arrow-right") is None
