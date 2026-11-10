@@ -1,13 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <defs>
-    <mask id="folga" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+    <mask id="alerta" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
       <rect width="24" height="24" fill="white" stroke="none" />
-      <path d="M10.25 9v3.25" stroke="black" stroke-width="4.5" />
-      <path d="M10.25 15h.01" stroke="black" stroke-width="4.5" />
+      <path d="M10.75 9.5v2.75" stroke="black" stroke-width="1.5" />
+      <path d="M10.75 14.75h.01" stroke="black" stroke-width="1.5" />
     </mask>
   </defs>
-  <rect x="2" y="8" width="16.5" height="8" rx="2" mask="url(#folga)" />
-  <path d="M22 13.5v-3" />
-  <path d="M10.25 9v3.25" />
-  <path d="M10.25 15h.01" />
+  <rect x="2" y="8" width="17.5" height="8" rx="2" fill="currentColor" mask="url(#alerta)" />
+  <path d="M19.5 10.75h2v2.5h-2z" fill="currentColor" />
 </svg>
