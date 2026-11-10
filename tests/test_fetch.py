@@ -4,6 +4,7 @@ Sem rede: um servidor HTTP local faz o papel do raw.githubusercontent.com.
 """
 
 import json
+from pathlib import Path
 import threading
 import xml.etree.ElementTree as ET
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -257,3 +258,12 @@ def test_linha_de_comando_com_erro(repo, lucide, capsys):
     repo.manifesto([], lucide_version=TAG)
     assert main(["fetch", "nao-existe", "--root", str(repo.raiz), "--url", lucide.url]) == 1
     assert "nao-existe" in capsys.readouterr().err
+
+
+def test_guarda_o_svg_cru_no_cache(repo, lucide):
+    repo.manifesto([], lucide_version=TAG)
+    lucide.icone("bell", SVG_SUJO)
+    fetch.buscar(repo.raiz, "bell", url=lucide.url)
+    cru = repo.raiz / ".cache" / "lucide" / TAG / "bell.svg"
+    assert cru.read_text() == SVG_SUJO
+    assert ".cache/" in (Path(__file__).resolve().parent.parent / ".gitignore").read_text()

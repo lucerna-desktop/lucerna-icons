@@ -17,6 +17,12 @@ TEMAS = ("escuro", "claro")
 PASTA_GALERIA = Path(__file__).parent.parent / "tools" / "gallery"
 
 
+@pytest.fixture(autouse=True)
+def sem_rede(monkeypatch):
+    """Nenhum teste da galeria fala com a rede: a URL do Lucide aponta para uma porta fechada."""
+    monkeypatch.setenv("LUCERNA_LUCIDE_URL", "http://127.0.0.1:9/{tag}/icons/{nome}.svg")
+
+
 @pytest.fixture
 def repo_galeria(repo_fixtures):
     """As fixtures, mais um pendente sem desenho e um `own` ainda sem o preenchido."""
@@ -88,6 +94,37 @@ def test_peso_automatico_pelo_tamanho(repo_galeria, tmp_path, fontes):
         m = re.search(rf'<[^>]*\bid="ic-bateria-escuro-contorno-{t}"[^>]*>', texto)
         assert f"--peso:{peso}" in m.group(0).replace(" ", ""), (t, m.group(0))
         assert f"font-size:{t}px" in m.group(0).replace(" ", ""), (t, m.group(0))
+
+
+def test_original_vem_do_cache_do_lucide(repo_galeria, tmp_path, fontes):
+    cache = repo_galeria.raiz / ".cache" / "lucide" / "0.460.0"
+    cache.mkdir(parents=True)
+    (cache / "arrow-right.svg").write_text(SVG_OK.replace("M5 12h14", "M1 1h2").replace("<svg ", "<!-- @license ISC -->\n<svg ", 1))
+    texto, _ = gerar(repo_galeria, ["seta"], tmp_path, fontes)
+    assert "ic-seta-lucide" in ids(texto)
+    assert 'd="M1 1h2"' in texto  # o cru do cache, não o contorno atual
+    assert "original indisponível" not in texto
+
+
+def test_sem_cache_nem_rede_cai_no_contorno_atual(repo_galeria, tmp_path, fontes):
+    texto, _ = gerar(repo_galeria, ["seta"], tmp_path, fontes)
+    assert "ic-seta-lucide" in ids(texto)
+    assert "contorno atual (original indisponível)" in texto
+
+
+def test_sem_cache_baixa_da_tag_fixada_e_guarda(repo_galeria, tmp_path, fontes, monkeypatch):
+    from test_fetch import Lucide
+
+    servidor = Lucide()
+    try:
+        servidor.icone("arrow-right", SVG_OK.replace("M5 12h14", "M7 7h7"), tag="0.460.0")
+        monkeypatch.setenv("LUCERNA_LUCIDE_URL", servidor.url)
+        texto, _ = gerar(repo_galeria, ["seta"], tmp_path, fontes)
+        assert servidor.pedidos == ["/0.460.0/icons/arrow-right.svg"]
+    finally:
+        servidor.fechar()
+    assert 'd="M7 7h7"' in texto
+    assert (repo_galeria.raiz / ".cache" / "lucide" / "0.460.0" / "arrow-right.svg").exists()
 
 
 def test_derivado_do_lucide_mostra_o_original(repo_galeria, tmp_path, fontes):

@@ -36,7 +36,7 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
-from . import build, manifest
+from . import build, fetch, manifest
 
 PASTA = Path(__file__).resolve().parent.parent / "gallery"
 TAMANHOS = (14, 16, 20, 24, 32, 40, 64)
@@ -184,7 +184,11 @@ def _cabecalho(item: Item, lucide: str) -> str:
     )
 
 
-def _desenho(item: Item, lucide: str, svg_original: str | None) -> str:
+# O rótulo da célula quando o original do Lucide não está no cache nem na rede.
+ROTULO_SEM_ORIGINAL = "contorno atual (original indisponível)"
+
+
+def _desenho(item: Item, lucide: str, svg_original: str | None, original_indisponivel: bool = False) -> str:
     n = item.nome
     if item.contorno is None:
         return (
@@ -201,6 +205,13 @@ def _desenho(item: Item, lucide: str, svg_original: str | None) -> str:
             '<div class="grupo"><h4>Original</h4><div class="cels">'
             f'<figure class="cel"><div class="quadro orig" id="ic-{n}-lucide">{svg_original}</div>'
             f"<figcaption>Lucide {_e(lucide)}<br><span>traço 2</span></figcaption></figure>"
+            "</div></div>"
+        )
+    elif original_indisponivel and item.contorno is not None:
+        grupos.append(
+            '<div class="grupo"><h4>Original</h4><div class="cels">'
+            f'<figure class="cel"><div class="quadro orig" id="ic-{n}-lucide">{_svg_embutido(item.contorno)}</div>'
+            f"<figcaption>{ROTULO_SEM_ORIGINAL}</figcaption></figure>"
             "</div></div>"
         )
     for tipo, titulo in (("contorno", "Contorno"), ("preenchido", "Preenchido")):
@@ -311,11 +322,11 @@ def _paineis(item: Item, temas: dict) -> str:
     return f'<div class="temas">{"".join(paineis)}</div>'
 
 
-def _cartao(item: Item, lucide: str, svg_original: str | None, temas: dict) -> str:
+def _cartao(item: Item, lucide: str, svg_original: str | None, temas: dict, original_indisponivel: bool = False) -> str:
     classe = "icone a-desenhar" if item.contorno is None else "icone"
     return (
         f'<article id="ic-{item.nome}" class="{classe}">'
-        f"{_cabecalho(item, lucide)}{_desenho(item, lucide, svg_original)}{_paineis(item, temas)}"
+        f"{_cabecalho(item, lucide)}{_desenho(item, lucide, svg_original, original_indisponivel)}{_paineis(item, temas)}"
         "</article>"
     )
 
@@ -343,8 +354,8 @@ def _faixa(itens: list[Item], temas: dict) -> str:
     return f'<div class="faixas">{"".join(paineis)}</div>'
 
 
-def _svg_embutido(caminho: Path) -> str:
-    texto = caminho.read_text(encoding="utf-8")
+def _svg_embutido(origem: "Path | str") -> str:
+    texto = origem if isinstance(origem, str) else origem.read_text(encoding="utf-8")
     inicio = texto.find("<svg")
     return texto[inicio:].strip() if inicio >= 0 else ""
 
@@ -426,7 +437,11 @@ def _indice(itens: list[Item]) -> str:
     return "".join(chips)
 
 
-def pagina(itens: list[Item], lucide: str, temas_json: dict, lote: dict | None) -> str:
+def pagina(
+    itens: list[Item], lucide: str, temas_json: dict, lote: dict | None, originais: dict[str, str | None] | None = None
+) -> str:
+    """`originais`: nome do ícone -> SVG cru do Lucide (None quando indisponível)."""
+    originais = originais or {}
     temas = temas_json["temas"]
     corpo = []
     i = 0
@@ -439,8 +454,9 @@ def pagina(itens: list[Item], lucide: str, temas_json: dict, lote: dict | None) 
             _cartao(
                 it,
                 lucide,
-                _svg_embutido(it.contorno) if it.contorno and it.icone.origin.startswith("lucide:") else None,
+                _svg_embutido(originais[it.nome]) if originais.get(it.nome) else None,
                 temas,
+                original_indisponivel=it.nome in originais and not originais[it.nome],
             )
             for it in grupo
         )
@@ -530,7 +546,13 @@ def gerar(
         )
 
     temas = json.loads((PASTA / "temas.json").read_text(encoding="utf-8"))
-    texto = pagina(itens, str(dados.get("lucideVersion", "")), temas, entrada_lote)
+    tag = str(dados.get("lucideVersion", ""))
+    originais = {
+        it.nome: fetch.original(raiz, tag, it.icone.origin.removeprefix("lucide:"))
+        for it in itens
+        if it.contorno is not None and it.icone.origin.startswith("lucide:")
+    }
+    texto = pagina(itens, tag, temas, entrada_lote, originais)
 
     if dist is not None:
         _copiar_fontes(Path(dist), saida / "fontes")

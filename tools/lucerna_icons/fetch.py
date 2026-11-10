@@ -99,6 +99,39 @@ def normalizar(texto: str) -> str:
     return ET.tostring(raiz, encoding="unicode") + "\n"
 
 
+def caminho_original(raiz: Path, tag: str, nome_lucide: str) -> Path:
+    """Onde fica o SVG cru do Lucide, como veio, para a galeria mostrar o original."""
+    return Path(raiz) / ".cache" / "lucide" / tag / f"{nome_lucide}.svg"
+
+
+def guardar_original(raiz: Path, tag: str, nome_lucide: str, texto: str) -> None:
+    destino = caminho_original(raiz, tag, nome_lucide)
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    destino.write_text(texto, encoding="utf-8")
+
+
+def original(raiz: Path, tag: str, nome_lucide: str, url: str | None = None) -> str | None:
+    """O SVG cru do Lucide: do cache e, se faltar, baixado da tag fixada (e guardado).
+    None quando não está no cache e não deu para baixar."""
+    if not manifest.VERSAO.match(tag) or not manifest.ORIGEM_LUCIDE.match(f"lucide:{nome_lucide}"):
+        return None
+    arquivo = caminho_original(raiz, tag, nome_lucide)
+    try:
+        return arquivo.read_text(encoding="utf-8")
+    except OSError:
+        pass
+    endereco = (url or os.environ.get(VARIAVEL_URL) or URL_LUCIDE).format(tag=tag, nome=nome_lucide)
+    try:
+        texto = _baixar(endereco)
+    except ErroDeFetch:
+        return None
+    try:
+        guardar_original(raiz, tag, nome_lucide, texto)
+    except OSError:
+        pass
+    return texto
+
+
 def _escrever_manifesto(raiz: Path, dados: dict):
     texto = json.dumps(dados, indent=2, ensure_ascii=False) + "\n"
     (raiz / "manifest.json").write_text(texto, encoding="utf-8")
@@ -143,7 +176,8 @@ def buscar(
         raise ErroDeFetch(f"{nome!r} já está aprovado; o fetch não sobrescreve um ícone aprovado")
 
     endereco = (url or os.environ.get(VARIAVEL_URL) or URL_LUCIDE).format(tag=tag, nome=nome_lucide)
-    svg = normalizar(_baixar(endereco))
+    cru = _baixar(endereco)
+    svg = normalizar(cru)
 
     destino = manifest.svg_contorno(raiz, nome)
     destino.parent.mkdir(parents=True, exist_ok=True)
@@ -156,6 +190,7 @@ def buscar(
         temporario.unlink()
         raise ErroDeFetch(f"{nome_lucide}: " + "; ".join(m for _, m in problemas))
     temporario.replace(destino)
+    guardar_original(raiz, tag, nome_lucide, cru)
 
     if existente is None:
         existente = {
